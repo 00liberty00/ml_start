@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="800.0" prefWidth="1474.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.CreateLikedController">
+   <children>
+      <HBox layoutX="330.0" layoutY="186.0" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="800.0" prefWidth="430.0">
+               <children>
+                  <Label layoutX="60.0" layoutY="14.0" text="Категории избранного" underline="true">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="firstFavorite" layoutX="33.0" layoutY="100.0" mnemonicParsing="false" onAction="#clickCategFavor1" onMouseClicked="#idButtonCategFav" prefHeight="76.0" prefWidth="364.0" text="Введите название категории">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="secondFavorite" layoutX="33.0" layoutY="200.0" mnemonicParsing="false" onAction="#clickCategFavor2" onMouseClicked="#idButtonCategFav" prefHeight="76.0" prefWidth="364.0" text="Введите название категории">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="thirdFavorite" layoutX="33.0" layoutY="300.0" mnemonicParsing="false" onAction="#clickCategFavor3" onMouseClicked="#idButtonCategFav" prefHeight="76.0" prefWidth="364.0" text="Введите название категории">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="fourthFavorite" layoutX="33.0" layoutY="400.0" mnemonicParsing="false" onAction="#clickCategFavor4" onMouseClicked="#idButtonCategFav" prefHeight="76.0" prefWidth="364.0" text="Введите название категории">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="fifthFavorite" layoutX="33.0" layoutY="500.0" mnemonicParsing="false" onAction="#clickCategFavor5" onMouseClicked="#idButtonCategFav" prefHeight="76.0" prefWidth="364.0" text="Введите название категории">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="sixthFavorite" layoutX="33.0" layoutY="600.0" mnemonicParsing="false" onAction="#clickCategFavor6" onMouseClicked="#idButtonCategFav" prefHeight="76.0" prefWidth="364.0" text="Введите название категории">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="textFieldFavor1" layoutX="33.0" layoutY="100.0" onAction="#enterCategFavor1" onKeyPressed="#returnButton" prefHeight="76.0" prefWidth="364.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldFavor2" layoutX="33.0" layoutY="200.0" onAction="#enterCategFavor2" onKeyPressed="#returnButton" prefHeight="76.0" prefWidth="364.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldFavor3" layoutX="33.0" layoutY="300.0" onAction="#enterCategFavor3" onKeyPressed="#returnButton" prefHeight="76.0" prefWidth="364.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldFavor4" layoutX="33.0" layoutY="400.0" onAction="#enterCategFavor4" onKeyPressed="#returnButton" prefHeight="76.0" prefWidth="364.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldFavor5" layoutX="33.0" layoutY="500.0" onAction="#enterCategFavor5" onKeyPressed="#returnButton" prefHeight="76.0" prefWidth="364.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldFavor6" layoutX="33.0" layoutY="600.0" onAction="#enterCategFavor6" onKeyPressed="#returnButton" prefHeight="76.0" prefWidth="364.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <GridPane gridLinesVisible="true" layoutY="7.0" prefHeight="787.0" prefWidth="756.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="favButt_1" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="favButt_2" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
+                        <Button fx:id="favButt_3" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" />
+                        <Button fx:id="favButt_4" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
+                        <Button fx:id="favButt_5" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" />
+                        <Button fx:id="favButt_6" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1" />
+                        <Button fx:id="favButt_7" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="favButt_8" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button fx:id="favButt_9" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button fx:id="favButt_10" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Button fx:id="favButt_11" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" />
+                        <Button fx:id="favButt_12" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="favButt_13" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Button fx:id="favButt_14" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Button fx:id="favButt_15" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <Button fx:id="favButt_16" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="3" />
+                        <Button fx:id="favButt_17" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Button fx:id="favButt_18" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Button fx:id="favButt_19" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Button fx:id="favButt_20" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Button fx:id="favButt_21" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="4" />
+                        <Button fx:id="favButt_22" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Button fx:id="favButt_23" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <Button fx:id="favButt_24" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                        <Button fx:id="favButt_25" disable="true" mnemonicParsing="false" onAction="#addButtonFav" prefHeight="216.0" prefWidth="152.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Pane>
+            <Pane prefHeight="800.0" prefWidth="289.0">
+               <children>
+                  <TextField fx:id="codeTextField" disable="true" layoutX="13.0" layoutY="92.0" onAction="#getGoodCode" prefHeight="31.0" prefWidth="261.0" />
+                  <TextField fx:id="nameTextField" disable="true" layoutX="14.0" layoutY="258.0" onAction="#getGoodName" prefHeight="31.0" prefWidth="261.0" />
+                  <Label layoutX="83.0" layoutY="27.0" text="Код товара">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="44.0" layoutY="190.0" text="Название товара">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="goodNameLabel" layoutX="14.0" layoutY="310.0" />
+                  <Label fx:id="messageLabel" layoutX="14.0" layoutY="350.0" prefHeight="21.0" prefWidth="0.0" textFill="RED" />
+                  <Label layoutX="13.0" layoutY="400.0" text="Чтобы добавить или изменить:" />
+                  <Label fx:id="chooseCatLabel" layoutX="16.0" layoutY="428.0" text="Выберите категорию" />
+                  <Label fx:id="chooseGoodLabel" layoutX="16.0" layoutY="449.0" text="Выберите товар" />
+                  <Label fx:id="chooseButtonLabel" layoutX="16.0" layoutY="470.0" text="Выберите кнопку, куда сделать запись" />
+                  <Label layoutX="16.0" layoutY="620.0" text="Чтобы изменить название категории" />
+                  <Label layoutX="16.0" layoutY="641.0" text="нажмите F3" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

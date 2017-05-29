@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "src/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<session-factory>
+<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+<property name="hibernate.connection.url">jdbc:mysql://185.69.155.59:3306/marleo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull</property>
+<property name="hibernate.connection.username">essa</property>
+<property name="hibernate.connection.password">YIGO+h4inYl62f3suP+BxQ==</property>
+<property name="hibernate.show_sql">true</property>
+<mapping resource="ml/model/Accounting.hbm.xml"/>
+<mapping resource="ml/model/CategoryFavorite.hbm.xml"/>
+<mapping resource="ml/model/GoodsBackup.hbm.xml"/>
+<mapping resource="ml/model/Discount.hbm.xml"/>
+<mapping resource="ml/model/Goods.hbm.xml"/>
+<mapping resource="ml/model/Arrival.hbm.xml"/>
+<mapping resource="ml/model/UserSwing.hbm.xml"/>
+<mapping resource="ml/model/UserRoles.hbm.xml"/>
+<mapping resource="ml/model/WriteoffList.hbm.xml"/>
+<mapping resource="ml/model/CheckDiscount.hbm.xml"/>
+<mapping resource="ml/model/Total.hbm.xml"/>
+<mapping resource="ml/model/Barcode.hbm.xml"/>
+<mapping resource="ml/model/Trial.hbm.xml"/>
+<mapping resource="ml/model/Check.hbm.xml"/>
+<mapping resource="ml/model/Favorite.hbm.xml"/>
+<mapping resource="ml/model/CategoryGoods.hbm.xml"/>
+<mapping resource="ml/model/CheckList.hbm.xml"/>
+<mapping resource="ml/model/Writeoff.hbm.xml"/>
+<mapping resource="ml/model/CashIn.hbm.xml"/>
+<mapping resource="ml/model/CashOut.hbm.xml"/>
+<mapping resource="ml/model/ReportsAccounting.hbm.xml"/>
+<mapping resource="ml/model/Orders.hbm.xml"/>
+<mapping resource="ml/model/ArrivalList.hbm.xml"/>
+<mapping resource="ml/model/CaseRecord.hbm.xml"/>
+<mapping resource="ml/model/GoodsAccounting.hbm.xml"/>
+</session-factory>
+</hibernate-configuration>

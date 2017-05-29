@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.LoginController">
+   <children>
+      <Pane layoutX="177.0" layoutY="85.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="loginLabel" layoutX="5.0" layoutY="100.0" prefHeight="70.0" prefWidth="150.0" text="Логин: ">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="loginTextField" alignment="CENTER" layoutX="155.0" layoutY="100.0" onAction="#onEnter" prefHeight="70.0" prefWidth="440.0">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </TextField>
+            <Label fx:id="authLabel" alignment="CENTER" layoutX="205.0" prefHeight="70.0" prefWidth="180.0" text="Авторизация">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label fx:id="passwordLabel" layoutX="5.0" layoutY="220.0" prefHeight="70.0" prefWidth="150.0" text="Пароль:">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="155.0" layoutY="220.0" onAction="#onEnter" prefHeight="70.0" prefWidth="440.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="okButton" layoutX="445.0" layoutY="325.0" mnemonicParsing="false" onAction="#okClicked" prefHeight="70.0" prefWidth="150.0" text="OK">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Label fx:id="message" layoutX="76.0" layoutY="340.0" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

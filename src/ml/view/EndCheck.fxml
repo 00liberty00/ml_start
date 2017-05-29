@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.EndCheckController">
+   <children>
+      <VBox prefHeight="30.0" prefWidth="600.0">
+         <children>
+            <Pane prefHeight="30.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="225.0" prefHeight="30.0" prefWidth="375.0" text="Конец продажи" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="numLabel" prefHeight="30.0" prefWidth="105.0" text="Номер чека:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="numberCheckLabel" layoutX="105.0" prefHeight="30.0" prefWidth="120.0" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <Pane layoutY="30.0" prefHeight="100.0" prefWidth="600.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label fx:id="sumLabel" prefHeight="100.0" prefWidth="300.0" text="Сумма чека:">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="sumCheckTextField" alignment="CENTER" editable="false" layoutX="300.0" prefHeight="100.0" prefWidth="300.0">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font></TextField>
+         </children>
+      </Pane>
+      <Pane layoutY="130.0" prefHeight="100.0" prefWidth="600.0" AnchorPane.topAnchor="140.0">
+         <children>
+            <Label fx:id="discLabel" prefHeight="100.0" prefWidth="300.0" text="Со скидкой:">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="discountCheckTextField" alignment="CENTER" editable="false" layoutX="300.0" prefHeight="100.0" prefWidth="300.0">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font></TextField>
+         </children>
+      </Pane>
+      <Pane layoutY="230.0" prefHeight="100.0" prefWidth="600.0" AnchorPane.topAnchor="250.0">
+         <children>
+            <Label fx:id="cashLabel" prefHeight="100.0" prefWidth="300.0" text="Наличные:">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cashCheckTextField" alignment="CENTER" layoutX="300.0" onAction="#isOkClicked" onKeyReleased="#getShortChange" prefHeight="100.0" prefWidth="300.0" style="-fx-text-inner-color: red;">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font></TextField>
+         </children>
+      </Pane>
+      <Pane layoutY="330.0" prefHeight="100.0" prefWidth="600.0" AnchorPane.topAnchor="400.0">
+         <children>
+            <Label fx:id="shortChangeLabel" prefHeight="100.0" prefWidth="300.0" text="Сдача:">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="shortChangeCheckTextField" alignment="CENTER" editable="false" layoutX="300.0" prefHeight="100.0" prefWidth="300.0">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font></TextField>
+         </children>
+      </Pane>
+      <Pane layoutY="430.0" prefHeight="70.0" prefWidth="600.0" AnchorPane.topAnchor="520.0">
+         <children>
+            <Button fx:id="cancelCheckButton" layoutX="305.0" layoutY="2.0" mnemonicParsing="false" onAction="#isCancelClicked" prefHeight="65.0" prefWidth="290.0" text="Отмена">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="okCheckButton" layoutX="5.0" layoutY="2.0" mnemonicParsing="false" onAction="#isOkClicked" prefHeight="65.0" prefWidth="295.0" text="Ok">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Label fx:id="message" layoutX="300.0" layoutY="368.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
