@@ -48,6 +48,12 @@ public class CashOutController implements Initializable {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
+    
+    public void setTopText(String sumOut, String noteOut) {
+        // set text from another class
+        sum.setText(sumOut);
+        note.setText(noteOut);
+    } 
 
     @FXML
     private void ok(ActionEvent event) {

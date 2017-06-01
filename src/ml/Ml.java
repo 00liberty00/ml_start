@@ -24,7 +24,7 @@ public class Ml {
             System.out.println("ВАША : " + System.getProperty("os.arch"));
             //Runtime.getRuntime().exec("java -jar ml.jar");
 //            Ml_FX.main(args);
-            Ml_Swing.main(args);
+            Ml_FX.main(args);
         }
     }
 

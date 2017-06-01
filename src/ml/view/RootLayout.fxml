@@ -101,6 +101,18 @@
                               <Insets />
                            </opaqueInsets>
                         </Button>
+                        <Button fx:id="indebtedness" layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#indebtednessClicked">
+                           <graphic>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/image/indebtedness.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
                      </children></Pane>
                   <Pane fx:id="ordersPane" prefHeight="200.0" prefWidth="200.0" />
                   <Pane fx:id="goodsPane" prefHeight="200.0" prefWidth="200.0" />

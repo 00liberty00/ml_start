@@ -27,6 +27,7 @@ import ml.window.CreateFavorWindow;
 import ml.window.CreateUserWindow;
 import ml.window.DayReportsWindow;
 import ml.window.EndShiftWindow;
+import ml.window.IndebtednessWindow;
 import ml.window.NewSessionWindow;
 import ml.window.SettingsPrintCheckWindow;
 
@@ -95,6 +96,9 @@ public class RootLayoutController implements Initializable {
     private Button cashOut;
 
     @FXML
+    private Button indebtedness;
+
+    @FXML
     private Button dayReports;
 
     @FXML
@@ -114,8 +118,7 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private Button exit;
-    
-    
+
     private ExitApp app = new ExitApp();
 
     /**
@@ -292,7 +295,7 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
-     * Списание товара
+     * Списание товара.
      */
     @FXML
     private void cancelClicked(ActionEvent event) {
@@ -301,7 +304,7 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
-     * Ввод денежных средств
+     * Ввод денежных средств.
      */
     @FXML
     private void cashInClicked(ActionEvent event) {
@@ -310,12 +313,21 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
-     * Вывод денежных средств
+     * Вывод денежных средств.
      */
     @FXML
     private void cashOutClicked(ActionEvent event) {
 
         new CashOutWindow();
+    }
+
+    /**
+     * Просмотр задолжности.
+     */
+    @FXML
+    private void indebtednessClicked(ActionEvent event) {
+
+        new IndebtednessWindow();
     }
 
     /**
