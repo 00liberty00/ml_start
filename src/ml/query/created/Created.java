@@ -7,9 +7,11 @@ package ml.query.created;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import ml.model.Comp;
 
 /**
  *
@@ -61,6 +63,10 @@ public class Created {
         return license;
     }
 
+    public String DisplayIdLicense(){
+        return idLicense;
+    }
+    
     //Обновляет запись
     public String update() {
         String license = null;
@@ -186,5 +192,70 @@ public class Created {
         return countUser;
     }
 
-    
+    //Добавляет mac компа в БД
+    public void insertMac(Comp comp) {
+        Connection dbConnection = null;
+        Statement statement = null;
+
+//        String insertTableSQL = "insert into user (id_user, mac, ip, name, date_create, note, blocking, id_license)\n"
+        String insertTableSQL = "insert into user (id_user, mac, name, blocking, date_create)\n"
+                + "values (?,?,?,?,?);";
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+            PreparedStatement pstmt = dbConnection.prepareStatement(insertTableSQL);
+            pstmt.setString(1, null);
+            pstmt.setBytes(2, comp.getMac());
+            pstmt.setString(3, comp.getName());
+            pstmt.setBoolean(4, comp.isBlocking());
+            pstmt.setDate(5, new java.sql.Date( comp.getDateCreate().getTime()));
+            //pstmt.setInt(6, comp.getIdLicense());
+            pstmt.execute();
+
+            // выполняем запрос update SQL
+            //statement.execute(insertTableSQL);
+            System.out.println("Record is updated to DBUSER table!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //Проверяет mac компа в БД
+    public boolean searchMac(String macString) {
+        boolean checkMac = false;
+
+        Connection dbConnection = null;
+        Statement statement = null;
+        String selectTableSQL = "select hex(mac) from user";
+        try {
+            dbConnection = getDBConnection();
+            statement = dbConnection.createStatement();
+
+            // выбираем данные с БД
+            ResultSet rs = statement.executeQuery(selectTableSQL);
+            byte[] macAddress = new byte[12];
+            // И если что то было получено то цикл while сработает   
+            while (rs.next()) {
+                //countUser = Integer.parseInt(rs.getString("countPC"));
+                for (int i = 0; i < 12; i++) {
+//                    Integer hex = Integer.parseInt("mac", 16);
+//                    macAddress[i] = hex.byteValue();
+                    macAddress[i] = rs.getBytes(1)[i];
+                    //System.out.println("ОТВЕТ : " + new String(rs.getBytes(1)));
+                }
+
+                System.out.println("ОТВЕТ_БД : " + new String(macAddress));
+                if (macString.equals(new String(macAddress))) {
+                    checkMac = true;
+                    System.out.println("КРУТЬ!!!");
+                }
+            }
+            System.out.println("ОТВЕТ_КЛАСС : " + macString);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return checkMac;
+    }
+
 }

@@ -9,7 +9,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Enumeration;
 
 /**
  *
@@ -18,7 +17,7 @@ import java.util.Enumeration;
 public class IpMac {
 
     private InetAddress ip;
-    private StringBuilder sb;
+    private StringBuilder sb = new StringBuilder();
 
     public String getIp() {
         try {
@@ -33,25 +32,33 @@ public class IpMac {
     public String getMac() {
 
         try {
-            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
-            while (networks.hasMoreElements()) {
-                NetworkInterface network = networks.nextElement();
-                byte[] mac = network.getHardwareAddress();
+            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
 
-                if (mac != null) {
-                    System.out.print("Current MAC address : ");
+            byte[] mac = network.getHardwareAddress();
 
-                    sb = new StringBuilder();
-                    for (int i = 0; i < mac.length; i++) {
-                        sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-                    }
-                    System.out.println(sb.toString());
-                }
+            //System.out.print("Current MAC address : ");
+
+            sb = new StringBuilder();
+            for (int i = 0; i < mac.length; i++) {
+                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
             }
+            System.out.println(sb.toString());
+
         } catch (SocketException ex) {
             ex.printStackTrace();
         }
         return sb.toString();
     }
+    
+     public String getName() {
+        try {
+            ip = InetAddress.getLocalHost();
+            System.out.println("Current IP address : " + ip.getHostName());
+        } catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        }
+        return ip.getHostName();
+    }
+    
 
 }

@@ -7,6 +7,7 @@ package ml;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.Observable;
@@ -25,6 +26,8 @@ import ml.trial.TestTrial;
 import ml.dialog.DialogAlert;
 import ml.dialog.DialogTextInput;
 import ml.exit.ExitApp;
+import ml.ipmac.IpMac;
+import ml.model.Comp;
 import ml.query.created.Created;
 import ml.query.trial.ChangeCreatedTrial;
 import ml.query.trial.TrialInfo;
@@ -39,9 +42,39 @@ public class Ml_FX extends Application {
     private BorderPane rootLayout;
     private DialogAlert alert;
     private Created created = new Created();
+    private Comp comp = new Comp();
 
     @Override
     public void start(Stage primaryStage) {
+
+        IpMac ipMac = new IpMac();
+        ipMac.getIp();
+
+        //00-01-02-03-04-05
+        String macString = ipMac.getMac().replaceAll("-", "");
+
+        //проверка на наличие mac адреса
+        boolean checkMac = created.searchMac(macString);
+        if (checkMac == false) {
+            TrialInfo info = new TrialInfo();
+            Date date = new Date();
+            String[] macAddressParts = ipMac.getMac().split("-");
+
+            byte[] macAddressBytes = new byte[6];
+            for (int i = 0; i < 6; i++) {
+                Integer hex = Integer.parseInt(macAddressParts[i], 16);
+                macAddressBytes[i] = hex.byteValue();
+            }
+            comp.setMac(macAddressBytes);
+            comp.setBlocking(false);
+            comp.setDateCreate(date);
+            comp.setName(ipMac.getName());
+//\\            comp.setIdLicense();
+            //Запись MAC-адреса в БД
+            created.insertMac(comp);
+
+        }
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("ML");
         File f = new File("src/hibernate.cfg.xml");
@@ -216,7 +249,7 @@ public class Ml_FX extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         launch(args);
     }
 
