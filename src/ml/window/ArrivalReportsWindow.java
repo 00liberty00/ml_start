@@ -10,13 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ml.controller.ReportsArrivalController;
 
 /**
  * Отчеты прихода.
+ *
  * @author dave
  */
 public class ArrivalReportsWindow {
-
 
     public ArrivalReportsWindow() {
         //Продажа товара
@@ -25,6 +26,31 @@ public class ArrivalReportsWindow {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ml/view/ReportsArrival.fxml"));
             BorderPane rootLayout = (BorderPane) loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Отчеты прихода");
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            //scene.getStylesheets().add("/styles/Styles.css");
+            //stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrivalReportsWindow(Long number) {
+        //Продажа товара
+        try {
+
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ml/view/ReportsArrival.fxml"));
+            BorderPane rootLayout = (BorderPane) loader.load();
+
+            ReportsArrivalController controller = (ReportsArrivalController) loader.getController();
+
+            controller.setData(number);
+
             Stage stage = new Stage();
             stage.setTitle("Отчеты прихода");
             // Show the scene containing the root layout.

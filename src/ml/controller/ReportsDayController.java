@@ -25,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import ml.authentication.GrantedAuth;
+import ml.model.ArrivalList;
 import ml.model.CaseRecord;
 import ml.model.CheckList;
 import ml.model.Total;
@@ -34,6 +35,8 @@ import ml.query.check.ProfitCheck;
 import ml.query.goods.SumGoods;
 import ml.query.total.DateTotal;
 import ml.table.ReportsDayTable;
+import ml.window.ArrivalReportsWindow;
+import ml.window.CancelReportsWindow;
 
 /**
  * FXML Controller class
@@ -74,6 +77,8 @@ public class ReportsDayController implements Initializable {
     private TableColumn<ReportsDayTable, String> noteReportsColumn;
     @FXML
     private TableColumn<ReportsDayTable, Date> dateReportsColumn;
+    @FXML
+    private TableColumn<ReportsDayTable, Long> numberReportsColumn;
 
     private ObservableList<ReportsDayTable> reportsDayData = FXCollections.observableArrayList();
     private List<CaseRecord> crList;
@@ -82,6 +87,7 @@ public class ReportsDayController implements Initializable {
     private GrantedAuth grantedAuth = new GrantedAuth();
     private Object auth = grantedAuth.role();
     private BigDecimal proceedsCheck = new BigDecimal("0.00");          //Выручка по чекам
+    private List<ArrivalList> arrivalViewList;
 
     @FXML
     private void okReportsDay(ActionEvent event) {
@@ -195,6 +201,7 @@ public class ReportsDayController implements Initializable {
         cancelReportsColumn.setCellValueFactory(new PropertyValueFactory<ReportsDayTable, BigDecimal>("sumCancel"));
         noteReportsColumn.setCellValueFactory(new PropertyValueFactory<ReportsDayTable, String>("note"));
         dateReportsColumn.setCellValueFactory(new PropertyValueFactory<ReportsDayTable, Date>("date"));
+        numberReportsColumn.setCellValueFactory(new PropertyValueFactory<ReportsDayTable, Long>("number"));
         //newPriceArrivalColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         /*if ("ROLE_ADMIN".equals(auth.toString())) {
         residueArrivalColumn.setCellValueFactory(new PropertyValueFactory<ArrivalTable, BigDecimal>("residue"));
@@ -214,16 +221,19 @@ public class ReportsDayController implements Initializable {
             if (cr.getArrival() != null) {
                 reportsDayTable.setSumInvoice(cr.getArrival().getSumInvoice());
                 reportsDayTable.setNote(cr.getArrival().getNote());
+                reportsDayTable.setNumber(cr.getArrival().getIdArrival());
             }
             if ("ROLE_ADMIN".equals(auth.toString())) {
                 if (cr.getArrival() != null) {
                     reportsDayTable.setSumArrival(cr.getArrival().getSumArrival());
                     reportsDayTable.setNote(cr.getArrival().getNote());
+                    reportsDayTable.setNumber(cr.getArrival().getIdArrival());
                 }
             }
             if (cr.getWriteOff() != null) {
                 reportsDayTable.setSumCancel(cr.getWriteOff().getSum());
                 reportsDayTable.setNote(cr.getWriteOff().getNote());
+                reportsDayTable.setNumber(cr.getWriteOff().getIdWriteoff());
             }
 
             reportsDayTable.setDate(cr.getDate());
@@ -235,6 +245,17 @@ public class ReportsDayController implements Initializable {
             reportsDayData.add(reportsDayTable);
         }
         tableReportsDay.setItems(reportsDayData);
+    }
+
+    @FXML
+    private void viewReports() {
+        ReportsDayTable table = tableReportsDay.getSelectionModel().getSelectedItem();
+        if (table.getSumArrival() != null) {
+            new ArrivalReportsWindow(table.getNumber());
+        }
+        if (table.getSumCancel() != null) {
+            new CancelReportsWindow(table.getNumber());
+        }
     }
 
     /**

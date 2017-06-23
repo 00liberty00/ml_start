@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -196,6 +197,33 @@ public class ReportsArrivalController implements Initializable {
                 }
             }
 
+        }
+    }
+
+    public void setData(Long number) {
+        System.out.println("CATCH");
+        reportsArrivalListData.clear();      //Очищает таблицу
+        tableArrivalList.setItems(reportsArrivalListData);
+        ArrivalListByIdArrival byIdArrival = new ArrivalListByIdArrival();
+        arrivalViewList = new ArrayList<ArrivalList>();
+        arrivalViewList = byIdArrival.listArrival(number);
+
+        ArrivalList ar = null;
+        for (ArrivalList gg1 : arrivalViewList) {
+            ar = gg1;
+            if (ar != null) {
+                //System.out.println("Проценты равны : " + cr.getCheck().getCheckDiscount().getDiscount().getPercent());
+                displaySmallArrivalListResult(ar);
+                nameUserLabel.setVisible(true);
+                nameUser.setText(ar.getArrival().getUserSwing().getName());
+                invoiceText.setText(ar.getArrival().getSumInvoice().toString());
+                arrivalText.setText(ar.getArrival().getSumArrival().toString());
+                numInvoiceText.setText(ar.getArrival().getNumberWaybill());
+
+                sumInvoiceLabel.setVisible(true);
+                sumArrivalLabel.setVisible(true);
+                numInvoiceLabel.setVisible(true);
+            }
         }
     }
 

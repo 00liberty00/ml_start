@@ -37,4 +37,24 @@ public class CancelReportsWindow {
             e.printStackTrace();
         }
     }
+    
+    public CancelReportsWindow(Long number) {
+        //Продажа товара
+        try {
+
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ml/view/ReportsCancel.fxml"));
+            BorderPane rootLayout = (BorderPane) loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Отчеты списания");
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            //scene.getStylesheets().add("/styles/Styles.css");
+            //stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

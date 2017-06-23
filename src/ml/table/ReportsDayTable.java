@@ -21,11 +21,14 @@ public class ReportsDayTable {
     private BigDecimal sumCancel;
     private String note;
     private Date date;
+    private Long number;
 
     public ReportsDayTable() {
     }
 
-    public ReportsDayTable(BigDecimal sumIn, BigDecimal sumOut, BigDecimal sumInvoice, BigDecimal sumArrival, BigDecimal sumCancel, String note, Date date) {
+    public ReportsDayTable(BigDecimal sumIn, BigDecimal sumOut,
+            BigDecimal sumInvoice, BigDecimal sumArrival, BigDecimal sumCancel,
+            String note, Date date, Long number) {
         this.sumIn = sumIn;
         this.sumOut = sumOut;
         this.sumInvoice = sumInvoice;
@@ -33,6 +36,7 @@ public class ReportsDayTable {
         this.sumCancel = sumCancel;
         this.note = note;
         this.date = date;
+        this.number = number;
     }
 
     public BigDecimal getSumIn() {
@@ -89,6 +93,14 @@ public class ReportsDayTable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
     }
 
 }
