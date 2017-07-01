@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "src/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://crimeali.mysql.ukraine.com.ua/crimeali_license?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">crimeali_license</property>
+    <property name="hibernate.connection.password">2bet2lx6</property>
+    <mapping resource="ml/modelLicense/Comp.hbm.xml"/>
+    <mapping resource="ml/modelLicense/License.hbm.xml"/>
+    <mapping resource="ml/modelLicense/User.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

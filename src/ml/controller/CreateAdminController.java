@@ -24,7 +24,9 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import ml.exit.ExitApp;
 import ml.model.UserSwing;
+import ml.modelLicense.User;
 import ml.query.user.AddUser;
+import ml.query.license.NewUser;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 /**
@@ -56,6 +58,7 @@ public class CreateAdminController implements Initializable {
     private final ShaPasswordEncoder encoder = new ShaPasswordEncoder();
     private Stage dialogStage;
     private UserSwing us = new UserSwing();
+    private User userLicense = new User();
     private AddUser addAdmin = new AddUser();
     private boolean fail = false;
     private ExitApp app = new ExitApp();
@@ -110,9 +113,15 @@ public class CreateAdminController implements Initializable {
             us.setEmail(mail.getText());
             us.setLastLogin(date);
 
+            userLicense.setEmail(mail.getText());
+            userLicense.setName(name.getText());
+            userLicense.setPhone(phone.getText());
+
             validate(us, validator);
             if (fail == false) {
 //Написать сообщения об ошибках
+                NewUser newUser = new NewUser();
+                newUser.add(userLicense);
                 addAdmin.add(us);
                 message.setText("Администратор создан");
                 message.setTextFill(Color.rgb(21, 117, 84));

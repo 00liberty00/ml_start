@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 01.07.2017 12:42:26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ml.modelLicense.User" table="user" catalog="crimeali_license" optimistic-lock="version">
+        <id name="idUser" type="java.lang.Integer">
+            <column name="id_user" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="license" class="ml.modelLicense.License" fetch="select">
+            <column name="id_license" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="100" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="100" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

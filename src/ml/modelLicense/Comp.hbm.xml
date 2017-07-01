@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 01.07.2017 12:42:26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ml.modelLicense.Comp" table="comp" catalog="crimeali_license" optimistic-lock="version">
+        <id name="idComp" type="java.lang.Integer">
+            <column name="id_comp" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="license" class="ml.modelLicense.License" fetch="select">
+            <column name="id_license" />
+        </many-to-one>
+        <property name="mac" type="binary">
+            <column name="mac" not-null="true" unique="true" />
+        </property>
+        <property name="ip" type="binary">
+            <column name="ip" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="45" />
+        </property>
+        <property name="dateCreate" type="timestamp">
+            <column name="date_create" length="19" />
+        </property>
+        <property name="note" type="string">
+            <column name="note" length="10000" />
+        </property>
+        <property name="blocking" type="java.lang.Byte">
+            <column name="blocking" />
+        </property>
+    </class>
+</hibernate-mapping>

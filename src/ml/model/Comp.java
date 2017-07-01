@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Comp {
 
-    private Integer idUser;
+    private Integer idComp;
     private byte[] mac;
     private Integer ip;
     private String name;
@@ -25,8 +25,8 @@ public class Comp {
     public Comp() {
     }
 
-    public Comp(Integer idUser, byte[] mac, Integer ip, String name, Date dateCreate, String note, boolean blocking, Integer idLicense) {
-        this.idUser = idUser;
+    public Comp(Integer idComp, byte[] mac, Integer ip, String name, Date dateCreate, String note, boolean blocking, Integer idLicense) {
+        this.idComp = idComp;
         this.mac = mac;
         this.ip = ip;
         this.name = name;
@@ -36,12 +36,12 @@ public class Comp {
         this.idLicense = idLicense;
     }
 
-    public Integer getIdUser() {
-        return idUser;
+    public Integer getIdComp() {
+        return idComp;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setIdComp(Integer idComp) {
+        this.idComp = idComp;
     }
 
     public byte[] getMac() {

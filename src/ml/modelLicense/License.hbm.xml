@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 01.07.2017 12:42:26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ml.modelLicense.License" table="license" catalog="crimeali_license" optimistic-lock="version">
+        <id name="idLicense" type="java.lang.Integer">
+            <column name="id_license" />
+            <generator class="identity" />
+        </id>
+        <property name="license" type="long">
+            <column name="license" not-null="true" />
+        </property>
+        <property name="datecreated" type="date">
+            <column name="datecreated" length="10" not-null="true" />
+        </property>
+        <property name="dateuse" type="timestamp">
+            <column name="dateuse" length="19" not-null="true" />
+        </property>
+        <property name="created" type="boolean">
+            <column name="created" not-null="true" />
+        </property>
+        <property name="countPc" type="int">
+            <column name="countPC" not-null="true" />
+        </property>
+        <property name="includeUser" type="int">
+            <column name="includeUser" not-null="true" />
+        </property>
+        <set name="comps" table="comp" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_license" />
+            </key>
+            <one-to-many class="ml.modelLicense.Comp" />
+        </set>
+        <set name="users" table="user" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_license" />
+            </key>
+            <one-to-many class="ml.modelLicense.User" />
+        </set>
+    </class>
+</hibernate-mapping>

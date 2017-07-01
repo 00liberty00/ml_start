@@ -198,7 +198,7 @@ public class Created {
         Statement statement = null;
 
 //        String insertTableSQL = "insert into user (id_user, mac, ip, name, date_create, note, blocking, id_license)\n"
-        String insertTableSQL = "insert into user (id_user, mac, name, blocking, date_create)\n"
+        String insertTableSQL = "insert into comp (id_user, mac, name, blocking, date_create)\n"
                 + "values (?,?,?,?,?);";
         try {
             dbConnection = getDBConnection();
@@ -226,7 +226,7 @@ public class Created {
 
         Connection dbConnection = null;
         Statement statement = null;
-        String selectTableSQL = "select hex(mac) from user";
+        String selectTableSQL = "select hex(mac) from comp";
         try {
             dbConnection = getDBConnection();
             statement = dbConnection.createStatement();
