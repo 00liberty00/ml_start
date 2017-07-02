@@ -23,10 +23,16 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import ml.exit.ExitApp;
+import ml.ipmac.IpMac;
+import ml.modelLicense.Comp;
 import ml.model.UserSwing;
+import ml.modelLicense.License;
 import ml.modelLicense.User;
+import ml.query.license.AddMac;
+import ml.query.license.ChooseLicense;
 import ml.query.user.AddUser;
 import ml.query.license.NewUser;
+import ml.query.license.UpdateLicense;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 /**
@@ -62,6 +68,7 @@ public class CreateAdminController implements Initializable {
     private AddUser addAdmin = new AddUser();
     private boolean fail = false;
     private ExitApp app = new ExitApp();
+    private Comp comp = new Comp();
     String failMessage;
 
     ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
@@ -120,8 +127,8 @@ public class CreateAdminController implements Initializable {
             validate(us, validator);
             if (fail == false) {
 //Написать сообщения об ошибках
-                NewUser newUser = new NewUser();
-                newUser.add(userLicense);
+                recordAboutUser();
+                //Запись пользователя в локальную бд
                 addAdmin.add(us);
                 message.setText("Администратор создан");
                 message.setTextFill(Color.rgb(21, 117, 84));
@@ -146,6 +153,45 @@ public class CreateAdminController implements Initializable {
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+    }
+
+    /**
+     * Запись информации о пользователе в бд лицензии
+     */
+    private void recordAboutUser() {
+        Date date = new Date();
+        //Запись в бд-лицензии
+        ChooseLicense chooseLicense = new ChooseLicense();
+        UpdateLicense updateLicense = new UpdateLicense();
+        License license = new License();
+        NewUser newUser = new NewUser();
+        AddMac addMac = new AddMac();
+        IpMac ipMac = new IpMac();
+        ipMac.getIp();
+        //String macString = ipMac.getMac().replaceAll("-", "");
+        String[] macAddressParts = ipMac.getMac().split("-");
+
+        byte[] macAddressBytes = new byte[6];
+        for (int i = 0; i < 6; i++) {
+            Integer hex = Integer.parseInt(macAddressParts[i], 16);
+            macAddressBytes[i] = hex.byteValue();
+        }
+        comp.setMac(macAddressBytes);
+        comp.setBlocking(false);
+        comp.setDateCreate(date);
+        comp.setName(ipMac.getName());
+        //Выбирает любой номер лицензии
+        chooseLicense.get();
+        license = chooseLicense.displayResult();
+        comp.setLicense(license);
+        //Запись MAC-адреса в БД
+        addMac.add(comp);
+        //Запись пользователя в БД-лицензии
+        userLicense.setLicense(license);
+        newUser.add(userLicense);
+        //Обновление поля лицензии на использованный номер лицензии
+        license.setCreated(true);
+        updateLicense.update(license);
     }
 
     /**

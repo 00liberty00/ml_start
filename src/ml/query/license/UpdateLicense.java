@@ -5,7 +5,7 @@
  */
 package ml.query.license;
 
-import ml.modelLicense.User;
+import ml.modelLicense.License;
 import ml.util.HibernateUtilLic;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,21 +15,22 @@ import org.hibernate.Transaction;
  *
  * @author Dave
  */
-public class NewUser {
+public class UpdateLicense {
     Session session = HibernateUtilLic.openSession();
     Transaction tx = null;
     Session sessionFactory;
 
-    public void add(User user) {
-        executeHQLQuery(user);
+    public void update(License license) {
+        executeHQLQuery(license);
     }
 
     //HQL-запрос
-    private void executeHQLQuery(User user) {
+    private void executeHQLQuery(License license) {
         try {
             tx = session.beginTransaction();
-            //remainderMinus.idGoods(s, check.getAmount());
-            session.save(user);
+
+            session.update(license);
+            session.flush();  // changes to cat are automatically detected and persisted
             tx.commit();
         } catch (HibernateException he) {
             he.printStackTrace();

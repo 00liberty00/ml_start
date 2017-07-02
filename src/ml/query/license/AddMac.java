@@ -5,7 +5,7 @@
  */
 package ml.query.license;
 
-import ml.modelLicense.User;
+import ml.modelLicense.Comp;
 import ml.util.HibernateUtilLic;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,21 +15,21 @@ import org.hibernate.Transaction;
  *
  * @author Dave
  */
-public class NewUser {
+public class AddMac {
     Session session = HibernateUtilLic.openSession();
     Transaction tx = null;
     Session sessionFactory;
 
-    public void add(User user) {
-        executeHQLQuery(user);
+    public void add(Comp comp) {
+        executeHQLQuery(comp);
     }
 
     //HQL-запрос
-    private void executeHQLQuery(User user) {
+    private void executeHQLQuery(Comp comp) {
         try {
             tx = session.beginTransaction();
             //remainderMinus.idGoods(s, check.getAmount());
-            session.save(user);
+            session.save(comp);
             tx.commit();
         } catch (HibernateException he) {
             he.printStackTrace();
