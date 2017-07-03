@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 import ml.Ml_FX;
 import ml.authentication.AuthenticationManag;
 import ml.model.UserSwing;
-import ml.query.created.Created;
+import ml.modelLicense.License;
+import ml.query.license.AddUserLicense;
 import ml.query.user.AuthUser;
 import ml.trial.TestTrial;
 import ml.window.RootWindow;
@@ -103,9 +104,9 @@ public class LoginController implements Initializable {
         Ml_FX ml = new Ml_FX();
 
         TestTrial testTrial = new TestTrial();
-        Created c = new Created();
-        String license;
-        license = testTrial.licenseTrial();
+        // Created c = new Created();
+        AddUserLicense addUserLicense = new AddUserLicense();
+        License license = testTrial.license();
 
         if (!resultList.isEmpty()) {
             for (Object o : resultList) {
@@ -118,9 +119,13 @@ public class LoginController implements Initializable {
                     //Открыть окно чека
                     try {
                         // +1 пользователь(ПК) в БД в поле ключа 
-                        c.addUser(license);
-                        if (c.getCountPC(license) >= c.getUser(license)) {
+                        //c.addUser(license);
+                        
+                        if (license.getCountPc() > license.getIncludeUser()) {
+                            addUserLicense.update(license);
                             new RootWindow();
+                            //Закрыть окно авторизации
+                            dialogStage.close();
                         } else {
                             message.setText("Лимит подключений исчерпан ");
                         }
@@ -128,8 +133,6 @@ public class LoginController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    //Закрыть окно авторизации
-                    dialogStage.close();
                 } else {
                     message.setText("Пользователя с таким логином \n" + "или паролем не существует");
                     okButton.setDisable(false);

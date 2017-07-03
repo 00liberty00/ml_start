@@ -13,6 +13,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import ml.modelLicense.License;
+import ml.query.license.LicenseCard;
 import ml.query.trial.TrialInfo;
 
 /**
@@ -25,6 +27,8 @@ public class TestTrial {
     private final CountTrial countTrial = new CountTrial();
     private boolean count;
     private final TrialInfo trialInfo = new TrialInfo();
+    private License license = new License();
+    private LicenseCard licenseCard = new LicenseCard();
 
     public TestTrial() {
         countTrial();
@@ -100,9 +104,11 @@ public class TestTrial {
         Integer id = Integer.parseInt(trialInfo.getTrial().getIdTrial().toString());
         return id;
     }
-    
-    //Выводит idTrial
-    public String licenseTrial() {
-        return trialInfo.getTrial().getLicense();
+
+    //Выводит license
+    public License license() {
+        licenseCard.setNum(trialInfo.getTrial().getLicense());
+        license = licenseCard.displayResult();
+        return license;
     }
 }

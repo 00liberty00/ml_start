@@ -5,7 +5,8 @@
  */
 package ml.exit;
 
-import ml.query.created.Created;
+import ml.modelLicense.License;
+import ml.query.license.DeleteUserLicense;
 import ml.trial.TestTrial;
 
 /**
@@ -13,13 +14,17 @@ import ml.trial.TestTrial;
  * @author Dave
  */
 public class ExitApp {
-
+    
     private TestTrial testTrial = new TestTrial();
-    private Created c = new Created();
+    private License license = testTrial.license();
+    private DeleteUserLicense deleteUserLicense = new DeleteUserLicense();
 
     public void close() {
-        if (c.getUser(testTrial.licenseTrial()) > 0) {
-            c.deleteUser(testTrial.licenseTrial());
+        
+        if (license.getIncludeUser() > 0) {
+            //удалить одного пользователя
+            deleteUserLicense.update(license);
+            //c.deleteUser(testTrial.licenseTrial());
         }
         System.exit(0);
     }

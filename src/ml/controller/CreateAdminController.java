@@ -33,6 +33,8 @@ import ml.query.license.ChooseLicense;
 import ml.query.user.AddUser;
 import ml.query.license.NewUser;
 import ml.query.license.UpdateLicense;
+import ml.query.trial.ChangeCreatedTrial;
+import ml.query.trial.TrialInfo;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 /**
@@ -192,6 +194,15 @@ public class CreateAdminController implements Initializable {
         //Обновление поля лицензии на использованный номер лицензии
         license.setCreated(true);
         updateLicense.update(license);
+
+        //Добавление номера лицензии в таблицу Trial 
+        TrialInfo trialInfo = new TrialInfo();
+        ChangeCreatedTrial cct = new ChangeCreatedTrial();
+        String numLicense = Long.toString(license.getLicense());
+        trialInfo.getTrial().setLicense(numLicense);
+        trialInfo.getTrial().setCreated(true);
+        cct.update(trialInfo.getTrial());
+
     }
 
     /**
