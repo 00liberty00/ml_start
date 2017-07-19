@@ -5,31 +5,32 @@
  */
 package ml.query.license;
 
+import ml.modelLicense.Comp;
 import ml.modelLicense.License;
 import ml.util.HibernateUtilLic;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author Dave
  */
-public class ChooseLicense {
-     private License license = new License();
+public class CompCard {
+    private Comp comp = new Comp();
 
-    public void get() {
-        executeHQLQuery();
+    //Метод запроса по номеру карты
+    public void setNum(String name, License license) {
+        executeHQLQuery(name, license);
     }
 
     //HQL-запрос
-    private void executeHQLQuery() {
+    private void executeHQLQuery(String name, License license) {
         try {
             Session session = HibernateUtilLic.openSession();
             session.beginTransaction();
-            Query q = session.createQuery("from License where created = 0 and countPC = 1");
-            q.setMaxResults(1);
-            license = (License) q.uniqueResult();
+
+            comp = (Comp) session.createCriteria(Comp.class).add(Restrictions.eq("name", name)).add(Restrictions.eq("license", license)).uniqueResult();
 
             displayResult();
             session.getTransaction().commit();
@@ -38,8 +39,7 @@ public class ChooseLicense {
         }
     }
 
-    public License displayResult() {
-
-        return license;
+    public Comp displayResult() {
+        return comp;
     }
 }

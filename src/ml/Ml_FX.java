@@ -7,14 +7,19 @@ package ml;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import ml.controller.CreateAdminController;
@@ -81,9 +86,7 @@ public class Ml_FX extends Application {
             if (l == 1) {
             
             }*/
-            ExitApp app = new ExitApp();
-            TestTrial testTrial = new TestTrial();
-            /*if (testTrial.testDateTrial() == false && testTrial.falseTrial() == false) {
+ /*if (testTrial.testDateTrial() == false && testTrial.falseTrial() == false) {
             
             System.out.println("Триал версия закончена!!!");
             DialogTextInput dialogTextInput = new DialogTextInput();
@@ -122,7 +125,9 @@ public class Ml_FX extends Application {
 
             } else {
                 //Ввод логина и пароля
+
                 initLoginLayout();
+
             }
             //System.out.println(ipMac.getIp());
             //System.out.println(ipMac.getMac());
@@ -146,12 +151,7 @@ public class Ml_FX extends Application {
         }*/
         //////////
         //Проверка, есть ли запись админа
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                ExitApp app = new ExitApp();
-                app.close();
-            }
-        });
+        primaryStage.setOnCloseRequest(confirmCloseEventHandler);
     }
 
     /**
@@ -210,6 +210,8 @@ public class Ml_FX extends Application {
     public void initLoginLayout() {
 
         try {
+            ExitApp app = new ExitApp();
+            TestTrial testTrial = new TestTrial();
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Ml_FX.class.getResource("view/Login.fxml"));
@@ -256,5 +258,40 @@ public class Ml_FX extends Application {
 
         });
     }
+
+    //Подтверждение закрытия окна
+    private EventHandler<WindowEvent> confirmCloseEventHandler = event -> {
+        Alert closeConfirmation = new Alert(
+                Alert.AlertType.CONFIRMATION,
+                "Вы уверены, что хотите выйти?"
+        );
+        Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                ButtonType.OK
+        );
+        Button cancelButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                ButtonType.CANCEL
+        );
+        exitButton.setText("Да");
+        cancelButton.setText("Нет");
+        closeConfirmation.setHeaderText("Выход из программы");
+
+        closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+        closeConfirmation.initOwner(primaryStage);
+
+        // normally, you would just use the default alert positioning,
+        // but for this simple sample the main stage is small,
+        // so explicitly position the alert so that the main window can still be seen.
+        closeConfirmation.setX(primaryStage.getX());
+        closeConfirmation.setY(primaryStage.getY() + primaryStage.getHeight());
+
+        Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+        if (!ButtonType.OK.equals(closeResponse.get())) {
+            event.consume();
+        } else {
+            ExitApp app = new ExitApp();
+            app.close();
+
+        }
+    };
 
 }

@@ -6,13 +6,17 @@
 package ml.controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ml.exit.ExitApp;
 import ml.window.ArrivalReportsWindow;
@@ -439,13 +443,40 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void exitClicked(ActionEvent event) {
 
-        app.close();
+        closeApp();
     }
 
     @FXML
     private void handleClose() {
-        app.close();
+        closeApp();
+
     }
+
+    //Подтверждение закрытия окна
+    private void closeApp() {
+        Alert closeConfirmation = new Alert(
+                Alert.AlertType.CONFIRMATION,
+                "Вы уверены, что хотите выйти?"
+        );
+        Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                ButtonType.OK
+        );
+        Button cancelButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+                ButtonType.CANCEL
+        );
+        exitButton.setText("Да");
+        cancelButton.setText("Нет");
+        closeConfirmation.setHeaderText("Выход из программы");
+
+        closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+        Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+        if (!ButtonType.OK.equals(closeResponse.get())) {
+        } else {
+            app.close();
+
+        }
+    }
+
 
     /**
      * Initializes the controller class.

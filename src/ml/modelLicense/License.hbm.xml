@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 01.07.2017 12:42:26 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="ml.modelLicense.License" table="license" catalog="crimeali_license" optimistic-lock="version">
+    <class name="ml.modelLicense.License" table="license" catalog="license_ml" optimistic-lock="version">
         <id name="idLicense" type="java.lang.Integer">
             <column name="id_license" />
             <generator class="identity" />

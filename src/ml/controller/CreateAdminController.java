@@ -69,7 +69,7 @@ public class CreateAdminController implements Initializable {
     private User userLicense = new User();
     private AddUser addAdmin = new AddUser();
     private boolean fail = false;
-    private ExitApp app = new ExitApp();
+   // private ExitApp app = new ExitApp();
     private Comp comp = new Comp();
     String failMessage;
 
@@ -138,6 +138,7 @@ public class CreateAdminController implements Initializable {
                 //Закрывает окно
                 Stage stage = (Stage) ok.getScene().getWindow();
                 stage.close();
+                ExitApp app = new ExitApp();
                 app.close();
             }
 
@@ -150,6 +151,7 @@ public class CreateAdminController implements Initializable {
 
     @FXML
     private void handleCancelButton() {
+        ExitApp app = new ExitApp();
         app.close();
     }
 

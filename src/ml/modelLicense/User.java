@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="user"
-    ,catalog="crimeali_license"
+    ,catalog="license_ml"
 )
 public class User  implements java.io.Serializable {
 

@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 01.07.2017 12:42:26 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="ml.modelLicense.Comp" table="comp" catalog="crimeali_license" optimistic-lock="version">
+    <class name="ml.modelLicense.Comp" table="comp" catalog="license_ml" optimistic-lock="version">
         <id name="idComp" type="java.lang.Integer">
             <column name="id_comp" />
             <generator class="identity" />

@@ -213,10 +213,17 @@ public class ArrivalController implements Initializable {
     @FXML
     private void getName(ActionEvent event) {
         String name = nameGood.getText();
+        boolean weightGood = weightCheckBox.isSelected();
+
         amountGood.setText(weight);
         amountGood.requestFocus();
         amountGood.selectAll();
-        amount = new BigDecimal(weight);
+
+        if (weightGood == true) {
+            amount = new BigDecimal(weight);
+        } else {
+            amount = new BigDecimal("1");
+        }
         nameGood.setText("");
         getGoodName(name);
 
@@ -269,14 +276,17 @@ public class ArrivalController implements Initializable {
         if (selectRow >= 0) {
             //Вставка данных в последнюю ячейку "цена в накладной" таблицы
             arrivalData.get(selectRow).setInvoicePrice(invoice);
-            arrivalData.get(selectRow).setNewPrice(allowance.divide(new BigDecimal(100)).multiply(invoice).add(invoice));
+            BigDecimal newPr = allowance.divide(new BigDecimal(100)).
+                    multiply(invoice).add(invoice);
+            arrivalData.get(selectRow).setNewPrice(newPr.setScale(0, BigDecimal.ROUND_HALF_UP)); // .setScale(2, BigDecimal.ROUND_HALF_UP) округление до 2-х знаков после запятой
             tableArrival.getItems().set(selectRow, arrivalData.get(selectRow));
 
             tableArrival.getSelectionModel().clearSelection();
             selectRow = -1;
         } else {
             arrivalData.get(row).setInvoicePrice(invoice);
-            arrivalData.get(row).setNewPrice(allowance.divide(new BigDecimal(100)).multiply(invoice).add(invoice));
+            BigDecimal newPr = allowance.divide(new BigDecimal(100)).multiply(invoice).add(invoice);
+            arrivalData.get(row).setNewPrice(newPr.setScale(0, BigDecimal.ROUND_HALF_UP));
             tableArrival.getItems().set(row, arrivalData.get(row));
         }
 
@@ -619,7 +629,6 @@ public class ArrivalController implements Initializable {
                             //Выбор даты для долга
                             dateChooseForDebt(bg2, sumInvoice, arrival);
                             }*/
-
                             //Очищает все поля
                             newArrival();
                         }
@@ -1126,7 +1135,7 @@ public class ArrivalController implements Initializable {
             arrivalTable.setName(goods.getName());
             arrivalTable.setOldPrice(goods.getPrice());
             arrivalTable.setInvoicePrice(goods.getPriceOpt());
-            arrivalTable.setNewPrice(decimal("###.##", Double.parseDouble(newPrice.toString())));
+            arrivalTable.setNewPrice(decimal("###.##", Double.parseDouble(newPrice.setScale(0, BigDecimal.ROUND_HALF_UP).toString())));
             arrivalTable.setAmount(amount);
 //2200838707746
 //2200439409407

@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import ml.dialog.DialogChoose;
 import ml.exit.ExitApp;
 
 /**
@@ -20,9 +21,9 @@ import ml.exit.ExitApp;
  */
 public class RootWindow {
 
-    
     private ExitApp app = new ExitApp();
-    
+    private Stage stage = new Stage();
+
     public RootWindow() {
         //Продажа товара
         try {
@@ -31,7 +32,7 @@ public class RootWindow {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ml/view/RootLayout.fxml"));
 
             BorderPane rootLayout = (BorderPane) loader.load();
-            Stage stage = new Stage();
+
             stage.setTitle("ML 1.0");
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -39,9 +40,19 @@ public class RootWindow {
             stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
+            //stage.setOnCloseRequest(confirmCloseEventHandler);
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                public void handle(WindowEvent we) {
-                    app.close();
+                @Override
+                public void handle(WindowEvent event) {
+                    DialogChoose choose = new DialogChoose();
+                    choose.alert("Выход из программы", null, "Вы уверены, что хотите выйти?");
+
+                    if (choose.display() == true) {
+                        app.close();
+                    } else {
+                        event.consume();
+
+                    }
                 }
             });
         } catch (IOException e) {

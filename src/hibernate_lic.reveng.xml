@@ -40,7 +40,7 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="crimeali_license"/>
+  <schema-selection match-catalog="license_ml"/>
   <table-filter match-name="license"/>
   <table-filter match-name="comp"/>
   <table-filter match-name="user"/>

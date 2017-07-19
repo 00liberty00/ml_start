@@ -8,6 +8,8 @@ package ml.controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,9 +20,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ml.Ml_FX;
 import ml.authentication.AuthenticationManag;
+import ml.ipmac.IpMac;
 import ml.model.UserSwing;
+import ml.modelLicense.Comp;
 import ml.modelLicense.License;
 import ml.query.license.AddUserLicense;
+import ml.query.license.CompCard;
 import ml.query.user.AuthUser;
 import ml.trial.TestTrial;
 import ml.window.RootWindow;
@@ -57,6 +62,7 @@ public class LoginController implements Initializable {
     private final AuthUser authUser = new AuthUser();
     private Stage dialogStage;
     private List res;
+    private Comp comp = new Comp();
 
     /**
      * Initializes the controller class.
@@ -119,15 +125,29 @@ public class LoginController implements Initializable {
                     //Открыть окно чека
                     try {
                         // +1 пользователь(ПК) в БД в поле ключа 
-                        //c.addUser(license);
-                        
+                        CompCard compCard = new CompCard();
+                        IpMac ipMac = new IpMac();
+                        compCard.setNum(ipMac.getName(), license);
+                        comp = compCard.displayResult();
                         if (license.getCountPc() > license.getIncludeUser()) {
-                            addUserLicense.update(license);
-                            new RootWindow();
-                            //Закрыть окно авторизации
-                            dialogStage.close();
+                            if (comp.getBlocking() == false) {
+                                addUserLicense.update(license);
+                                new RootWindow();
+                                //Закрыть окно авторизации
+                                dialogStage.close();
+                            } else {
+                                message.setText("Компьютер заблокирован ");
+                            }
                         } else {
                             message.setText("Лимит подключений исчерпан ");
+
+                            //Задержка на выполенние закрытия приложения
+                            Timer t = new Timer();
+                            t.scheduleAtFixedRate(new TimerTask() {
+                                public void run() {
+                                    System.exit(0);
+                                }
+                            }, 2000, 3000);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

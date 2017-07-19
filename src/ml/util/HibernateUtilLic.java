@@ -34,7 +34,10 @@ public class HibernateUtilLic {
             
             //для внутреннего приложения
             //configuration = new Configuration().configure("/hibernate.cfg.xml");
-            String pass = "2bet2lx6";
+            
+            String path = "jdbc:mysql://185.25.117.219:3306/license_ml?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull";
+            configuration.setProperty("hibernate.connection.url", path);
+            String pass = "plwej83jh";
             configuration.setProperty("hibernate.connection.password", pass);
             sessionFactory = configuration.buildSessionFactory();
         } catch (Throwable ex) {

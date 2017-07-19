@@ -5,8 +5,8 @@
 <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/marleo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull</property>
-<property name="hibernate.connection.username">dave</property>
-<property name="hibernate.connection.password">ttuA8mRYbTBzQU2FJsM2UQ==</property>
+<property name="hibernate.connection.username">root</property>
+<property name="hibernate.connection.password">KWLHrb7yaU82iBfWjTnYdg==</property>
 <property name="hibernate.show_sql">true</property>
 <mapping resource="ml/model/Accounting.hbm.xml"/>
 <mapping resource="ml/model/CategoryFavorite.hbm.xml"/>

@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="license"
-    ,catalog="crimeali_license"
+    ,catalog="license_ml"
 )
 public class License  implements java.io.Serializable {
 

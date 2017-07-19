@@ -39,7 +39,7 @@
                      <children>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#okSellClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/sell.png" />
                                  </image>
@@ -51,7 +51,7 @@
                         </Button>
                         <Button layoutX="270.0" layoutY="14.0" mnemonicParsing="false" onAction="#arrivalClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/arrival.png" />
                                  </image>
@@ -63,7 +63,7 @@
                         </Button>
                         <Button layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/cancell.png" />
                                  </image>
@@ -79,7 +79,7 @@
                      <children>
                         <Button fx:id="cashIn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#cashInClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/arrivalMoney.png" />
                                  </image>
@@ -91,7 +91,7 @@
                         </Button>
                         <Button fx:id="cashOut" layoutX="270.0" layoutY="14.0" mnemonicParsing="false" onAction="#cashOutClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/cancellMoney.png" />
                                  </image>
@@ -103,7 +103,7 @@
                         </Button>
                         <Button fx:id="indebtedness" layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#indebtednessClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/indebtedness.png" />
                                  </image>
@@ -120,7 +120,7 @@
                      <children>
                         <Button fx:id="dayReports" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#dayReportsClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/reportsDay.png" />
                                  </image>
@@ -132,7 +132,7 @@
                         </Button>
                         <Button fx:id="checkReports" layoutX="270.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkReportsClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/reportsCheck.png" />
                                  </image>
@@ -144,7 +144,7 @@
                         </Button>
                         <Button fx:id="arrivalReports" layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#arrivalReportsClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/reportsArrival.png" />
                                  </image>
@@ -156,7 +156,7 @@
                         </Button>
                         <Button fx:id="cancelReports" layoutX="790.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelReportsClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/reportsCancel.png" />
                                  </image>
@@ -172,7 +172,7 @@
                      <children>
                         <Button fx:id="endShift" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#endShiftClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/endShift.png" />
                                  </image>
@@ -187,7 +187,7 @@
                      <children>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newUserClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/newUser.png" />
                                  </image>
@@ -196,7 +196,7 @@
                         </Button>
                         <Button layoutX="270.0" layoutY="14.0" mnemonicParsing="false">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/settingsUser.png" />
                                  </image>
@@ -205,7 +205,7 @@
                         </Button>
                         <Button layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#createLikedClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/liked.png" />
                                  </image>
@@ -214,7 +214,7 @@
                         </Button>
                         <Button layoutX="790.0" layoutY="14.0" mnemonicParsing="false" onAction="#settingsPrintCheckClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/settingsPrintCheck.png" />
                                  </image>
@@ -230,7 +230,7 @@
                      <children>
                         <Button fx:id="newSess" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newSessClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/newSession.png" />
                                  </image>
@@ -242,7 +242,7 @@
                         </Button>
                         <Button fx:id="exit" layoutX="270.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitClicked">
                            <graphic>
-                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../resources/image/exit.png" />
                                  </image>
@@ -260,13 +260,13 @@
       </AnchorPane>
    </center>
    <left>
-      <ScrollPane prefHeight="700.0" prefWidth="243.0" BorderPane.alignment="CENTER">
+      <ScrollPane prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="vBox" prefHeight="969.0" prefWidth="218.0">
                <children>
-                  <Button fx:id="sellMenu" mnemonicParsing="false" onAction="#okSellMenuClicked">
+                  <Button fx:id="sellMenu" mnemonicParsing="false" onAction="#okSellMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/sellMenu.png" />
                            </image>
@@ -276,9 +276,9 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="moneyMenu" mnemonicParsing="false" onAction="#okMoneyMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="moneyMenu" mnemonicParsing="false" onAction="#okMoneyMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/moneyMenu.png" />
                            </image>
@@ -288,18 +288,18 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="ordersMenu" mnemonicParsing="false" onAction="#okOrdersMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="ordersMenu" mnemonicParsing="false" onAction="#okOrdersMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/ordersMenu.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="goodsMenu" mnemonicParsing="false" onAction="#okGoodsMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="goodsMenu" mnemonicParsing="false" onAction="#okGoodsMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/goodsMenu.png" />
                            </image>
@@ -309,9 +309,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="reportsMenu" mnemonicParsing="false" onAction="#okReportsMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="reportsMenu" mnemonicParsing="false" onAction="#okReportsMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/reportsMenu.png" />
                            </image>
@@ -321,9 +321,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="218.0">
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/printMenu.png" />
                            </image>
@@ -333,9 +333,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="endShiftMenu" mnemonicParsing="false" onAction="#okEndShiftMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="endShiftMenu" mnemonicParsing="false" onAction="#okEndShiftMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/endshiftMenu.png" />
                            </image>
@@ -345,9 +345,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="settingsMenu" mnemonicParsing="false" onAction="#okSettingsMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="settingsMenu" mnemonicParsing="false" onAction="#okSettingsMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/settingsMenu.png" />
                            </image>
@@ -357,9 +357,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="exitMenu" mnemonicParsing="false" onAction="#okExitMenuClicked" prefHeight="96.0" prefWidth="218.0">
+                  <Button fx:id="exitMenu" mnemonicParsing="false" onAction="#okExitMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/image/exitMenu.png" />
                            </image>
