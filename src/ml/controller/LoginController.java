@@ -6,6 +6,7 @@
 package ml.controller;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -20,10 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ml.Ml_FX;
 import ml.authentication.AuthenticationManag;
+import ml.dialog.DialogChoose;
 import ml.ipmac.IpMac;
 import ml.model.UserSwing;
 import ml.modelLicense.Comp;
 import ml.modelLicense.License;
+import ml.query.license.AddMac;
 import ml.query.license.AddUserLicense;
 import ml.query.license.CompCard;
 import ml.query.user.AuthUser;
@@ -129,26 +132,60 @@ public class LoginController implements Initializable {
                         IpMac ipMac = new IpMac();
                         compCard.setNum(ipMac.getName(), license);
                         comp = compCard.displayResult();
-                        if (license.getCountPc() > license.getIncludeUser()) {
-                            if (comp.getBlocking() == false) {
-                                addUserLicense.update(license);
-                                new RootWindow();
-                                //Закрыть окно авторизации
-                                dialogStage.close();
+                        //если этого компа нет в БД(новый комп)
+                        if (comp != null) {
+                            if (license.getCountPc() > license.getIncludeUser()) {
+                                if (comp.getBlocking() == false) {
+                                    addUserLicense.update(license);
+                                    new RootWindow();
+                                    //Закрыть окно авторизации
+                                    dialogStage.close();
+                                } else {
+                                    message.setText("Компьютер заблокирован ");
+                                }
                             } else {
-                                message.setText("Компьютер заблокирован ");
+                                message.setText("Лимит подключений исчерпан ");
+
+                                //Задержка на выполенние закрытия приложения
+                                Timer t = new Timer();
+                                t.scheduleAtFixedRate(new TimerTask() {
+                                    public void run() {
+                                        System.exit(0);
+                                    }
+                                }, 2000, 3000);
                             }
                         } else {
-                            message.setText("Лимит подключений исчерпан ");
+                            message.setText("Этот компьютер не связан" + " \n " + "с лицензией : № " + license.getLicense());
 
-                            //Задержка на выполенние закрытия приложения
-                            Timer t = new Timer();
-                            t.scheduleAtFixedRate(new TimerTask() {
-                                public void run() {
-                                    System.exit(0);
+                            DialogChoose dialog = new DialogChoose();
+                            dialog.alert("Внимание!", "Этот компьютер не связан"
+                                    + "\n" + "с лицензией : № " + license.getLicense()
+                                    + "\n" + "Эта лицензия распространяеся на "
+                                    + license.getCountPc() + " компьютер(а)", "Добавить этот компьютер");
+                            //Добавление нового компа к лицензии
+                            if (dialog.display() == true) {
+                                AddMac addMac = new AddMac();
+                                Date date = new Date();
+                                //ipMac.getIp();
+                                //String macString = ipMac.getMac().replaceAll("-", "");
+                                String[] macAddressParts = ipMac.getMac().split("-");
+
+                                byte[] macAddressBytes = new byte[6];
+                                for (int i = 0; i < 6; i++) {
+                                    Integer hex = Integer.parseInt(macAddressParts[i], 16);
+                                    macAddressBytes[i] = hex.byteValue();
                                 }
-                            }, 2000, 3000);
+                                Comp newComp = new Comp();
+                                newComp.setMac(macAddressBytes);
+                                newComp.setBlocking(false);
+                                newComp.setDateCreate(date);
+                                newComp.setName(ipMac.getName());
+                                newComp.setLicense(license);
+                                //Запись MAC-адреса в БД
+                                addMac.add(newComp);
+                            }
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

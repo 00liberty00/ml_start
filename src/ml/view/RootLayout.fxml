@@ -224,6 +224,15 @@
                               <Insets />
                            </opaqueInsets>
                         </Button>
+                        <Button layoutX="14.0" layoutY="154.0" mnemonicParsing="false" onAction="#settingsAppClicked">
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/image/settingsApp.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </Pane>
                   <Pane fx:id="exitPane" prefHeight="200.0" prefWidth="200.0">

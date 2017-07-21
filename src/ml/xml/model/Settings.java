@@ -5,10 +5,29 @@
  */
 package ml.xml.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Dave
  */
 public class Settings {
-    
+
+    private BigDecimal rounding;
+
+    public Settings() {
+    }
+
+    public Settings(BigDecimal rounding) {
+        this.rounding = rounding;
+    }
+
+    public BigDecimal getRounding() {
+        return rounding;
+    }
+
+    public void setRounding(BigDecimal rounding) {
+        this.rounding = rounding;
+    }
+
 }

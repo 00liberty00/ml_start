@@ -33,6 +33,7 @@ import ml.window.DayReportsWindow;
 import ml.window.EndShiftWindow;
 import ml.window.IndebtednessWindow;
 import ml.window.NewSessionWindow;
+import ml.window.SettingsAppWindow;
 import ml.window.SettingsPrintCheckWindow;
 
 /**
@@ -423,6 +424,17 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
+     * Настройки приложения.
+     *
+     * @param event
+     */
+    @FXML
+    private void settingsAppClicked(ActionEvent event) {
+
+        new SettingsAppWindow();
+    }
+
+    /**
      * Новая сессия.
      *
      * @param event
@@ -476,7 +488,6 @@ public class RootLayoutController implements Initializable {
 
         }
     }
-
 
     /**
      * Initializes the controller class.

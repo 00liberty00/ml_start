@@ -57,7 +57,9 @@ public class ChooseSumInvoiceController implements Initializable {
     @FXML
     private void getOk(ActionEvent event) {
 
-        if (!"".equals(newSumInvoice.getText())) {
+        boolean isMyComboBoxEmpty = sumInvoiceCombo.getSelectionModel().isEmpty();
+
+        if (isMyComboBoxEmpty == true) {
             sum = new BigDecimal(newSumInvoice.getText());
         } else {
             sum = sumInvoiceCombo.getValue();
@@ -112,7 +114,7 @@ public class ChooseSumInvoiceController implements Initializable {
         // TODO
         //Ввод в поле только цифры и точку
         newSumInvoice.addEventFilter(KeyEvent.KEY_TYPED, validTextField.numeric_Validation(10));
-
+        newSumInvoice.setText("0.00");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -120,12 +122,13 @@ public class ChooseSumInvoiceController implements Initializable {
                 for (CaseRecord gg1 : crList) {
                     crr = gg1;
                     if ((crr.getCashOut() != null) && (crr.getArrival() == null)) {
-                        
+
                         sumInvoiceCombo.getItems().add(crr.getCashOut().getSumCash());
                         crNewList.add(crr);
                     }
-
+                    
                 }
+                sumInvoiceCombo.getItems().add(new BigDecimal("0.00"));
             }
         });
     }
