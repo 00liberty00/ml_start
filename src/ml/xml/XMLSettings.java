@@ -6,7 +6,10 @@
 package ml.xml;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,20 +19,24 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import ml.xml.model.Settings;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author Dave
  */
 public class XMLSettings {
-
+    
     private Document doc;
     private Element rootElement;
-
+    
     private void create(Settings settings) {
 
         // staff elements
@@ -38,7 +45,7 @@ public class XMLSettings {
         attr.setValue("1");
         staff.setAttributeNode(attr);
         rootElement.appendChild(staff);
-
+        
         Element codeElem = doc.createElement("rounding");
         codeElem.appendChild(doc.createTextNode(settings.getRounding().toString()));
         staff.appendChild(codeElem);
@@ -55,18 +62,18 @@ public class XMLSettings {
 //        residueElem.appendChild(doc.createTextNode(footer));
 //        staff.appendChild(residueElem);
     }
-
+    
     public void newRounding(Settings settings) {
-
+        
         try {
-
+            
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             // root elements
             doc = docBuilder.newDocument();
             rootElement = doc.createElement("settings");
             doc.appendChild(rootElement);
-
+            
             this.create(settings);
 
             // write the content into xml file
@@ -77,7 +84,7 @@ public class XMLSettings {
             DOMSource source = new DOMSource(doc);
             File file = new File("src/ml/resources/settings/settings.xml");
             try {
-
+                
                 if (file.createNewFile()) {
                     System.out.println("File is created!");
                 } else {
@@ -91,15 +98,42 @@ public class XMLSettings {
             // Output to console for testing
             // StreamResult result = new StreamResult(System.out);
             transformer.transform(source, result);
-
+            
             System.out.println("File saved!");
-
+            
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
         }
-
+        
     }
-
+    
+    public BigDecimal getRounding() {
+        BigDecimal rounding = new BigDecimal(0);
+        try {
+            FileInputStream file = new FileInputStream(new File("src/ml/resources/settings/settings.xml"));
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            Document xmlDocument = builder.parse(file);
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            System.out.println("*************************");
+            String findName = "/settings/appSettings/rounding";
+            System.out.println(findName);
+            rounding = new BigDecimal(xPath.compile(findName).evaluate(xmlDocument));
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return rounding;
+    }
+    
 }

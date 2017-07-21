@@ -52,13 +52,36 @@ public class SettingsAppController implements Initializable {
         xmls.newRounding(settings);
     }
 
+    //Выводит на экран выбранное раннее значение
+    private void setComboValue() {
+
+        BigDecimal defaultValue = xmls.getRounding();
+
+        int i0 = defaultValue.compareTo(new BigDecimal("0"));
+        int i1 = defaultValue.compareTo(new BigDecimal("1"));
+        int i2 = defaultValue.compareTo(new BigDecimal("2"));
+        if (i0 == 0) {
+            combo.getSelectionModel().select(new BigDecimal("100.00"));
+
+        }
+        if (i1 == 0) {
+            combo.getSelectionModel().select(new BigDecimal("100.10"));
+        }
+        if (i2 == 0) {
+            combo.getSelectionModel().select(new BigDecimal("100.11"));
+
+        }
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        rounding = new BigDecimal("0");
+        setComboValue();
+
+        rounding = new BigDecimal("2");
         combo.getItems().add(new BigDecimal("100.00"));
         combo.getItems().add(new BigDecimal("100.10"));
         combo.getItems().add(new BigDecimal("100.11"));
