@@ -14,12 +14,14 @@ import java.math.BigDecimal;
 public class Settings {
 
     private BigDecimal rounding;
+    private Boolean smsCheck;
 
     public Settings() {
     }
 
-    public Settings(BigDecimal rounding) {
+    public Settings(BigDecimal rounding, Boolean smsCheck) {
         this.rounding = rounding;
+        this.smsCheck = smsCheck;
     }
 
     public BigDecimal getRounding() {
@@ -28,6 +30,14 @@ public class Settings {
 
     public void setRounding(BigDecimal rounding) {
         this.rounding = rounding;
+    }
+
+    public Boolean getSmsCheck() {
+        return smsCheck;
+    }
+
+    public void setSmsCheck(Boolean smsCheck) {
+        this.smsCheck = smsCheck;
     }
 
 }

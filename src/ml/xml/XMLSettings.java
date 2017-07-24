@@ -33,10 +33,10 @@ import org.xml.sax.SAXException;
  * @author Dave
  */
 public class XMLSettings {
-    
+
     private Document doc;
     private Element rootElement;
-    
+
     private void create(Settings settings) {
 
         // staff elements
@@ -45,10 +45,14 @@ public class XMLSettings {
         attr.setValue("1");
         staff.setAttributeNode(attr);
         rootElement.appendChild(staff);
-        
-        Element codeElem = doc.createElement("rounding");
-        codeElem.appendChild(doc.createTextNode(settings.getRounding().toString()));
-        staff.appendChild(codeElem);
+
+        Element roundingElem = doc.createElement("rounding");
+        roundingElem.appendChild(doc.createTextNode(settings.getRounding().toString()));
+        staff.appendChild(roundingElem);
+
+        Element smsElem = doc.createElement("sms");
+        smsElem.appendChild(doc.createTextNode(settings.getSmsCheck().toString()));
+        staff.appendChild(smsElem);
 
 //        Element adressElem = doc.createElement("adress");
 //        adressElem.appendChild(doc.createTextNode(adress));
@@ -62,20 +66,29 @@ public class XMLSettings {
 //        residueElem.appendChild(doc.createTextNode(footer));
 //        staff.appendChild(residueElem);
     }
-    
-    public void newRounding(Settings settings) {
-        
+
+    public void newRecord(Settings settings) {
         try {
-            
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             // root elements
             doc = docBuilder.newDocument();
             rootElement = doc.createElement("settings");
             doc.appendChild(rootElement);
-            
+
             this.create(settings);
 
+            writeXML();
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        }
+
+    }
+
+    //Запись в XML файл
+    private void writeXML() {
+        try {
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -84,7 +97,7 @@ public class XMLSettings {
             DOMSource source = new DOMSource(doc);
             File file = new File("src/ml/resources/settings/settings.xml");
             try {
-                
+
                 if (file.createNewFile()) {
                     System.out.println("File is created!");
                 } else {
@@ -98,17 +111,14 @@ public class XMLSettings {
             // Output to console for testing
             // StreamResult result = new StreamResult(System.out);
             transformer.transform(source, result);
-            
+
             System.out.println("File saved!");
-            
-        } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
+
         } catch (TransformerException tfe) {
             tfe.printStackTrace();
         }
-        
     }
-    
+
     public BigDecimal getRounding() {
         BigDecimal rounding = new BigDecimal(0);
         try {
@@ -121,7 +131,7 @@ public class XMLSettings {
             String findName = "/settings/appSettings/rounding";
             System.out.println(findName);
             rounding = new BigDecimal(xPath.compile(findName).evaluate(xmlDocument));
-            
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -135,5 +145,5 @@ public class XMLSettings {
         }
         return rounding;
     }
-    
+
 }

@@ -12,7 +12,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import ml.dialog.DialogAlert;
+import ml.model.UserSwing;
+import ml.query.user.AdminUser;
+import ml.query.user.PhoneUser;
+import ml.query.user.UpdatePhoneUser;
 import ml.xml.XMLSettings;
 import ml.xml.model.Settings;
 
@@ -27,14 +34,40 @@ public class SettingsAppController implements Initializable {
     private ComboBox<BigDecimal> combo;
     @FXML
     private Button okButton;
+    @FXML
+    private TextField phoneTextField;
+    @FXML
+    private CheckBox smsCheck;
 
     private XMLSettings xmls = new XMLSettings();
     private Settings settings = new Settings();
     private BigDecimal rounding;
+    private DialogAlert alert = new DialogAlert();
+    private PhoneUser phoneUser = new PhoneUser();
+    private UpdatePhoneUser updatePhoneUser = new UpdatePhoneUser();
+    private AdminUser adminUser = new AdminUser();
+    private UserSwing userSwing = new UserSwing();
+    private boolean selectCheck = false;
 
     @FXML
     private void okAction(ActionEvent event) {
 
+        roundingPrice();
+
+        //если выбрана отправка смс
+        if (selectCheck == true) {
+            smsCheck();
+        } else {
+            settings.setSmsCheck(false);
+        }
+
+        xmls.newRecord(settings);
+
+        alert.alert(null, null, "Настройки сохранены!");
+    }
+
+    //Обработка округления цены товара
+    private Settings roundingPrice() {
         int i0 = combo.getValue().compareTo(new BigDecimal("100.00"));
         int i1 = combo.getValue().compareTo(new BigDecimal("100.10"));
         int i2 = combo.getValue().compareTo(new BigDecimal("100.11"));
@@ -48,8 +81,21 @@ public class SettingsAppController implements Initializable {
             rounding = new BigDecimal("2");
         }
         settings.setRounding(rounding);
+        return settings;
+    }
 
-        xmls.newRounding(settings);
+    //Обработка смс информирования
+    private Settings smsCheck() {
+        //Возвращает значение админа
+        adminUser.get();
+        userSwing = adminUser.displayResult();
+
+        boolean selectCheck = smsCheck.isSelected();
+        settings.setSmsCheck(selectCheck);
+
+        userSwing.setPhone(phoneTextField.getText());
+        updatePhoneUser.add(userSwing);
+        return settings;
     }
 
     //Выводит на экран выбранное раннее значение
@@ -86,6 +132,17 @@ public class SettingsAppController implements Initializable {
         combo.getItems().add(new BigDecimal("100.10"));
         combo.getItems().add(new BigDecimal("100.11"));
 
-    }
+        phoneTextField.setDisable(true);
+        smsCheck.setOnAction((event) -> {
+            selectCheck = smsCheck.isSelected();
+            if (selectCheck == true) {
+                phoneTextField.setDisable(false);
+                phoneUser.phoneUser();
+                phoneTextField.setText(phoneUser.displayResult().toString());
 
+            } else {
+                phoneTextField.setDisable(true);
+            }
+        });
+    }
 }
