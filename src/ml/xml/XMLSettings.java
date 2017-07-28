@@ -146,4 +146,31 @@ public class XMLSettings {
         return rounding;
     }
 
+    public boolean getSms() {
+        boolean smsCheck = false;
+        try {
+            FileInputStream file = new FileInputStream(new File("src/ml/resources/settings/settings.xml"));
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            Document xmlDocument = builder.parse(file);
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            System.out.println("*************************");
+            String findName = "/settings/appSettings/sms";
+            System.out.println(findName);
+            smsCheck = Boolean.parseBoolean(xPath.compile(findName).evaluate(xmlDocument));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        return smsCheck;
+    }
+
 }

@@ -92,6 +92,7 @@ import ml.dialog.DialogTextInput;
 import ml.query.caserecord.DateCaseRecord;
 import ml.util.MoneyRegexp;
 import ml.util.RegexpNameGoods;
+import ml.xml.XMLSettings;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -170,6 +171,7 @@ public class ArrivalController implements Initializable {
     private int selectRow = -1;
     private DialogAlert dialogAlert = new DialogAlert();
     private DialogChoose dialogChoose = new DialogChoose();
+    private XMLSettings xmls = new XMLSettings();
     private DialogCombobox dialogCombobox = new DialogCombobox();
     private BigDecimal sumInvoice = new BigDecimal("0.00");
 
@@ -259,6 +261,8 @@ public class ArrivalController implements Initializable {
      */
     @FXML
     private void getInvoice() {
+        Integer roundingPrice = xmls.getRounding().intValue();
+
         invoicePrice.selectAll();
         String s = invoicePrice.getText();
         //Замена , на .
@@ -274,11 +278,12 @@ public class ArrivalController implements Initializable {
 
         //Если выбрана строка то изменить в ней значение Цены в товаре
         if (selectRow >= 0) {
+
             //Вставка данных в последнюю ячейку "цена в накладной" таблицы
             arrivalData.get(selectRow).setInvoicePrice(invoice);
             BigDecimal newPr = allowance.divide(new BigDecimal(100)).
                     multiply(invoice).add(invoice);
-            arrivalData.get(selectRow).setNewPrice(newPr.setScale(0, BigDecimal.ROUND_HALF_UP)); // .setScale(2, BigDecimal.ROUND_HALF_UP) округление до 2-х знаков после запятой
+            arrivalData.get(selectRow).setNewPrice(newPr.setScale(roundingPrice, BigDecimal.ROUND_HALF_UP)); // .setScale(2, BigDecimal.ROUND_HALF_UP) округление до 2-х знаков после запятой
             tableArrival.getItems().set(selectRow, arrivalData.get(selectRow));
 
             tableArrival.getSelectionModel().clearSelection();
@@ -286,7 +291,7 @@ public class ArrivalController implements Initializable {
         } else {
             arrivalData.get(row).setInvoicePrice(invoice);
             BigDecimal newPr = allowance.divide(new BigDecimal(100)).multiply(invoice).add(invoice);
-            arrivalData.get(row).setNewPrice(newPr.setScale(0, BigDecimal.ROUND_HALF_UP));
+            arrivalData.get(row).setNewPrice(newPr.setScale(roundingPrice, BigDecimal.ROUND_HALF_UP));
             tableArrival.getItems().set(row, arrivalData.get(row));
         }
 
@@ -1106,6 +1111,8 @@ public class ArrivalController implements Initializable {
      * Метод для просмотра результатов в "JTable".
      */
     private void displayResult(Goods goods) {
+        Integer roundingPrice = xmls.getRounding().intValue();
+
         nameArrivalColumn.setCellValueFactory(new PropertyValueFactory<ArrivalTable, String>("name"));
         nameArrivalColumn.setCellFactory(TextFieldTableCell.<ArrivalTable>forTableColumn());
         nameArrivalColumn.setOnEditCommit(
@@ -1135,7 +1142,7 @@ public class ArrivalController implements Initializable {
             arrivalTable.setName(goods.getName());
             arrivalTable.setOldPrice(goods.getPrice());
             arrivalTable.setInvoicePrice(goods.getPriceOpt());
-            arrivalTable.setNewPrice(decimal("###.##", Double.parseDouble(newPrice.setScale(0, BigDecimal.ROUND_HALF_UP).toString())));
+            arrivalTable.setNewPrice(decimal("###.##", Double.parseDouble(newPrice.setScale(roundingPrice, BigDecimal.ROUND_HALF_UP).toString())));
             arrivalTable.setAmount(amount);
 //2200838707746
 //2200439409407

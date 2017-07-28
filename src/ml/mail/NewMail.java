@@ -33,10 +33,10 @@ public class NewMail {
     static final String ENCODING = "UTF-8";
 
     public void main(String email, String content) {
-        String subject = "MyCash";
+        String subject = "ML";
         String smtpHost = "mail.ukraine.com.ua";
-        String address = "admin@crimea.cc";
-        String login = "admin@crimea.cc";
+        String address = "ml@applix.top";
+        String login = "ml@applix.top";
         String password = "ktyxbr88";
         String smtpPort = "2525";
 

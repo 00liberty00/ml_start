@@ -12,18 +12,18 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * Создание администратора
+ * Обновление администратора
  * @author dave
  */
-public class UpdatePhoneUser {
+public class UpdateAdmin {
 
     private final Session session = HibernateUtil.openSession();
     Transaction tx = null;
     
     /**
-     * Добавление администратора.
+     * обновление администратора.
      */
-    public void add(UserSwing us){
+    public void update(UserSwing us){
         query(us);
     }
     

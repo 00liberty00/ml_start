@@ -19,7 +19,7 @@ import ml.dialog.DialogAlert;
 import ml.model.UserSwing;
 import ml.query.user.AdminUser;
 import ml.query.user.PhoneUser;
-import ml.query.user.UpdatePhoneUser;
+import ml.query.user.UpdateAdmin;
 import ml.xml.XMLSettings;
 import ml.xml.model.Settings;
 
@@ -44,7 +44,7 @@ public class SettingsAppController implements Initializable {
     private BigDecimal rounding;
     private DialogAlert alert = new DialogAlert();
     private PhoneUser phoneUser = new PhoneUser();
-    private UpdatePhoneUser updatePhoneUser = new UpdatePhoneUser();
+    private UpdateAdmin updatePhoneUser = new UpdateAdmin();
     private AdminUser adminUser = new AdminUser();
     private UserSwing userSwing = new UserSwing();
     private boolean selectCheck = false;
@@ -94,7 +94,7 @@ public class SettingsAppController implements Initializable {
         settings.setSmsCheck(selectCheck);
 
         userSwing.setPhone(phoneTextField.getText());
-        updatePhoneUser.add(userSwing);
+        updatePhoneUser.update(userSwing);
         return settings;
     }
 

@@ -38,10 +38,12 @@ import ml.query.check.Proceeds;
 import ml.query.check.ProfitCheck;
 import ml.query.goods.SumGoods;
 import ml.query.total.AddTotal;
+import ml.query.user.AdminUser;
 import ml.query.user.IdUserByName;
 import ml.query.user.MailUser;
 import ml.query.user.PhoneUser;
 import ml.sms.Smsc;
+import ml.xml.XMLSettings;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.apache.log4j.Logger;
@@ -80,6 +82,9 @@ public class EndShiftController implements Initializable {
     private BigDecimal profit;                                          //Сумма прибыли
     private MailUser mu = new MailUser();
     private PhoneUser pu = new PhoneUser();
+    private XMLSettings xmls = new XMLSettings();
+    private AdminUser adminUser = new AdminUser();
+    private UserSwing userSwing = new UserSwing();
 
     @FXML
     private void getDate() {
@@ -196,7 +201,6 @@ public class EndShiftController implements Initializable {
         System.out.println("Сумма денег в товаре : " + sumGoods);
         System.out.println("Прибыль : " + profit);
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");*/
-
         sumCash.setText("0.00");
         proceedsText.setText("0.00");
 
@@ -220,9 +224,15 @@ public class EndShiftController implements Initializable {
         mail.main(email, messageEmail);
 
         //sms - оповещение
-        pu.phoneUser();
+        boolean checkSms = xmls.getSms();
+        if (checkSms == true) {
+            adminUser.get();
+            userSwing = adminUser.displayResult();
+            smsc.send_sms(userSwing.getPhone(), messageSms, 1, "", "", 0, "ml", "");
+            /*pu.phoneUser();
         String phone = pu.displayResult().toString();
-        smsc.send_sms(phone, messageSms, 1, "", "", 0, "kiosk", "");
+        smsc.send_sms(phone, messageSms, 1, "", "", 0, "kiosk", "");*/
+        }
 
         //После отправки на почту очищает файл log_file.log
         try {
