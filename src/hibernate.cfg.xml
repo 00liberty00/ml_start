@@ -25,6 +25,7 @@
 <mapping resource="ml/model/Favorite.hbm.xml"/>
 <mapping resource="ml/model/CategoryGoods.hbm.xml"/>
 <mapping resource="ml/model/CheckList.hbm.xml"/>
+<mapping resource="ml/model/CheckListNewPrice.hbm.xml"/>
 <mapping resource="ml/model/Writeoff.hbm.xml"/>
 <mapping resource="ml/model/CashIn.hbm.xml"/>
 <mapping resource="ml/model/CashOut.hbm.xml"/>

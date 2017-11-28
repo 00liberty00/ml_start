@@ -39,6 +39,7 @@
                         <TableColumn fx:id="amountCheckColumn" prefWidth="130.0" text="Количество" />
                         <TableColumn fx:id="sumCheckColumn" prefWidth="75.0" text="Сумма" />
                         <TableColumn fx:id="residueCheckColumn" minWidth="0.0" prefWidth="139.0" text="Остаток" />
+                        <TableColumn fx:id="checkFreePriceCheckColumn" prefWidth="75.0" text="Новая цена" visible="false" />
                     </columns>
                      
                   </TableView>

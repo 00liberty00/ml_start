@@ -97,6 +97,8 @@ public class ReportsCheckController implements Initializable {
     private TableColumn<ReportsCheckListTable, String> codeCol;
     @FXML
     private TableColumn<ReportsCheckListTable, BigDecimal> amountCol;
+    @FXML
+    private TableColumn<ReportsCheckListTable, BigDecimal> priceCol;
 
     @FXML
     private TableView<ReportsCheckListSmallTable> tableSmallCheckList;
@@ -155,10 +157,10 @@ public class ReportsCheckController implements Initializable {
      * Поиск по коду или по названию товара
      */
     @FXML
-    private void getCodeNameGood(){
+    private void getCodeNameGood() {
         // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<ReportsCheckListTable> filteredData = new FilteredList<>(reportsCheckListData, p -> true);
-        
+
         // 2. Set the filter Predicate whenever the filter changes.
         codeNameGoodTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(person -> {
@@ -189,7 +191,7 @@ public class ReportsCheckController implements Initializable {
         tableCheckList.setItems(sortedData);
 
     }
-    
+
     /**
      * Просмотр чека
      */
@@ -330,6 +332,7 @@ public class ReportsCheckController implements Initializable {
         codeCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, String>("code"));
         dateCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, String>("date"));
         amountCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, BigDecimal>("amount"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, BigDecimal>("price"));
 
         ReportsCheckListTable reportsCheckListTable;
         Set<CheckList> s = cr.getCheckLists();
@@ -345,6 +348,14 @@ public class ReportsCheckController implements Initializable {
             reportsCheckListTable.setName(checkList.getGoods().getName());
             reportsCheckListTable.setCode(checkList.getGoods().getCode());
 
+            //Проверка на наличии новой цены
+            if (checkList.getNewPrice() == true) {
+                //CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
+                //checkListNewPrice.setCheckList(checkList);
+                reportsCheckListTable.setPrice(checkList.getCheckListNewPrice().getNewPrice());
+            } else {
+                reportsCheckListTable.setPrice(checkList.getGoods().getPrice());
+            }
             // заполняем таблицу данными
             reportsCheckListData.add(reportsCheckListTable);
         }
@@ -370,12 +381,27 @@ public class ReportsCheckController implements Initializable {
             //Проверка, был чек со скидкой или нет
             if (cr.getCheck().getCheckDiscount() != null) {
                 discount = new BigDecimal(cr.getCheck().getCheckDiscount().getDiscount().getPercent());
-                BigDecimal priceWithPercent = cr.getGoods().getPrice().subtract(cr.getGoods().getPrice().multiply(discount.divide(new BigDecimal(100))));
-                reportsCheckListSmallTable.setPrice(priceWithPercent);
+
+                if (cr.getNewPrice() == true) {
+                    //CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
+                    //checkListNewPrice.setCheckList(checkList);
+                    reportsCheckListSmallTable.setPrice(cr.getCheckListNewPrice().getNewPrice().subtract(cr.getCheckListNewPrice().getNewPrice().multiply(discount.divide(new BigDecimal(100)))));
+                } else {
+                    BigDecimal priceWithPercent = cr.getGoods().getPrice().subtract(cr.getGoods().getPrice().multiply(discount.divide(new BigDecimal(100))));
+                    reportsCheckListSmallTable.setPrice(priceWithPercent);
+                }
+
                 discountLabel.setVisible(true);
                 discountText.setText(discount.toString() + "%");
             } else {
-                reportsCheckListSmallTable.setPrice(cr.getGoods().getPrice());
+                if (cr.getNewPrice() == true) {
+                    //CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
+                    //checkListNewPrice.setCheckList(checkList);
+                    reportsCheckListSmallTable.setPrice(cr.getCheckListNewPrice().getNewPrice());
+                } else {
+                    reportsCheckListSmallTable.setPrice(cr.getGoods().getPrice());
+                }
+
             }
             reportsCheckListSmallTable.setAmount(cr.getAmount());
             //System.out.println("" + cr.getGoods().getName());

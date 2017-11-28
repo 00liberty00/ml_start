@@ -97,6 +97,8 @@ public class CheckLayoutController implements Initializable {
     @FXML
     private TableColumn<CheckTable, BigDecimal> residueCheckColumn;
     @FXML
+    private TableColumn<CheckTable, Boolean> checkFreePriceCheckColumn;
+    @FXML
     private TextField amountGood;
     @FXML
     private Label checkLabel2;
@@ -139,6 +141,8 @@ public class CheckLayoutController implements Initializable {
     private CategoryByName categoryByName = new CategoryByName();
     private RegexpNameGoods regexpNameGoods = new RegexpNameGoods();
     private int selectRow = -1;
+    private boolean checkNewPrice = false;
+    private BigDecimal newPrice = new BigDecimal(0.00);
 
     /**
      * Поиск товара по коду, по наименованию
@@ -451,10 +455,12 @@ public class CheckLayoutController implements Initializable {
         amountCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, BigDecimal>("amount"));
         priceCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, BigDecimal>("price"));
         sumCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, BigDecimal>("sum"));
+        checkFreePriceCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, Boolean>("checkFreePrice"));
         if ("ROLE_ADMIN".equals(auth.toString())) {
             residueCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, BigDecimal>("residue"));
+            
         }
-
+        
         CheckTable checkTable = new CheckTable();
         for (int i = 0; i < 1; i++) {
             BigDecimal price = goods.getPrice();
@@ -465,6 +471,7 @@ public class CheckLayoutController implements Initializable {
             checkTable.setPrice(price);
             checkTable.setAmount(amount);
             checkTable.setSum(sum);
+            checkTable.setCheckFreePrice(checkNewPrice);
             if ("ROLE_ADMIN".equals(auth.toString())) {
                 checkTable.setResidue(goods.getResidue());
             }
@@ -500,7 +507,7 @@ public class CheckLayoutController implements Initializable {
         // The Java 8 way to get the response value (with lambda expression).
         result.ifPresent(code -> numberDiscount.numberDiscount(code));
         discount = numberDiscount.displayResult();
-        if (discount != null) {
+        if (discount.getNumcard() != null) {
             percent = decimal("###.###", Double.parseDouble(discount.getPercent()));
 
             result.ifPresent(numberCard -> infoFirstLabel.setText("Дисконтная карта №" + numberCard));
@@ -543,9 +550,13 @@ public class CheckLayoutController implements Initializable {
         //Вставка данных в последнюю ячейку "кол-во" и "сумма строки" таблицы
         checkData.get(row).setPrice(decimal("##.###", Double.parseDouble(newPriceWithDot)));
         checkData.get(row).setSum(sum);
+        checkData.get(row).setCheckFreePrice(true);
         tableCheck.getItems().set(row, checkData.get(row));
 
         sumForTextField();
+
+        //checkNewPrice = true;
+        this.newPrice = price;
         //discountNumberTextField.setText(percent.toString() + "%");
     }
 
@@ -600,6 +611,9 @@ public class CheckLayoutController implements Initializable {
             }
             //Товар по коду из таблицы
             goodByCode.setCode(codeCheckColumn.getCellData(j));
+            
+            Boolean checkFreePrice = checkFreePriceCheckColumn.getCellData(j);
+            
             //Прибыль с одной еденицы товара по коду
             BigDecimal profit = priceCheckColumn.getCellData(j)
                     .subtract(goodByCode.displayResult().getPriceOpt());
@@ -611,6 +625,9 @@ public class CheckLayoutController implements Initializable {
             goods.getCheckLists().add(checkList);
             checkList.setAmount(amountCheckColumn.getCellData(j));
             checkList.setProfit(profit);
+            
+            checkList.setNewPrice(checkFreePrice);
+            
             checkListArrayList.add(checkList);
         }
 
@@ -644,7 +661,7 @@ public class CheckLayoutController implements Initializable {
             //controller.setSumText("1000", "10");
             controller.setDialogStage(dialogStage);
 
-            controller.setAddCheck(tableCheck, checkArrayList, checkListArrayList, discount);
+            controller.setAddCheck(tableCheck, checkArrayList, checkListArrayList, discount, checkNewPrice, newPrice);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
@@ -667,6 +684,8 @@ public class CheckLayoutController implements Initializable {
             discount = new Discount();
             sumCheck.setText("0.00");
             sumCheckWithDiscount.setText("0.00");
+            checkNewPrice = false;
+            newPrice = new BigDecimal(0.00);
 
             //Список всего товара
             goodsList = allGoodsList.listGoods();
@@ -761,6 +780,7 @@ public class CheckLayoutController implements Initializable {
                                 case F3:
 //                                    if (event.isControlDown()) {
                                     getDialogDiscount();
+
                                     System.out.println("КНОПКА F3 НАЖАТА!!!");
 //                                    }
                                     break;

@@ -30,12 +30,14 @@ import ml.Ml_FX;
 import ml.model.Check;
 import ml.model.CheckDiscount;
 import ml.model.CheckList;
+import ml.model.CheckListNewPrice;
 import ml.model.Discount;
 import ml.print.Print;
 import ml.query.check.AddCheck;
 import ml.query.check.AddCheckList;
 import ml.query.check.LastCheck;
 import ml.query.checkDiscount.AddCheckDiscount;
+import ml.query.checkNewPrice.AddCheckNewPrice;
 import ml.query.discount.UpdateSumDiscount;
 import ml.query.goods.UpdateResidueGood;
 import ml.table.CheckTable;
@@ -91,6 +93,8 @@ public class EndCheckController implements Initializable {
     private LastCheck lastCheck = new LastCheck();
     private ValidTextField validTextField = new ValidTextField();
     private UpdateSumDiscount dis = new UpdateSumDiscount();
+    private boolean checkNewPrice = false;
+    private BigDecimal newPrice = new BigDecimal(0.00);
 
     public boolean displayOkClicked() {
 
@@ -108,12 +112,14 @@ public class EndCheckController implements Initializable {
         discountCheckTextField.setText(convertSumWithDiscount);
     }
 
-    public void setAddCheck(TableView<CheckTable> tableCheck, List<Check> check, List<CheckList> checkList, Discount discount) {
+    public void setAddCheck(TableView<CheckTable> tableCheck, List<Check> check, List<CheckList> checkList, Discount discount, boolean checkNewPrice, BigDecimal newPrice) {
         // set text from another class
         this.tableCheck = tableCheck;
         this.checkArrayList = check;
         this.checkListArrayList = checkList;
         this.discount = discount;
+        this.checkNewPrice = checkNewPrice;
+        this.newPrice = newPrice;
     }
 
     @FXML
@@ -209,6 +215,16 @@ public class EndCheckController implements Initializable {
                     addCheckList.add(checkList);
                     updateResidueGood.update(checkList, null, null, false);
                     //printerCheck.printer(check.getName(), check.getAmount(), check.getPrice());
+
+                    if (checkList.getNewPrice() == true) {
+                        CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
+                        AddCheckNewPrice addCheckNewPrice = new AddCheckNewPrice();
+                        checkListNewPrice.setCheckList(checkList);
+                        checkListNewPrice.setNewPrice(newPrice);
+                        //newPrice
+                        addCheckNewPrice.add(checkListNewPrice);
+
+                    }
 
                 }
 

@@ -55,6 +55,7 @@ Contributor(s):
   <table-filter match-name="categoryFavorite"/>
   <table-filter match-name="writeoffList"/>
   <table-filter match-name="checkList"/>
+  <table-filter match-name="checkListNewPrice"/>
   <table-filter match-name="categoryGoods"/>
   <table-filter match-name="favorite"/>
   <table-filter match-name="case_record"/>

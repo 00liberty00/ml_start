@@ -18,17 +18,19 @@ public class CheckTable {
     private BigDecimal price;
     private BigDecimal residue;
     private BigDecimal sum;
+    private Boolean checkFreePrice;
 
     public CheckTable() {
     }
     
-    public CheckTable(String name, String code, BigDecimal amount, BigDecimal price, BigDecimal residue, BigDecimal sum) {
+    public CheckTable(String name, String code, BigDecimal amount, BigDecimal price, BigDecimal residue, BigDecimal sum, Boolean checkFreePrice) {
         this.name = name;
         this.code = code;
         this.amount = amount;
         this.price = price;
         this.residue = residue;
         this.sum = sum;
+        this.checkFreePrice = checkFreePrice;
     }
 
     public String getName() {
@@ -77,6 +79,14 @@ public class CheckTable {
 
     public void setSum(BigDecimal sum) {
         this.sum = sum;
+    }
+
+    public Boolean getCheckFreePrice() {
+        return checkFreePrice;
+    }
+
+    public void setCheckFreePrice(Boolean checkFreePrice) {
+        this.checkFreePrice = checkFreePrice;
     }
     
     

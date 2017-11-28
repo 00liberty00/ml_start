@@ -63,11 +63,12 @@
                <children>
                   <TableView fx:id="tableCheckList" prefHeight="680.0" prefWidth="625.0">
                     <columns>
-                        <TableColumn fx:id="numberCol" prefWidth="100.0" text="№ чека" />
-                        <TableColumn fx:id="dateCol" prefWidth="130.0" text="Время" />
-                        <TableColumn fx:id="codeCol" prefWidth="120.0" text="Код товара" />
-                      <TableColumn fx:id="nameCol" prefWidth="175.0" text="Название товара" />
-                      <TableColumn fx:id="amountCol" prefWidth="100.0" text="Количество" />
+                        <TableColumn fx:id="numberCol" prefWidth="79.0" text="№ чека" />
+                        <TableColumn fx:id="dateCol" prefWidth="118.0" text="Время" />
+                        <TableColumn fx:id="codeCol" prefWidth="122.0" text="Код товара" />
+                      <TableColumn fx:id="nameCol" prefWidth="199.0" text="Название товара" />
+                      <TableColumn fx:id="amountCol" prefWidth="106.0" text="Кол-во" />
+                        <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="0.0" text="Цена" visible="false" />
                     </columns>
                   </TableView>
                </children></Pane>

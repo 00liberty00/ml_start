@@ -17,15 +17,17 @@ public class ReportsCheckListTable {
     private String name;
     private String code;
     private BigDecimal amount;
+    private BigDecimal price;
     private String date;
 
     public ReportsCheckListTable() {
     }
 
-    public ReportsCheckListTable(Integer number, String name,String code, BigDecimal amount, String date) {
+    public ReportsCheckListTable(Integer number, String name,String code, BigDecimal amount, BigDecimal price, String date) {
         this.number = number;
         this.name = name;
         this.amount = amount;
+        this.price = price;
         this.date = date;
         this.code = code;
     }
@@ -62,6 +64,14 @@ public class ReportsCheckListTable {
         this.amount = amount;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+    
     public String getDate() {
         return date;
     }

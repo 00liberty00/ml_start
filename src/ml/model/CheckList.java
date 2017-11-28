@@ -10,6 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -17,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "checklist",
-         catalog = "marleo"
+        catalog = "marleo"
 )
 public class CheckList implements java.io.Serializable {
 
@@ -26,15 +27,19 @@ public class CheckList implements java.io.Serializable {
     private Goods goods;
     private BigDecimal amount;
     private BigDecimal profit;
+    private CheckListNewPrice checkListNewPrice;
+    private Boolean checkNewPrice;
 
     public CheckList() {
     }
 
-    public CheckList(Check check, Goods goods, BigDecimal amount, BigDecimal profit) {
+    public CheckList(Check check, Goods goods, BigDecimal amount, BigDecimal profit, CheckListNewPrice checkListNewPrice, Boolean checkNewPrice) {
         this.check = check;
         this.goods = goods;
         this.amount = amount;
         this.profit = profit;
+        this.checkListNewPrice = checkListNewPrice;
+        this.checkNewPrice = checkNewPrice;
     }
 
     @Id
@@ -85,5 +90,23 @@ public class CheckList implements java.io.Serializable {
     public void setProfit(BigDecimal profit) {
         this.profit = profit;
     }
+    
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "checkList")
+    public CheckListNewPrice getCheckListNewPrice() {
+        return this.checkListNewPrice;
+    }
 
+    public void setCheckListNewPrice(CheckListNewPrice checkListNewPrice) {
+        this.checkListNewPrice = checkListNewPrice;
+    }
+
+    @Column(name="new_price")
+    public Boolean getNewPrice() {
+        return checkNewPrice;
+    }
+
+    public void setNewPrice(Boolean checkNewPrice) {
+        this.checkNewPrice = checkNewPrice;
+    }
+    
 }
