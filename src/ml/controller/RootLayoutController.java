@@ -31,6 +31,7 @@ import ml.window.CreateFavorWindow;
 import ml.window.CreateUserWindow;
 import ml.window.DayReportsWindow;
 import ml.window.EndShiftWindow;
+import ml.window.GeneralsReportsWindow;
 import ml.window.IndebtednessWindow;
 import ml.window.NewSessionWindow;
 import ml.window.SettingsAppWindow;
@@ -105,6 +106,9 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private Button dayReports;
+    
+    @FXML
+    private Button generalsReports;
 
     @FXML
     private Button checkReports;
@@ -344,6 +348,17 @@ public class RootLayoutController implements Initializable {
     private void dayReportsClicked(ActionEvent event) {
 
         new DayReportsWindow();
+    }
+
+    /**
+     * Общие отчеты.
+     *
+     * @param event
+     */
+    @FXML
+    private void generalsReportsClicked(ActionEvent event) {
+
+        new GeneralsReportsWindow();
     }
 
     /**

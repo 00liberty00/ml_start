@@ -166,6 +166,15 @@
                               <Insets />
                            </opaqueInsets>
                         </Button>
+                        <Button fx:id="generalsReports" layoutX="14.0" layoutY="154.0" mnemonicParsing="false" onAction="#generalsReportsClicked">
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/image/reportsGeneral.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </Pane>
                   <Pane fx:id="endShiftPane" prefHeight="200.0" prefWidth="200.0">
