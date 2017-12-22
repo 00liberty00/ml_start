@@ -31,7 +31,10 @@ import ml.model.Check;
 import ml.model.CheckList;
 import ml.model.GeneralReportsModel;
 import ml.model.Goods;
+import ml.model.Writeoff;
+import ml.model.WriteoffList;
 import ml.query.arrival.BetweenDatesArrival;
+import ml.query.cancellation.BetweenDatesCancellation;
 import ml.query.categoryGood.CategoryGoodList;
 import ml.query.categoryGood.CategoryGoodsByName;
 import ml.query.check.BetweenDatesCheck;
@@ -78,6 +81,8 @@ public class ReportsGeneralController implements Initializable {
     private List<Check> check;
     private List<Arrival> arrival;
     private List<ArrivalList> arrivalList;
+    private List<Writeoff> cancellation;
+    private List<WriteoffList> cancellationList;
 
     private CategoryGoodList categoryGoodList = new CategoryGoodList();
     private ObservableList<String> options = FXCollections.observableArrayList();
@@ -90,6 +95,8 @@ public class ReportsGeneralController implements Initializable {
     private ObservableList<ReportsGeneralTable> reportsGeneralData = FXCollections.observableArrayList();
     private BetweenDatesCheck betweenDatesCheck = new BetweenDatesCheck();
     private BetweenDatesArrival betweenDatesArrival = new BetweenDatesArrival();
+    private BetweenDatesCancellation betweenDatesCancellation = new BetweenDatesCancellation();
+
     private GeneralReportsModel generalReportsModel = new GeneralReportsModel();
 
     @FXML
@@ -119,10 +126,17 @@ public class ReportsGeneralController implements Initializable {
         List<BigDecimal> amountNewCheck = new ArrayList<BigDecimal>();
         List<String> nameArrival = new ArrayList<String>();
         List<BigDecimal> amountArrival = new ArrayList<BigDecimal>();
+
         List<String> nameNewArrival = new ArrayList<String>();
         List<BigDecimal> amountNewArrival = new ArrayList<BigDecimal>();
+        List<String> nameCancell = new ArrayList<String>();
+        List<BigDecimal> amountCancell = new ArrayList<BigDecimal>();
+        List<String> nameNewCancell = new ArrayList<String>();
+        List<BigDecimal> amountNewCancell = new ArrayList<BigDecimal>();
         List<BigDecimal> balance = new ArrayList<BigDecimal>();
         List<BigDecimal> balanceArrival = new ArrayList<BigDecimal>();
+        List<BigDecimal> balanceCancell = new ArrayList<BigDecimal>();
+
         List<BigDecimal> balanceNew = new ArrayList<BigDecimal>();
         List<BigDecimal> profit = new ArrayList<BigDecimal>();
         List<BigDecimal> profitNew = new ArrayList<BigDecimal>();
@@ -131,6 +145,8 @@ public class ReportsGeneralController implements Initializable {
         BigDecimal amCheck;
         String nArrival;
         BigDecimal amArrival;
+        String nCancell;
+        BigDecimal amCancell;
         BigDecimal pr;
         BigDecimal b;
 
@@ -146,6 +162,10 @@ public class ReportsGeneralController implements Initializable {
         //список прихода по дате
         betweenDatesArrival.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
         arrival = betweenDatesArrival.displayResult();
+
+        //список списания по дате
+        betweenDatesCancellation.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
+        cancellation = betweenDatesCancellation.displayResult();
 
         //Вывод списка проданного товара по категории
         check.forEach((cg) -> {
@@ -188,6 +208,26 @@ public class ReportsGeneralController implements Initializable {
             }
         });
 
+        //Вывод списка списанного товара по категории
+        cancellation.forEach((cg) -> {
+            String nameGood = new String();
+            Set<WriteoffList> s = cg.getWriteoffLists();
+            Iterator<WriteoffList> it = s.iterator();
+
+            while (it.hasNext()) {
+                WriteoffList writeoffList = it.next();
+                writeoffList.getGoods().getCategoryGoods();
+                //Вывод на экран если категориии одинаковы с выбранной категорией
+                if (categoryGoods == writeoffList.getGoods().getCategoryGoods()) {
+
+                    nameCancell.add(writeoffList.getGoods().getName());
+                    amountCancell.add(writeoffList.getAmount());
+                    balanceCancell.add(writeoffList.getGoods().getResidue());
+
+                }
+            }
+        });
+
         //Запись в новый список названия проданного товара
         for (int i = 0; i < nameCheck.size(); i++) {
             nCheck = nameCheck.get(i);
@@ -198,6 +238,7 @@ public class ReportsGeneralController implements Initializable {
                 nameNewCheck.add(nCheck);
                 amountNewCheck.add(new BigDecimal(0.00));
                 amountNewArrival.add(new BigDecimal(0.00));
+                amountNewCancell.add(new BigDecimal(0.00));
                 profitNew.add(new BigDecimal(0.00));
                 balanceNew.add(b);
             }
@@ -208,6 +249,7 @@ public class ReportsGeneralController implements Initializable {
                     nameNewCheck.add(nCheck);
                     amountNewCheck.add(new BigDecimal(0.00));
                     amountNewArrival.add(new BigDecimal(0.00));
+                    amountNewCancell.add(new BigDecimal(0.00));
                     profitNew.add(new BigDecimal(0.00));
                     balanceNew.add(b);
                 }
@@ -224,6 +266,7 @@ public class ReportsGeneralController implements Initializable {
                 nameNewCheck.add(nArrival);
                 amountNewCheck.add(new BigDecimal(0.00));
                 amountNewArrival.add(new BigDecimal(0.00));
+                amountNewCancell.add(new BigDecimal(0.00));
                 profitNew.add(new BigDecimal(0.00));
                 balanceNew.add(b);
             }
@@ -234,6 +277,35 @@ public class ReportsGeneralController implements Initializable {
                     nameNewCheck.add(nArrival);
                     amountNewCheck.add(new BigDecimal(0.00));
                     amountNewArrival.add(new BigDecimal(0.00));
+                    amountNewCancell.add(new BigDecimal(0.00));
+                    profitNew.add(new BigDecimal(0.00));
+                    balanceNew.add(b);
+                }
+            }
+        }
+
+        //Запись в новый список названия списанного товара
+        for (int i = 0; i < nameCancell.size(); i++) {
+            nCancell = nameCancell.get(i);
+            amCancell = amountCancell.get(i);
+            b = balanceCancell.get(i);
+            //если новый список пуст, то записать в него первое название товара и кол-во 0
+            if (nameNewCheck.isEmpty()) {
+                nameNewCheck.add(nCancell);
+                amountNewCheck.add(new BigDecimal(0.00));
+                amountNewArrival.add(new BigDecimal(0.00));
+                amountNewCancell.add(new BigDecimal(0.00));
+                profitNew.add(new BigDecimal(0.00));
+                balanceNew.add(b);
+            }
+            //Запись в новый List не одинаковых названий продуктов
+            for (int j = 0; j < nameNewCheck.size(); j++) {
+
+                if (!nameNewCheck.contains(nCancell)) {
+                    nameNewCheck.add(nCancell);
+                    amountNewCheck.add(new BigDecimal(0.00));
+                    amountNewArrival.add(new BigDecimal(0.00));
+                    amountNewCancell.add(new BigDecimal(0.00));
                     profitNew.add(new BigDecimal(0.00));
                     balanceNew.add(b);
                 }
@@ -250,12 +322,15 @@ public class ReportsGeneralController implements Initializable {
                     BigDecimal soldGood;
                     BigDecimal soldProfit;
                     BigDecimal arrivalGood;
+                    BigDecimal cancellGood;
                     soldGood = amountNewCheck.get(i);
                     soldGood = soldGood.add(amountCheck.get(j));
                     soldProfit = profitNew.get(i);
                     soldProfit = soldProfit.add(profit.get(j));
                     arrivalGood = amountNewArrival.get(i);
                     arrivalGood = arrivalGood.add(new BigDecimal(0.00));
+                    cancellGood = amountNewCancell.get(i);
+                    cancellGood = cancellGood.add(new BigDecimal(0.00));
                     amountNewCheck.set(i, soldGood);
                     profitNew.set(i, soldProfit);
                     amountNewArrival.set(i, arrivalGood);
@@ -278,6 +353,22 @@ public class ReportsGeneralController implements Initializable {
                     amountNewArrival.set(i, arrivalGood);
                 }
             }
+            for (int j = 0; j < nameCancell.size(); j++) {
+                if (nn.equals(nameCancell.get(j))) {
+//                    BigDecimal soldGood;
+//                    BigDecimal soldProfit;
+                    BigDecimal cancellGood;
+//                    soldGood = amountNewCheck.get(i);
+//                    soldGood = soldGood.add(amountCheck.get(j));
+//                    soldProfit = profitNew.get(i);
+//                    soldProfit = soldProfit.add(profit.get(j));
+                    cancellGood = amountNewCancell.get(i);
+                    cancellGood = cancellGood.add(amountCancell.get(j));
+//                    amountNewCheck.set(i, soldGood);
+//                    profitNew.set(i, soldProfit);
+                    amountNewCancell.set(i, cancellGood);
+                }
+            }
         }
 
         //запись в таблицу
@@ -286,6 +377,7 @@ public class ReportsGeneralController implements Initializable {
             generalReportsModel.setNameColumn(nameNewCheck.get(i));
             generalReportsModel.setQuantitySoldColumn(new BigDecimal(amountNewCheck.get(i).toString()));
             generalReportsModel.setQuantityArrivalColumn(new BigDecimal(amountNewArrival.get(i).toString()));
+            generalReportsModel.setQuantityCancelColumn(new BigDecimal(amountNewCancell.get(i).toString()));
             generalReportsModel.setBalanceColumn(balanceNew.get(i));
             generalReportsModel.setSumProfitColumn(new BigDecimal(profitNew.get(i).toString()));
 
@@ -312,6 +404,7 @@ public class ReportsGeneralController implements Initializable {
             reports.setName(generalReportsModel.getNameColumn());
             reports.setQuantitySold(generalReportsModel.getQuantitySoldColumn());
             reports.setQuantityArrival(generalReportsModel.getQuantityArrivalColumn());
+            reports.setQuantityCancel(generalReportsModel.getQuantityCancelColumn());
             reports.setBalance(generalReportsModel.getBalanceColumn());
             reports.setSumProfit(generalReportsModel.getSumProfitColumn());
             // заполняем таблицу данными
