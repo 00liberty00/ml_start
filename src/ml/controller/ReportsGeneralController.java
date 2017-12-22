@@ -24,11 +24,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ml.model.Arrival;
+import ml.model.ArrivalList;
 import ml.model.CategoryGoods;
 import ml.model.Check;
 import ml.model.CheckList;
 import ml.model.GeneralReportsModel;
 import ml.model.Goods;
+import ml.query.arrival.BetweenDatesArrival;
 import ml.query.categoryGood.CategoryGoodList;
 import ml.query.categoryGood.CategoryGoodsByName;
 import ml.query.check.BetweenDatesCheck;
@@ -73,6 +76,8 @@ public class ReportsGeneralController implements Initializable {
     private CheckList chl;
     private List<CheckList> checkList;
     private List<Check> check;
+    private List<Arrival> arrival;
+    private List<ArrivalList> arrivalList;
 
     private CategoryGoodList categoryGoodList = new CategoryGoodList();
     private ObservableList<String> options = FXCollections.observableArrayList();
@@ -84,6 +89,7 @@ public class ReportsGeneralController implements Initializable {
     private GoodsListByCategory goodsListByCategory = new GoodsListByCategory();
     private ObservableList<ReportsGeneralTable> reportsGeneralData = FXCollections.observableArrayList();
     private BetweenDatesCheck betweenDatesCheck = new BetweenDatesCheck();
+    private BetweenDatesArrival betweenDatesArrival = new BetweenDatesArrival();
     private GeneralReportsModel generalReportsModel = new GeneralReportsModel();
 
     @FXML
@@ -107,14 +113,25 @@ public class ReportsGeneralController implements Initializable {
 
     @FXML
     private void getOk(ActionEvent event) {
-        List<String> name = new ArrayList<String>();
-        List<BigDecimal> amount = new ArrayList<BigDecimal>();
-        List<String> nameNew = new ArrayList<String>();
-        List<BigDecimal> amountNew = new ArrayList<BigDecimal>();
+        List<String> nameCheck = new ArrayList<String>();
+        List<BigDecimal> amountCheck = new ArrayList<BigDecimal>();
+        List<String> nameNewCheck = new ArrayList<String>();
+        List<BigDecimal> amountNewCheck = new ArrayList<BigDecimal>();
+        List<String> nameArrival = new ArrayList<String>();
+        List<BigDecimal> amountArrival = new ArrayList<BigDecimal>();
+        List<String> nameNewArrival = new ArrayList<String>();
+        List<BigDecimal> amountNewArrival = new ArrayList<BigDecimal>();
         List<BigDecimal> balance = new ArrayList<BigDecimal>();
+        List<BigDecimal> balanceArrival = new ArrayList<BigDecimal>();
         List<BigDecimal> balanceNew = new ArrayList<BigDecimal>();
-        String n;
-        BigDecimal am;
+        List<BigDecimal> profit = new ArrayList<BigDecimal>();
+        List<BigDecimal> profitNew = new ArrayList<BigDecimal>();
+
+        String nCheck;
+        BigDecimal amCheck;
+        String nArrival;
+        BigDecimal amArrival;
+        BigDecimal pr;
         BigDecimal b;
 
         //удаление строк в таблице
@@ -125,6 +142,10 @@ public class ReportsGeneralController implements Initializable {
         //список чеков по дате
         betweenDatesCheck.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
         check = betweenDatesCheck.displayResult();
+
+        //список прихода по дате
+        betweenDatesArrival.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
+        arrival = betweenDatesArrival.displayResult();
 
         //Вывод списка проданного товара по категории
         check.forEach((cg) -> {
@@ -138,56 +159,135 @@ public class ReportsGeneralController implements Initializable {
                 //Вывод на экран если категориии одинаковы с выбранной категорией
                 if (categoryGoods == checkList.getGoods().getCategoryGoods()) {
 
-                    name.add(checkList.getGoods().getName());
-                    amount.add(checkList.getAmount());
+                    nameCheck.add(checkList.getGoods().getName());
+                    amountCheck.add(checkList.getAmount());
+                    //amountArrival.add(new BigDecimal(0.00));
+                    profit.add(checkList.getProfit());
                     balance.add(checkList.getGoods().getResidue());
                 }
             }
         });
 
-        //Запись в новый список названия товара
-        for (int i = 0; i < name.size(); i++) {
-            n = name.get(i);
-            am = amount.get(i);
+        //Вывод списка приходного товара по категории
+        arrival.forEach((cg) -> {
+            String nameGood = new String();
+            Set<ArrivalList> s = cg.getArrivalLists();
+            Iterator<ArrivalList> it = s.iterator();
+
+            while (it.hasNext()) {
+                ArrivalList arrivalList = it.next();
+                arrivalList.getGoods().getCategoryGoods();
+                //Вывод на экран если категориии одинаковы с выбранной категорией
+                if (categoryGoods == arrivalList.getGoods().getCategoryGoods()) {
+
+                    nameArrival.add(arrivalList.getGoods().getName());
+                    amountArrival.add(arrivalList.getAmount());
+                    balanceArrival.add(arrivalList.getGoods().getResidue());
+
+                }
+            }
+        });
+
+        //Запись в новый список названия проданного товара
+        for (int i = 0; i < nameCheck.size(); i++) {
+            nCheck = nameCheck.get(i);
+            amCheck = amountCheck.get(i);
             b = balance.get(i);
             //если новый список пуст, то записать в него первое название товара и кол-во 0
-            if (nameNew.isEmpty()) {
-                nameNew.add(n);
-                amountNew.add(new BigDecimal(0.00));
+            if (nameNewCheck.isEmpty()) {
+                nameNewCheck.add(nCheck);
+                amountNewCheck.add(new BigDecimal(0.00));
+                amountNewArrival.add(new BigDecimal(0.00));
+                profitNew.add(new BigDecimal(0.00));
                 balanceNew.add(b);
             }
             //Запись в новый List не одинаковых названий продуктов
-            for (int j = 0; j < nameNew.size(); j++) {
+            for (int j = 0; j < nameNewCheck.size(); j++) {
 
-                if (!nameNew.contains(n)) {
-                    nameNew.add(n);
-                    amountNew.add(new BigDecimal(0.00));
+                if (!nameNewCheck.contains(nCheck)) {
+                    nameNewCheck.add(nCheck);
+                    amountNewCheck.add(new BigDecimal(0.00));
+                    amountNewArrival.add(new BigDecimal(0.00));
+                    profitNew.add(new BigDecimal(0.00));
+                    balanceNew.add(b);
+                }
+            }
+        }
+
+        //Запись в новый список названия приходного товара
+        for (int i = 0; i < nameArrival.size(); i++) {
+            nArrival = nameArrival.get(i);
+            amArrival = amountArrival.get(i);
+            b = balanceArrival.get(i);
+            //если новый список пуст, то записать в него первое название товара и кол-во 0
+            if (nameNewCheck.isEmpty()) {
+                nameNewCheck.add(nArrival);
+                amountNewCheck.add(new BigDecimal(0.00));
+                amountNewArrival.add(new BigDecimal(0.00));
+                profitNew.add(new BigDecimal(0.00));
+                balanceNew.add(b);
+            }
+            //Запись в новый List не одинаковых названий продуктов
+            for (int j = 0; j < nameNewCheck.size(); j++) {
+
+                if (!nameNewCheck.contains(nArrival)) {
+                    nameNewCheck.add(nArrival);
+                    amountNewCheck.add(new BigDecimal(0.00));
+                    amountNewArrival.add(new BigDecimal(0.00));
+                    profitNew.add(new BigDecimal(0.00));
                     balanceNew.add(b);
                 }
             }
         }
 
         //подссчет кол-ва и остатка товара по названию
-        for (int i = 0; i < nameNew.size(); i++) {
-            String nn = nameNew.get(i);
+        for (int i = 0; i < nameNewCheck.size(); i++) {
+            String nn = nameNewCheck.get(i);
 
-            for (int j = 0; j < name.size(); j++) {
+            for (int j = 0; j < nameCheck.size(); j++) {
 
-                if (nn.equals(name.get(j))) {
+                if (nn.equals(nameCheck.get(j))) {
                     BigDecimal soldGood;
-                    soldGood = amountNew.get(i);
-                    soldGood = soldGood.add(amount.get(j));
-                    amountNew.set(i, soldGood);
+                    BigDecimal soldProfit;
+                    BigDecimal arrivalGood;
+                    soldGood = amountNewCheck.get(i);
+                    soldGood = soldGood.add(amountCheck.get(j));
+                    soldProfit = profitNew.get(i);
+                    soldProfit = soldProfit.add(profit.get(j));
+                    arrivalGood = amountNewArrival.get(i);
+                    arrivalGood = arrivalGood.add(new BigDecimal(0.00));
+                    amountNewCheck.set(i, soldGood);
+                    profitNew.set(i, soldProfit);
+                    amountNewArrival.set(i, arrivalGood);
+                }
+            }
+            for (int j = 0; j < nameArrival.size(); j++) {
+                if (nn.equals(nameArrival.get(j))) {
+                    System.out.println("вывод : " + nameArrival.get(j));
+//                    BigDecimal soldGood;
+//                    BigDecimal soldProfit;
+                    BigDecimal arrivalGood;
+//                    soldGood = amountNewCheck.get(i);
+//                    soldGood = soldGood.add(amountCheck.get(j));
+//                    soldProfit = profitNew.get(i);
+//                    soldProfit = soldProfit.add(profit.get(j));
+                    arrivalGood = amountNewArrival.get(i);
+                    arrivalGood = arrivalGood.add(amountArrival.get(j));
+//                    amountNewCheck.set(i, soldGood);
+//                    profitNew.set(i, soldProfit);
+                    amountNewArrival.set(i, arrivalGood);
                 }
             }
         }
 
         //запись в таблицу
-        for (int i = 0; i < nameNew.size(); i++) {
+        for (int i = 0; i < nameNewCheck.size(); i++) {
 
-            generalReportsModel.setNameColumn(nameNew.get(i));
-            generalReportsModel.setQuantitySoldColumn(new BigDecimal(amountNew.get(i).toString()));
+            generalReportsModel.setNameColumn(nameNewCheck.get(i));
+            generalReportsModel.setQuantitySoldColumn(new BigDecimal(amountNewCheck.get(i).toString()));
+            generalReportsModel.setQuantityArrivalColumn(new BigDecimal(amountNewArrival.get(i).toString()));
             generalReportsModel.setBalanceColumn(balanceNew.get(i));
+            generalReportsModel.setSumProfitColumn(new BigDecimal(profitNew.get(i).toString()));
 
             displayResult(generalReportsModel);
         }
@@ -211,7 +311,9 @@ public class ReportsGeneralController implements Initializable {
 
             reports.setName(generalReportsModel.getNameColumn());
             reports.setQuantitySold(generalReportsModel.getQuantitySoldColumn());
+            reports.setQuantityArrival(generalReportsModel.getQuantityArrivalColumn());
             reports.setBalance(generalReportsModel.getBalanceColumn());
+            reports.setSumProfit(generalReportsModel.getSumProfitColumn());
             // заполняем таблицу данными
             reportsGeneralData.add(reports);
         }

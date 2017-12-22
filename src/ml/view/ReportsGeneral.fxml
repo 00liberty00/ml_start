@@ -27,12 +27,12 @@
                         <TableView fx:id="tableReportsGeneral" layoutX="134.0" layoutY="107.0" prefHeight="552.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="nameColumn" prefWidth="105.0" text="Название" />
-                            <TableColumn fx:id="sumPriceAmountColumn" prefWidth="165.0" text="Сумма кол-во*цена" />
-                              <TableColumn fx:id="sumProfitColumn" prefWidth="136.0" text="Сумма прибыли" />
+                              <TableColumn fx:id="balanceColumn" prefWidth="75.0" text="Остаток" />
                               <TableColumn fx:id="quantitySoldColumn" prefWidth="165.0" text="Кол-во проданного" />
                               <TableColumn fx:id="quantityArrivalColumn" prefWidth="137.0" text="Кол-во прихода" />
                               <TableColumn fx:id="quantityCancelColumn" prefWidth="141.0" text="Кол-во списания" />
-                              <TableColumn fx:id="balanceColumn" prefWidth="75.0" text="Остаток" />
+                              <TableColumn fx:id="sumProfitColumn" prefWidth="136.0" text="Сумма прибыли" />
+                            <TableColumn fx:id="sumPriceAmountColumn" prefWidth="165.0" text="Сумма кол-во*цена" />
                           </columns>
                         </TableView>
                      </children>
