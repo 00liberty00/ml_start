@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,11 +23,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ml.model.Arrival;
 import ml.model.ArrivalList;
+import ml.model.CaseRecord;
 import ml.model.CategoryGoods;
 import ml.model.Check;
 import ml.model.CheckList;
@@ -35,6 +41,7 @@ import ml.model.Writeoff;
 import ml.model.WriteoffList;
 import ml.query.arrival.BetweenDatesArrival;
 import ml.query.cancellation.BetweenDatesCancellation;
+import ml.query.caserecord.BetweenDatesCaseRecords;
 import ml.query.categoryGood.CategoryGoodList;
 import ml.query.categoryGood.CategoryGoodsByName;
 import ml.query.check.BetweenDatesCheck;
@@ -73,6 +80,26 @@ public class ReportsGeneralController implements Initializable {
     private DatePicker dateTo;
     @FXML
     private Button okReports;
+    @FXML
+    private Label sumSalesLabel;
+    @FXML
+    private Label sumArrivalLabel;
+    @FXML
+    private Label sumCancellLabel;
+    @FXML
+    private Label sumGoodSalesLabel;
+    @FXML
+    private Label sumGoodArrivalLabel;
+    @FXML
+    private Label sumGoodCancellLabel;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Tab reportOfGoodsTabPane;
+    @FXML
+    private Tab reportOfMoneyTabPane;
+    @FXML
+    private Tab reportMoveOfGoodsTabPane;
 
     private String textComboBox;
     private List<CategoryGoods> categoryList;
@@ -83,6 +110,7 @@ public class ReportsGeneralController implements Initializable {
     private List<ArrivalList> arrivalList;
     private List<Writeoff> cancellation;
     private List<WriteoffList> cancellationList;
+    private List<CaseRecord> caseRecords;
 
     private CategoryGoodList categoryGoodList = new CategoryGoodList();
     private ObservableList<String> options = FXCollections.observableArrayList();
@@ -96,6 +124,7 @@ public class ReportsGeneralController implements Initializable {
     private BetweenDatesCheck betweenDatesCheck = new BetweenDatesCheck();
     private BetweenDatesArrival betweenDatesArrival = new BetweenDatesArrival();
     private BetweenDatesCancellation betweenDatesCancellation = new BetweenDatesCancellation();
+    private BetweenDatesCaseRecords betweenDatesCaseRecords = new BetweenDatesCaseRecords();
 
     private GeneralReportsModel generalReportsModel = new GeneralReportsModel();
 
@@ -120,6 +149,56 @@ public class ReportsGeneralController implements Initializable {
 
     @FXML
     private void getOk(ActionEvent event) {
+        if (reportOfGoodsTabPane.isSelected()) {
+            reportsOfGoods();
+        }
+        if (reportOfMoneyTabPane.isSelected()) {
+        }
+        if (reportMoveOfGoodsTabPane.isSelected()) {
+            reportsMoveOfGoods();
+        }
+    }
+
+    //Отчет по движению товара
+    private void reportsMoveOfGoods() {
+
+        BigDecimal sumCheck = new BigDecimal(0.00);
+        BigDecimal sumArrival = new BigDecimal(0.00);
+        BigDecimal sumCancellation = new BigDecimal(0.00);
+
+        Arrival a;
+        Writeoff w;
+        //список CaseRecords по дате
+        betweenDatesCaseRecords.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
+        caseRecords = betweenDatesCaseRecords.displayResult();
+
+        //список чеков по дате
+        betweenDatesCheck.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
+        check = betweenDatesCheck.displayResult();
+
+        for (int i = 0; i < caseRecords.size(); i++) {
+            a = caseRecords.get(i).getArrival();
+            w = caseRecords.get(i).getWriteOff();
+            if (a != null) {
+                sumArrival = sumArrival.add(a.getSumArrival());
+            }
+            if (w != null) {
+                sumCancellation = sumCancellation.add(w.getSum());
+            }
+        }
+
+        for (Check ch : check) {
+            sumCheck = sumCheck.add(ch.getSum());
+        }
+
+        sumSalesLabel.setText(sumCheck.toString());
+        sumArrivalLabel.setText(sumArrival.toString());
+        sumCancellLabel.setText(sumCancellation.toString());
+
+    }
+
+    //Отчет по товару
+    private void reportsOfGoods() {
         List<String> nameCheck = new ArrayList<String>();
         List<BigDecimal> amountCheck = new ArrayList<BigDecimal>();
         List<String> nameNewCheck = new ArrayList<String>();
@@ -140,6 +219,10 @@ public class ReportsGeneralController implements Initializable {
         List<BigDecimal> balanceNew = new ArrayList<BigDecimal>();
         List<BigDecimal> profit = new ArrayList<BigDecimal>();
         List<BigDecimal> profitNew = new ArrayList<BigDecimal>();
+
+        BigDecimal sumCheck = new BigDecimal(0.00);
+        BigDecimal sumArrival = new BigDecimal(0.00);
+        BigDecimal sumCancellation = new BigDecimal(0.00);
 
         String nCheck;
         BigDecimal amCheck;
@@ -168,8 +251,8 @@ public class ReportsGeneralController implements Initializable {
         cancellation = betweenDatesCancellation.displayResult();
 
         //Вывод списка проданного товара по категории
-        check.forEach((cg) -> {
-            String nameGood = new String();
+        for (Check cg : check) {
+
             Set<CheckList> s = cg.getCheckLists();
             Iterator<CheckList> it = s.iterator();
 
@@ -181,17 +264,18 @@ public class ReportsGeneralController implements Initializable {
 
                     nameCheck.add(checkList.getGoods().getName());
                     amountCheck.add(checkList.getAmount());
-                    //amountArrival.add(new BigDecimal(0.00));
                     profit.add(checkList.getProfit());
                     balance.add(checkList.getGoods().getResidue());
+                    //Сумма проданного товара по категории
+                    sumCheck = sumCheck.add(checkList.getGoods().getPrice().multiply(checkList.getAmount()));
                 }
             }
-        });
+        };
 
         //Вывод списка приходного товара по категории
-        arrival.forEach((cg) -> {
-            String nameGood = new String();
-            Set<ArrivalList> s = cg.getArrivalLists();
+        for (Arrival ar : arrival) {
+
+            Set<ArrivalList> s = ar.getArrivalLists();
             Iterator<ArrivalList> it = s.iterator();
 
             while (it.hasNext()) {
@@ -203,15 +287,15 @@ public class ReportsGeneralController implements Initializable {
                     nameArrival.add(arrivalList.getGoods().getName());
                     amountArrival.add(arrivalList.getAmount());
                     balanceArrival.add(arrivalList.getGoods().getResidue());
-
+                    //Сумма приходного товара по категории
+                    sumArrival = sumArrival.add(arrivalList.getGoods().getPriceOpt().multiply(arrivalList.getAmount()));
                 }
             }
-        });
+        };
 
         //Вывод списка списанного товара по категории
-        cancellation.forEach((cg) -> {
-            String nameGood = new String();
-            Set<WriteoffList> s = cg.getWriteoffLists();
+        for (Writeoff wr : cancellation) {
+            Set<WriteoffList> s = wr.getWriteoffLists();
             Iterator<WriteoffList> it = s.iterator();
 
             while (it.hasNext()) {
@@ -223,10 +307,11 @@ public class ReportsGeneralController implements Initializable {
                     nameCancell.add(writeoffList.getGoods().getName());
                     amountCancell.add(writeoffList.getAmount());
                     balanceCancell.add(writeoffList.getGoods().getResidue());
-
+                    //Сумма списанного товара по категории
+                    sumCancellation = sumCancellation.add(writeoffList.getGoods().getPrice().multiply(writeoffList.getAmount()));
                 }
             }
-        });
+        };
 
         //Запись в новый список названия проданного товара
         for (int i = 0; i < nameCheck.size(); i++) {
@@ -338,38 +423,25 @@ public class ReportsGeneralController implements Initializable {
             }
             for (int j = 0; j < nameArrival.size(); j++) {
                 if (nn.equals(nameArrival.get(j))) {
-                    System.out.println("вывод : " + nameArrival.get(j));
-//                    BigDecimal soldGood;
-//                    BigDecimal soldProfit;
                     BigDecimal arrivalGood;
-//                    soldGood = amountNewCheck.get(i);
-//                    soldGood = soldGood.add(amountCheck.get(j));
-//                    soldProfit = profitNew.get(i);
-//                    soldProfit = soldProfit.add(profit.get(j));
                     arrivalGood = amountNewArrival.get(i);
                     arrivalGood = arrivalGood.add(amountArrival.get(j));
-//                    amountNewCheck.set(i, soldGood);
-//                    profitNew.set(i, soldProfit);
                     amountNewArrival.set(i, arrivalGood);
                 }
             }
             for (int j = 0; j < nameCancell.size(); j++) {
                 if (nn.equals(nameCancell.get(j))) {
-//                    BigDecimal soldGood;
-//                    BigDecimal soldProfit;
                     BigDecimal cancellGood;
-//                    soldGood = amountNewCheck.get(i);
-//                    soldGood = soldGood.add(amountCheck.get(j));
-//                    soldProfit = profitNew.get(i);
-//                    soldProfit = soldProfit.add(profit.get(j));
                     cancellGood = amountNewCancell.get(i);
                     cancellGood = cancellGood.add(amountCancell.get(j));
-//                    amountNewCheck.set(i, soldGood);
-//                    profitNew.set(i, soldProfit);
                     amountNewCancell.set(i, cancellGood);
                 }
             }
         }
+
+        sumGoodSalesLabel.setText(sumCheck.toString());
+        sumGoodArrivalLabel.setText(sumArrival.toString());
+        sumGoodCancellLabel.setText(sumCancellation.toString());
 
         //запись в таблицу
         for (int i = 0; i < nameNewCheck.size(); i++) {
@@ -429,6 +501,39 @@ public class ReportsGeneralController implements Initializable {
             options.add(cg.getName());
         });
         categoryGood.setItems(options);
+
+        //Заполнение ComboBox в зависимости от выбраного Tab
+        tabPane.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                String nameTab = ov.getValue().getId();
+
+                switch (nameTab) {
+                    case "reportOfGoodsTabPane":
+                        categoryGood.getItems().clear();
+
+                        //Список всего товара
+                        categoryList = categoryGoodList.getList();
+                        categoryList.forEach((cg) -> {
+                            options.add(cg.getName());
+                        });
+                        categoryGood.setItems(options);
+                        break;
+                    case "reportOfMoneyTabPane":
+
+                        categoryGood.getItems().clear();
+                        break;
+                    case "reportMoveOfGoodsTabPane":
+
+                        categoryGood.getItems().clear();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        });
     }
 
 }

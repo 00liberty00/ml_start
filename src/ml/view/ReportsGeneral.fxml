@@ -18,13 +18,13 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TabPane layoutX="411.0" layoutY="209.0" prefHeight="591.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="209.0">
+      <TabPane fx:id="tabPane" layoutX="411.0" layoutY="209.0" prefHeight="591.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="209.0">
         <tabs>
-          <Tab text="Отчет по товару">
+          <Tab fx:id="reportOfGoodsTabPane" text="Отчет по товару">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="656.0" prefWidth="1200.0">
                      <children>
-                        <TableView fx:id="tableReportsGeneral" layoutX="134.0" layoutY="107.0" prefHeight="552.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tableReportsGeneral" layoutX="134.0" layoutY="107.0" prefHeight="350.0" prefWidth="1200.0" AnchorPane.bottomAnchor="231.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="nameColumn" prefWidth="105.0" text="Название" />
                               <TableColumn fx:id="balanceColumn" prefWidth="75.0" text="Остаток" />
@@ -32,21 +32,83 @@
                               <TableColumn fx:id="quantityArrivalColumn" prefWidth="137.0" text="Кол-во прихода" />
                               <TableColumn fx:id="quantityCancelColumn" prefWidth="141.0" text="Кол-во списания" />
                               <TableColumn fx:id="sumProfitColumn" prefWidth="136.0" text="Сумма прибыли" />
-                            <TableColumn fx:id="sumPriceAmountColumn" prefWidth="165.0" text="Сумма кол-во*цена" />
+                            <TableColumn fx:id="sumPriceAmountColumn" prefWidth="165.0" text="Сумма кол-во*цена" visible="false" />
                           </columns>
                         </TableView>
+                        <Label layoutX="21.0" layoutY="336.0" text="Сумма продаж товара:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="384.0" text="Сумма прихода товара:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="432.0" text="Сумма списания товара:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumGoodSalesLabel" layoutX="398.0" layoutY="336.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumGoodArrivalLabel" layoutX="398.0" layoutY="384.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumGoodCancellLabel" layoutX="398.0" layoutY="432.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Отчет по деньгам">
+          <Tab fx:id="reportOfMoneyTabPane" text="Отчет по деньгам">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="703.0" prefWidth="1200.0" />
             </content>
           </Tab>
-            <Tab text="Отчет по движению товара">
+            <Tab fx:id="reportMoveOfGoodsTabPane" text="Отчет по движению товара">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="64.0" text="Сумма продаж товара:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="137.0" text="Сумма прихода товара:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="212.0" text="Сумма списания товара:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumSalesLabel" layoutX="385.0" layoutY="64.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumArrivalLabel" layoutX="385.0" layoutY="137.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumCancellLabel" layoutX="385.0" layoutY="212.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
