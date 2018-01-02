@@ -189,7 +189,11 @@ public class ConfigDB {
             Element mapping25 = doc.createElement("mapping");
             mapping25.setAttribute("resource", "ml/model/GoodsAccounting.hbm.xml");
             staff.appendChild(mapping25);
-
+            
+            Element mapping26 = doc.createElement("mapping");
+            mapping26.setAttribute("resource", "ml/model/CheckListNewPrice.hbm.xml");
+            staff.appendChild(mapping26);
+            
             DOMImplementation domImpl = doc.getImplementation();
             DocumentType doctype = domImpl.createDocumentType("doctype",
                     "-//Hibernate/Hibernate Configuration DTD 3.0//EN",
