@@ -12,12 +12,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ml.authentication.GrantedAuth;
 import ml.exit.ExitApp;
 import ml.window.ArrivalReportsWindow;
 import ml.window.ArrivalWindow;
@@ -36,6 +40,7 @@ import ml.window.IndebtednessWindow;
 import ml.window.NewSessionWindow;
 import ml.window.SettingsAppWindow;
 import ml.window.SettingsPrintCheckWindow;
+import ml.window.ViewAllGoodsWindow;
 
 /**
  * FXML Controller class
@@ -106,7 +111,7 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private Button dayReports;
-    
+
     @FXML
     private Button generalsReports;
 
@@ -128,7 +133,18 @@ public class RootLayoutController implements Initializable {
     @FXML
     private Button exit;
 
+    @FXML
+    private VBox vBox;
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private Button viewGoods;
+
     private ExitApp app = new ExitApp();
+    private GrantedAuth grantedAuth = new GrantedAuth();
+    private Object auth = grantedAuth.role();
 
     /**
      * Открывает меню движения товара.
@@ -340,6 +356,23 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
+     * Просмотр товара - общий список.
+     */
+    @FXML
+    private void viewGoodsClicked(ActionEvent event) {
+
+        if ("ROLE_ADMIN".equals(auth.toString())) {
+            new ViewAllGoodsWindow();
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Сообщение:");
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Требуются права администратора!");
+            alert.showAndWait();
+        }
+    }
+
+    /**
      * Дневные отчеты.
      *
      * @param event
@@ -358,7 +391,15 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void generalsReportsClicked(ActionEvent event) {
 
-        new GeneralsReportsWindow();
+        if ("ROLE_ADMIN".equals(auth.toString())) {
+            new GeneralsReportsWindow();
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Сообщение:");
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Требуются права администратора!");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -413,7 +454,15 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void newUserClicked(ActionEvent event) {
 
-        new CreateUserWindow();
+        if ("ROLE_ADMIN".equals(auth.toString())) {
+            new CreateUserWindow();
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Сообщение:");
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Требуются права администратора!");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -435,7 +484,15 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void settingsPrintCheckClicked(ActionEvent event) {
 
-        new SettingsPrintCheckWindow();
+        if ("ROLE_ADMIN".equals(auth.toString())) {
+            new SettingsPrintCheckWindow();
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Сообщение:");
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Требуются права администратора!");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -446,7 +503,15 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void settingsAppClicked(ActionEvent event) {
 
-        new SettingsAppWindow();
+        if ("ROLE_ADMIN".equals(auth.toString())) {
+            new SettingsAppWindow();
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Сообщение:");
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Требуются права администратора!");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -521,4 +586,5 @@ public class RootLayoutController implements Initializable {
         settingsPane.setVisible(false);
         exitPane.setVisible(false);
     }
+
 }

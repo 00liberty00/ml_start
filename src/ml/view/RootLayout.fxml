@@ -115,7 +115,21 @@
                         </Button>
                      </children></Pane>
                   <Pane fx:id="ordersPane" prefHeight="200.0" prefWidth="200.0" />
-                  <Pane fx:id="goodsPane" prefHeight="200.0" prefWidth="200.0" />
+                  <Pane fx:id="goodsPane" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="viewGoods" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#viewGoodsClicked">
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/image/allGoods.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                     </children></Pane>
                   <Pane fx:id="reportsPane" prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="dayReports" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#dayReportsClicked">
