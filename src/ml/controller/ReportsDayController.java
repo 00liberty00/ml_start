@@ -35,8 +35,8 @@ import ml.query.check.ProfitCheck;
 import ml.query.goods.SumGoods;
 import ml.query.total.DateTotal;
 import ml.table.ReportsDayTable;
-import ml.window.ArrivalReportsWindow;
-import ml.window.CancelReportsWindow;
+import ml.window.ViewArrivalFromReportsWindow;
+import ml.window.ViewCancelFromReportsWindow;
 
 /**
  * FXML Controller class
@@ -249,12 +249,16 @@ public class ReportsDayController implements Initializable {
 
     @FXML
     private void viewReports() {
-        ReportsDayTable table = tableReportsDay.getSelectionModel().getSelectedItem();
+        ReportsDayTable table = new ReportsDayTable();
+        table = tableReportsDay.getSelectionModel().getSelectedItem();
         if (table.getSumArrival() != null) {
-            new ArrivalReportsWindow(table.getNumber());
+            //new ArrivalReportsWindow(table.getNumber());
+            ViewArrivalFromReportsWindow arw = new ViewArrivalFromReportsWindow();
+            arw.view(table.getNumber());
         }
         if (table.getSumCancel() != null) {
-            new CancelReportsWindow(table.getNumber());
+            ViewCancelFromReportsWindow crw = new ViewCancelFromReportsWindow();
+            crw.view(table.getNumber());
         }
     }
 

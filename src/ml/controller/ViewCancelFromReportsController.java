@@ -8,7 +8,7 @@ package ml.controller;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -42,7 +42,7 @@ import ml.table.ReportsCancelTable;
  *
  * @author Dave
  */
-public class ReportsCancelController implements Initializable {
+public class ViewCancelFromReportsController implements Initializable {
 
     @FXML
     private DatePicker date;
@@ -72,6 +72,8 @@ public class ReportsCancelController implements Initializable {
     private Label nameUserLabel;
     @FXML
     private Label nameUser;
+    @FXML
+    private Label sumInvoiceLabel;
     @FXML
     private Label sumCancelLabel;
     @FXML
@@ -156,7 +158,7 @@ public class ReportsCancelController implements Initializable {
     }
 
     /**
-     * Просмотр списания
+     * Просмотр списание
      *
      * @param event
      */
@@ -179,9 +181,8 @@ public class ReportsCancelController implements Initializable {
                     nameUserLabel.setVisible(true);
                     nameUser.setText(ca.getWriteoff().getUserSwing().getName());
                     cancelText.setText(ca.getWriteoff().getSum().toString());
-                    noteText.setText(ca.getWriteoff().getNote());
+
                     sumCancelLabel.setVisible(true);
-                    noteLabel.setVisible(true);
                 }
             }
 
@@ -235,6 +236,32 @@ public class ReportsCancelController implements Initializable {
         tableReportsCancel.setItems(reportsCancelData);
     }
 
+    public void setData(Long number) {
+        reportsCancelListData.clear();      //Очищает таблицу
+        tableCancelList.setItems(reportsCancelListData);
+        CancelListByIdCancel byIdCancel = new CancelListByIdCancel();
+        cancelViewList = new ArrayList<WriteoffList>();
+        cancelViewList = byIdCancel.listCancel(number);
+
+        WriteoffList ar = new WriteoffList();
+        for (WriteoffList gg1 : cancelViewList) {
+            ar = gg1;
+            if (ar != null) {
+                //System.out.println("Проценты равны : " + cr.getCheck().getCheckDiscount().getDiscount().getPercent());
+                displaySmallCancelListResult(ar);
+                nameUserLabel.setVisible(true);
+                nameUser.setText(ar.getWriteoff().getUserSwing().getName());
+                noteText.setText(ar.getWriteoff().getNote());
+                cancelText.setText(ar.getWriteoff().getSum().toString());
+//                sumInvoiceLabel.setText(ar.getWriteoff().getNote());
+
+                nameUserLabel.setVisible(true);
+                noteLabel.setVisible(true);
+                sumCancelLabel.setVisible(true);
+            }
+        }
+    }
+    
     /**
      * Метод для просмотра результатов в "JTable".
      */
@@ -305,17 +332,6 @@ public class ReportsCancelController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
-                dateCancel.setDate(LocalDate.now().toString());
-                caList = dateCancel.displayResult();
-                Writeoff cr = null;
-                for (Writeoff gg1 : caList) {
-                    cr = gg1;
-                    if (cr != null) {
-                        displayCancelResult(cr);
-                        displayCancelListResult(cr);
-                    }
-                }
 
             }
         });

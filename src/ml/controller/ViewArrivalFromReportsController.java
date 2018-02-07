@@ -8,7 +8,6 @@ package ml.controller;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,7 +42,7 @@ import ml.table.ReportsArrivalTable;
  *
  * @author Dave
  */
-public class ReportsArrivalController implements Initializable {
+public class ViewArrivalFromReportsController implements Initializable {
 
     @FXML
     private DatePicker date;
@@ -201,34 +200,29 @@ public class ReportsArrivalController implements Initializable {
     }
 
     public void setData(Long number) {
-        System.out.println("CATCH");
-        /*reportsArrivalListData.clear();      //Очищает таблицу
-        tableArrivalList.setItems(reportsArrivalListData);*/
+        reportsArrivalListData.clear();      //Очищает таблицу
+        tableArrivalList.setItems(reportsArrivalListData);
         ArrivalListByIdArrival byIdArrival = new ArrivalListByIdArrival();
         arrivalViewList = new ArrayList<ArrivalList>();
         arrivalViewList = byIdArrival.listArrival(number);
 
-        for (int i = 0; i < arrivalViewList.size(); i++) {
-
-            System.out.println(": " + arrivalViewList.get(i).getGoods().getName());
-        }
-        /*ArrivalList ar = new ArrivalList();
+        ArrivalList ar = new ArrivalList();
         for (ArrivalList gg1 : arrivalViewList) {
-        ar = gg1;
-        if (ar != null) {
-        //System.out.println("Проценты равны : " + cr.getCheck().getCheckDiscount().getDiscount().getPercent());
-        displaySmallArrivalListResult(ar);
-        nameUserLabel.setVisible(true);
-        nameUser.setText(ar.getArrival().getUserSwing().getName());
-        invoiceText.setText(ar.getArrival().getSumInvoice().toString());
-        arrivalText.setText(ar.getArrival().getSumArrival().toString());
-        numInvoiceText.setText(ar.getArrival().getNumberWaybill());
-        
-        sumInvoiceLabel.setVisible(true);
-        sumArrivalLabel.setVisible(true);
-        numInvoiceLabel.setVisible(true);
+            ar = gg1;
+            if (ar != null) {
+                //System.out.println("Проценты равны : " + cr.getCheck().getCheckDiscount().getDiscount().getPercent());
+                displaySmallArrivalListResult(ar);
+                nameUserLabel.setVisible(true);
+                nameUser.setText(ar.getArrival().getUserSwing().getName());
+                invoiceText.setText(ar.getArrival().getSumInvoice().toString());
+                arrivalText.setText(ar.getArrival().getSumArrival().toString());
+                numInvoiceText.setText(ar.getArrival().getNumberWaybill());
+
+                sumInvoiceLabel.setVisible(true);
+                sumArrivalLabel.setVisible(true);
+                numInvoiceLabel.setVisible(true);
+            }
         }
-        }*/
     }
 
     /**
@@ -341,7 +335,6 @@ public class ReportsArrivalController implements Initializable {
         }
 
         tableArrivalList.setItems(reportsArrivalListData);
-        System.out.println("");
     }
 
     /**
@@ -353,17 +346,6 @@ public class ReportsArrivalController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
-                dateArrival.setDate(LocalDate.now().toString());
-                arList = dateArrival.displayResult();
-                Arrival cr = null;
-                for (Arrival gg1 : arList) {
-                    cr = gg1;
-                    if (cr != null) {
-                        displayArrivalResult(cr);
-                        displayArrivalListResult(cr);
-                    }
-                }
 
             }
         });
