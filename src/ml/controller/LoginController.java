@@ -125,26 +125,22 @@ public class LoginController implements Initializable {
                     Authentication request = new UsernamePasswordAuthenticationToken(user, pass);
                     Authentication result = am.authenticate(request);
                     SecurityContextHolder.getContext().setAuthentication(result);
-                    //Открыть окно чека
                     try {
-                        // +1 пользователь(ПК) в БД в поле ключа 
+
                         CompCard compCard = new CompCard();
                         IpMac ipMac = new IpMac();
                         compCard.setNum(ipMac.getName(), license);
                         comp = compCard.displayResult();
                         //если этого компа нет в БД(новый комп)
                         if (comp != null) {
-                            if (license.getCountPc() > license.getIncludeUser()) {
-                                if (comp.getBlocking() == false) {
-                                    addUserLicense.update(license);
-                                    new RootWindow();
-                                    //Закрыть окно авторизации
-                                    dialogStage.close();
-                                } else {
-                                    message.setText("Компьютер заблокирован ");
-                                }
+                            if (comp.getBlocking() == false) {
+                                // +1 пользователь(ПК) в БД в поле ключа 
+                                //addUserLicense.update(license);
+                                new RootWindow();
+                                //Закрыть окно авторизации
+                                dialogStage.close();
                             } else {
-                                message.setText("Лимит подключений исчерпан ");
+                                message.setText("Компьютер заблокирован ");
 
                                 //Задержка на выполенние закрытия приложения
                                 Timer t = new Timer();
@@ -154,6 +150,7 @@ public class LoginController implements Initializable {
                                     }
                                 }, 2000, 3000);
                             }
+
                         } else {
                             message.setText("Этот компьютер не связан" + " \n " + "с лицензией : № " + license.getLicense());
 

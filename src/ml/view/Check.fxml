@@ -158,6 +158,7 @@
                   <Insets />
                </opaqueInsets>
             </Button>
+            <Label fx:id="getConnDB" layoutX="14.0" layoutY="690.0" />
          </children>
          <opaqueInsets>
             <Insets />

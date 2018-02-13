@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,6 +57,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import ml.Ml_FX;
 import ml.authentication.GrantedAuth;
@@ -90,8 +93,11 @@ import ml.dialog.DialogCombobox;
 import org.controlsfx.control.textfield.TextFields;
 import ml.dialog.DialogTextInput;
 import ml.query.caserecord.DateCaseRecord;
+import ml.util.CheckConnection;
+import ml.util.CheckInternetConnection;
 import ml.util.MoneyRegexp;
 import ml.util.RegexpNameGoods;
+import ml.xml.XMLSearchAddress;
 import ml.xml.XMLSettings;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -149,6 +155,8 @@ public class ArrivalController implements Initializable {
     private Button newArrival;
     @FXML
     private Button okArrival;
+    @FXML
+    private Label getConnDB;
 
     private CategoryGoodList categoryGoodList = new CategoryGoodList();
     private List<CategoryGoods> categoryList;
@@ -174,6 +182,10 @@ public class ArrivalController implements Initializable {
     private XMLSettings xmls = new XMLSettings();
     private DialogCombobox dialogCombobox = new DialogCombobox();
     private BigDecimal sumInvoice = new BigDecimal("0.00");
+    private CheckConnection checkConnection = new CheckConnection();
+    private Timeline timeline = new Timeline();
+    boolean firstState = false;
+    boolean lastState = false;
 
     /**
      * Поиск товара по коду
@@ -426,8 +438,6 @@ public class ArrivalController implements Initializable {
             tableArrival.getItems().clear();
 
         }
-        Stage stage = (Stage) borderPane.getScene().getWindow();
-        stage.close();
 
     }
 
@@ -541,7 +551,8 @@ public class ArrivalController implements Initializable {
                 addCaseRecord.add(caseRecord);
 
                 //Очищает все поля
-                newArrival();
+                //newArrival();
+                closeWindow();
 
             } // Если оплачена не вся сумма накладной, то разницу записать в долг
             else if (res == -1) {
@@ -635,7 +646,9 @@ public class ArrivalController implements Initializable {
                             dateChooseForDebt(bg2, sumInvoice, arrival);
                             }*/
                             //Очищает все поля
-                            newArrival();
+//                            newArrival();
+                            closeWindow();
+
                         }
                     } else {
 
@@ -706,7 +719,9 @@ public class ArrivalController implements Initializable {
                             addCaseRecord.add(caseRecord);
 
                             //Очищает все поля
-                            newArrival();
+                            //newArrival();
+                            closeWindow();
+
                         }
 
                     }
@@ -790,7 +805,8 @@ public class ArrivalController implements Initializable {
                         addCaseRecord.add(caseRecord);
 
                         //Очищает все поля
-                        newArrival();
+                        //newArrival();
+                        closeWindow();
                     }
                 }
             }
@@ -799,6 +815,15 @@ public class ArrivalController implements Initializable {
             dialogAlert.alert("Внимание!!!", "Поле 'Оплата за товар' пустое или меньше 0", "Введите корректную сумму");
         }
 
+    }
+
+    /**
+     * Закрывает окно
+     */
+    private void closeWindow() {
+        Stage stage = (Stage) borderPane.getScene().getWindow();
+        stage.close();
+        timeline.stop();
     }
 
     /**
@@ -1348,6 +1373,61 @@ public class ArrivalController implements Initializable {
     }
 
     /**
+     * Проверка соединения с БД
+     */
+    private void getConnection() {
+
+        XMLSearchAddress address = new XMLSearchAddress();
+        address.findAddress();
+        System.out.println("Адрес : " + address.displayResult());
+        CheckInternetConnection connection = new CheckInternetConnection();
+        /*TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+        System.out.println("Ответ сети : " + connection.call());
+        if ("true".equals(connection.call())) {
+        getConnDB.setText("Связь есть");
+        } else {
+        getConnDB.setText("Связи нет");
+        }
+        }
+        };
+        
+        timer2.schedule(task, 100, 3000);*/
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
+            System.out.println("Ответ сети : " + connection.call());
+            if ("true".equals(connection.call())) {
+                getConnDB.setText("Соединение есть");
+                getConnDB.setStyle("-fx-text-fill: BLUE;");
+                okArrival.setDisable(false);
+                newArrival.setDisable(false);
+
+                firstState = true;
+
+            } else {
+                getConnDB.setText("Соединения нет");
+                getConnDB.setStyle("-fx-text-fill: RED;");
+                okArrival.setDisable(true);
+                newArrival.setDisable(true);
+                //checkConnection.closeConnection();
+                firstState = false;
+                lastState = true;
+            }
+
+            if ((firstState == true) && (lastState == true)) {
+                firstState = false;
+                lastState = false;
+                checkConnection.restartConnection();
+            }
+        }));
+
+        timeline.setCycleCount(100);
+        timeline.play();
+
+    }
+
+    /**
      * Initializes the controller class.
      */
     @Override
@@ -1357,6 +1437,16 @@ public class ArrivalController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+
+                //проверка соединения с БД
+                getConnection();
+                //Если закрыть окно, то проверка соединения окончена
+                Stage stage = (Stage) borderPane.getScene().getWindow();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    public void handle(WindowEvent we) {
+                        timeline.stop();
+                    }
+                });
 
                 //Multiline для колонок
                 makeHeaderWrappable(invoicePriceArrivalColumn);

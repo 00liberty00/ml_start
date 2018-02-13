@@ -112,6 +112,7 @@ public class ReturnGoodController implements Initializable {
             checkList.setAmount(new BigDecimal("0.00").subtract(new BigDecimal(amount.getText().toString())));
             checkList.setProfit(profit);
             checkList.setCheck(lastCheck.displayResult());
+            checkList.setNewPrice(false);
             check.getCheckLists().add(checkList);
             addCheckList.add(checkList);
             

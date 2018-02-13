@@ -21,7 +21,7 @@ public class HibernateUtil {
 
     public static final ThreadLocal session = new ThreadLocal();
     private static Configuration configuration = new Configuration();
-    private static final SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     private static SHAEncode sha = new SHAEncode();
     
     static {
@@ -61,5 +61,34 @@ public class HibernateUtil {
             s.close();
         }
         session.set(null);
+    }
+    
+    public static void closeSessionFactory() {
+        Session s = (Session) session.get();
+
+        if (s != null) {
+            sessionFactory.close();
+        }
+    }
+    
+    public static void restartSessionFactory() {
+        try {
+            // Create the SessionFactory from standard (hibernate.cfg.xml) 
+            // config file.
+            //для внешнего приложения
+            File f = new File("src/hibernate.cfg.xml");
+            configuration = new Configuration().configure(f);
+            
+            //для внутреннего приложения
+            //configuration = new Configuration().configure("/hibernate.cfg.xml");
+            sha.decode();
+            String pass = sha.displayDecode();
+            configuration.setProperty("hibernate.connection.password", pass);
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Throwable ex) {
+            // Log the exception. 
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
     }
 }

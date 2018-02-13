@@ -8,6 +8,11 @@
 <property name="hibernate.connection.username">root</property>
 <property name="hibernate.connection.password">KWLHrb7yaU82iBfWjTnYdg==</property>
 <property name="hibernate.show_sql">true</property>
+
+<property name="connection.autoReconnect">true</property>
+<property name="connection.autoReconnectForPools">true</property>
+<property name="connection.is-connection-validation-required">true</property>
+
 <mapping resource="ml/model/Accounting.hbm.xml"/>
 <mapping resource="ml/model/CategoryFavorite.hbm.xml"/>
 <mapping resource="ml/model/GoodsBackup.hbm.xml"/>

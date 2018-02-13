@@ -16,19 +16,19 @@ import org.hibernate.Session;
  */
 public class QueryAllGoodsList {
 
-    private final Session sess = HibernateUtil.openSession();
-    
+    private Session sess;
+
     @SuppressWarnings("unchecked")
     public List<Goods> listGoods() {
-
+        sess = HibernateUtil.openSession();
         return sess.createQuery("from Goods")
                 .list();
     }
-    
+
     //Очистка списка
     @SuppressWarnings("unchecked")
     public void clearList() {
-
+        sess = HibernateUtil.openSession();
         sess.clear();
     }
 }

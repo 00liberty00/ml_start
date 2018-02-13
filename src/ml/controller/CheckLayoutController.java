@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +41,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import ml.Ml_FX;
 import ml.authentication.GrantedAuth;
 import ml.barcode.BarcodeConv;
@@ -55,7 +59,10 @@ import ml.query.goods.GoodByCode;
 import ml.query.goods.QueryAllGoodsList;
 import ml.query.user.IdUserByName;
 import ml.table.CheckTable;
+import ml.util.CheckConnection;
+import ml.util.CheckInternetConnection;
 import ml.util.RegexpNameGoods;
+import ml.xml.XMLSearchAddress;
 import org.apache.commons.lang3.ArrayUtils;
 import org.controlsfx.control.textfield.TextFields;
 import org.springframework.security.core.Authentication;
@@ -122,6 +129,8 @@ public class CheckLayoutController implements Initializable {
     private Button sixthFavorite;
     @FXML
     private Button newCheck;
+    @FXML
+    private Label getConnDB;
 
     private Stage primaryStage;
     private List<Goods> goodsList;
@@ -143,6 +152,10 @@ public class CheckLayoutController implements Initializable {
     private int selectRow = -1;
     private boolean checkNewPrice = false;
     private BigDecimal newPrice = new BigDecimal(0.00);
+    private CheckConnection checkConnection = new CheckConnection();
+    private Timeline timeline = new Timeline();
+    boolean firstState = false;
+    boolean lastState = false;
 
     /**
      * Поиск товара по коду, по наименованию
@@ -458,9 +471,9 @@ public class CheckLayoutController implements Initializable {
         checkFreePriceCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, Boolean>("checkFreePrice"));
         if ("ROLE_ADMIN".equals(auth.toString())) {
             residueCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, BigDecimal>("residue"));
-            
+
         }
-        
+
         CheckTable checkTable = new CheckTable();
         for (int i = 0; i < 1; i++) {
             BigDecimal price = goods.getPrice();
@@ -611,9 +624,9 @@ public class CheckLayoutController implements Initializable {
             }
             //Товар по коду из таблицы
             goodByCode.setCode(codeCheckColumn.getCellData(j));
-            
+
             Boolean checkFreePrice = checkFreePriceCheckColumn.getCellData(j);
-            
+
             //Прибыль с одной еденицы товара по коду
             BigDecimal profit = priceCheckColumn.getCellData(j)
                     .subtract(goodByCode.displayResult().getPriceOpt());
@@ -625,9 +638,9 @@ public class CheckLayoutController implements Initializable {
             goods.getCheckLists().add(checkList);
             checkList.setAmount(amountCheckColumn.getCellData(j));
             checkList.setProfit(profit);
-            
+
             checkList.setNewPrice(checkFreePrice);
-            
+
             checkListArrayList.add(checkList);
         }
 
@@ -721,6 +734,71 @@ public class CheckLayoutController implements Initializable {
     }
 
     /**
+     * Проверка соединения с БД
+     */
+    private void getConnection() {
+
+        XMLSearchAddress address = new XMLSearchAddress();
+        address.findAddress();
+        System.out.println("Адрес : " + address.displayResult());
+        CheckInternetConnection connection = new CheckInternetConnection();
+        /*TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+        System.out.println("Ответ сети : " + connection.call());
+        if ("true".equals(connection.call())) {
+        getConnDB.setText("Связь есть");
+        } else {
+        getConnDB.setText("Связи нет");
+        }
+        }
+        };
+        
+        timer2.schedule(task, 100, 3000);*/
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
+            System.out.println("Ответ сети : " + connection.call());
+            if ("true".equals(connection.call())) {
+                getConnDB.setText("Соединение есть");
+                getConnDB.setStyle("-fx-text-fill: BLUE;");
+                newCheck.setDisable(false);
+                firstFavorite.setDisable(false);
+                secondFavorite.setDisable(false);
+                thirdFavorite.setDisable(false);
+                fourthFavorite.setDisable(false);
+                fifthFavorite.setDisable(false);
+                sixthFavorite.setDisable(false);
+
+                firstState = true;
+
+            } else {
+                getConnDB.setText("Соединения нет");
+                getConnDB.setStyle("-fx-text-fill: RED;");
+                newCheck.setDisable(true);
+                firstFavorite.setDisable(true);
+                secondFavorite.setDisable(true);
+                thirdFavorite.setDisable(true);
+                fourthFavorite.setDisable(true);
+                fifthFavorite.setDisable(true);
+                sixthFavorite.setDisable(true);
+                //checkConnection.closeConnection();
+                firstState = false;
+                lastState = true;
+            }
+
+            if ((firstState == true) && (lastState == true)) {
+                firstState = false;
+                lastState = false;
+                checkConnection.restartConnection();
+            }
+        }));
+
+        timeline.setCycleCount(100);
+        timeline.play();
+
+    }
+
+    /**
      * Initializes the controller class.
      */
     @Override
@@ -729,6 +807,16 @@ public class CheckLayoutController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+
+                //проверка соединения с БД
+                getConnection();
+                //Если закрыть окно, то проверка соединения окончена
+                Stage stage = (Stage) borderPane.getScene().getWindow();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    public void handle(WindowEvent we) {
+                        timeline.stop();
+                    }
+                });
 
                 //Список всего товара
                 goodsList = allGoodsList.listGoods();
@@ -780,19 +868,17 @@ public class CheckLayoutController implements Initializable {
                                 case F3:
 //                                    if (event.isControlDown()) {
                                     getDialogDiscount();
-
-                                    System.out.println("КНОПКА F3 НАЖАТА!!!");
 //                                    }
                                     break;
                                 case ESCAPE:
-                                    getDialogEnd();
-                                    System.out.println("КНОПКА ESC НАЖАТА!!!");
+                                    if ("Соединение есть".equals(getConnDB.getText())) {
+                                        getDialogEnd();
+                                    }
                                     break;
 
                                 case F:
                                     if (event.isControlDown()) {
                                         //getDialogFavofite();
-                                        System.out.println("КНОПКА CTRL+F НАЖАТА!!!");
                                     }
                                     break;
                                 case HOME:
