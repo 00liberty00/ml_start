@@ -740,7 +740,6 @@ public class CheckLayoutController implements Initializable {
 
         XMLSearchAddress address = new XMLSearchAddress();
         address.findAddress();
-        System.out.println("Адрес : " + address.displayResult());
         CheckInternetConnection connection = new CheckInternetConnection();
         /*TimerTask task = new TimerTask() {
         @Override
@@ -757,7 +756,7 @@ public class CheckLayoutController implements Initializable {
         timer2.schedule(task, 100, 3000);*/
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
-            System.out.println("Ответ сети : " + connection.call());
+
             if ("true".equals(connection.call())) {
                 getConnDB.setText("Соединение есть");
                 getConnDB.setStyle("-fx-text-fill: BLUE;");

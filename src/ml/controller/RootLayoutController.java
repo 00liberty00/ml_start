@@ -8,6 +8,8 @@ package ml.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,14 +17,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import ml.authentication.GrantedAuth;
 import ml.exit.ExitApp;
+import ml.modelLicense.Comp;
+import ml.query.compCard.CompMessage;
 import ml.window.ArrivalReportsWindow;
 import ml.window.ArrivalWindow;
 import ml.window.CancelReportsWindow;
@@ -142,9 +148,14 @@ public class RootLayoutController implements Initializable {
     @FXML
     private Button viewGoods;
 
+    @FXML
+    private Label message;
+
     private ExitApp app = new ExitApp();
     private GrantedAuth grantedAuth = new GrantedAuth();
     private Object auth = grantedAuth.role();
+    private Timeline timeline = new Timeline();
+    private Comp comp = new Comp();
 
     /**
      * Открывает меню движения товара.
@@ -568,6 +579,11 @@ public class RootLayoutController implements Initializable {
 
         }
     }
+    public void setCompCard(Comp comp){
+        this.comp = comp;
+
+        System.out.println("");
+    }
 
     /**
      * Initializes the controller class.
@@ -585,6 +601,21 @@ public class RootLayoutController implements Initializable {
         endShiftPane.setVisible(false);
         settingsPane.setVisible(false);
         exitPane.setVisible(false);
+
+        /*TestTrial testTrial = new TestTrial();
+        // Created c = new Created();
+        AddUserLicense addUserLicense = new AddUserLicense();
+        License license = testTrial.license();*/
+
+        //Сообщение
+        timeline = new Timeline(new KeyFrame(Duration.seconds(60), ev -> {
+            CompMessage compMessage = new CompMessage();
+            compMessage.setComp(comp);
+            message.setText(compMessage.displayResult().getMessage());
+        }));
+
+        timeline.setCycleCount(100);
+        timeline.play();
     }
 
 }

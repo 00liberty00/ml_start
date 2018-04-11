@@ -20,6 +20,9 @@
         <property name="name" type="string">
             <column name="name" length="45" />
         </property>
+        <property name="message" type="string">
+            <column name="message" length="10000" />
+        </property>
         <property name="dateCreate" type="timestamp">
             <column name="date_create" length="19" />
         </property>

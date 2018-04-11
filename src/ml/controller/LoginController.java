@@ -28,7 +28,7 @@ import ml.modelLicense.Comp;
 import ml.modelLicense.License;
 import ml.query.license.AddMac;
 import ml.query.license.AddUserLicense;
-import ml.query.license.CompCard;
+import ml.query.compCard.CompCard;
 import ml.query.user.AuthUser;
 import ml.trial.TestTrial;
 import ml.window.RootWindow;
@@ -136,7 +136,7 @@ public class LoginController implements Initializable {
                             if (comp.getBlocking() == false) {
                                 // +1 пользователь(ПК) в БД в поле ключа 
                                 //addUserLicense.update(license);
-                                new RootWindow();
+                                new RootWindow(comp);
                                 //Закрыть окно авторизации
                                 dialogStage.close();
                             } else {

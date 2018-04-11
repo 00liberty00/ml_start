@@ -195,28 +195,34 @@ public class ArrivalController implements Initializable {
     @FXML
     private void getCode(ActionEvent event) {
         String code = codeGood.getText();
+        if (code.length() <= 13) {
+            boolean weightGood = weightCheckBox.isSelected();
 
-        boolean weightGood = weightCheckBox.isSelected();
+            if (weightGood == true) {
 
-        if (weightGood == true) {
+                boolean firstLetter = barcodeConv.firstLetters(code);
+                if (firstLetter == true) {
+                    code = barcodeConv.sixLetter(code);
+                    weight = barcodeConv.fourLetter(codeGood.getText());
+                    //residueGoodsTextField.setText(weight);
 
-            boolean firstLetter = barcodeConv.firstLetters(code);
-            if (firstLetter == true) {
-                code = barcodeConv.sixLetter(code);
-                weight = barcodeConv.fourLetter(codeGood.getText());
-                //residueGoodsTextField.setText(weight);
-
+                }
+                firstLetter = false;
+                weightGood = false;
+                amountGood.setText(weight);
+                amount = new BigDecimal(weight);
+            } else {
+                amountGood.setText("1");
             }
-            firstLetter = false;
-            weightGood = false;
-            amountGood.setText(weight);
-            amount = new BigDecimal(weight);
-        } else {
-            amountGood.setText("1");
+            codeGood.requestFocus();
+            codeGood.setText("");
+            getGoodCode(code);
         }
-        codeGood.requestFocus();
-        codeGood.setText("");
-        getGoodCode(code);
+        else{
+            dialogAlert.alert("Внимание!!!", "", "Кол-во символов в коде не должно превышать 13-ти");
+            
+        }
+
     }
 
     /**
@@ -1379,7 +1385,6 @@ public class ArrivalController implements Initializable {
 
         XMLSearchAddress address = new XMLSearchAddress();
         address.findAddress();
-        System.out.println("Адрес : " + address.displayResult());
         CheckInternetConnection connection = new CheckInternetConnection();
         /*TimerTask task = new TimerTask() {
         @Override
@@ -1396,7 +1401,6 @@ public class ArrivalController implements Initializable {
         timer2.schedule(task, 100, 3000);*/
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
-            System.out.println("Ответ сети : " + connection.call());
             if ("true".equals(connection.call())) {
                 getConnDB.setText("Соединение есть");
                 getConnDB.setStyle("-fx-text-fill: BLUE;");

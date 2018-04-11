@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ml.query.license;
+package ml.query.compCard;
 
 import ml.modelLicense.Comp;
 import ml.modelLicense.License;
@@ -17,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
  * @author Dave
  */
 public class CompCard {
+
     private Comp comp = new Comp();
 
     //Метод запроса по номеру карты
@@ -40,6 +41,7 @@ public class CompCard {
     }
 
     public Comp displayResult() {
+        //Передача параметра в rootLayoutController для вывода сообщения
         return comp;
     }
 }

@@ -32,6 +32,8 @@ public class Comp implements java.io.Serializable {
     private String name;
     private Date dateCreate;
     private String note;
+    private String message;
+
     private Boolean blocking;
 
     public Comp() {
@@ -41,13 +43,14 @@ public class Comp implements java.io.Serializable {
         this.mac = mac;
     }
 
-    public Comp(License license, byte[] mac, byte[] ip, String name, Date dateCreate, String note, Boolean blocking) {
+    public Comp(License license, byte[] mac, byte[] ip, String name, Date dateCreate, String note, String message, Boolean blocking) {
         this.license = license;
         this.mac = mac;
         this.ip = ip;
         this.name = name;
         this.dateCreate = dateCreate;
         this.note = note;
+        this.message = message;
         this.blocking = blocking;
     }
 
@@ -117,6 +120,15 @@ public class Comp implements java.io.Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+    
+    
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Column(name = "blocking")
