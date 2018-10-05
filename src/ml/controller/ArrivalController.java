@@ -854,7 +854,7 @@ public class ArrivalController implements Initializable {
             //Список оплат за сегоняшний день
             List<CaseRecord> crList;
             DateCaseRecord dateCaseRecord = new DateCaseRecord();
-            dateCaseRecord.setDate(LocalDate.now().toString());
+            dateCaseRecord.setDate(LocalDate.now());
             crList = dateCaseRecord.displayResult();
             ChooseSumInvoiceController sumInvoiceController = loader.getController();
 

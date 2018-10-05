@@ -120,7 +120,8 @@ public class ReportsDayController implements Initializable {
         pr = new Proceeds();
         DateTotal dateTotal = new DateTotal();
         DateCaseRecord dateCaseRecord = new DateCaseRecord();
-        dateCaseRecord.setDate(date.toString());
+        dateCaseRecord.setDate(date);
+        //dateCaseRecord.totalSalary(date);
         crList = dateCaseRecord.displayResult();
         BigDecimal sumCashIn = new BigDecimal(0.00);
         BigDecimal sumCashOut = new BigDecimal(0.00);

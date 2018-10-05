@@ -65,6 +65,16 @@
                               <Font size="22.0" />
                            </font>
                         </Label>
+                        <Label layoutX="21.0" layoutY="485.0" text="Сумма прибыли:">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="sumProfitLabel" layoutX="398.0" layoutY="485.0" text="0.00">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
             </content>

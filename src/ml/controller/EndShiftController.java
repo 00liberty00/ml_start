@@ -99,7 +99,7 @@ public class EndShiftController implements Initializable {
         proceeds = new BigDecimal("0.00");
         sumOut = new BigDecimal("0.00");
         DateCaseRecord dateCaseRecord = new DateCaseRecord();
-        dateCaseRecord.setDate(datePicker.getValue().toString());
+        dateCaseRecord.setDate(datePicker.getValue());
         crList = dateCaseRecord.displayResult();
         if (!"".equals(sumCash.getText())) {
             endSum = new BigDecimal(sumCash.getText());

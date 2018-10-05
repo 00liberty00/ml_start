@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ReportsCheckController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ReportsCheckController">
    <top>
       <Pane prefHeight="120.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
@@ -64,11 +64,11 @@
                   <TableView fx:id="tableCheckList" prefHeight="680.0" prefWidth="625.0">
                     <columns>
                         <TableColumn fx:id="numberCol" prefWidth="79.0" text="№ чека" />
-                        <TableColumn fx:id="dateCol" prefWidth="118.0" text="Время" />
+                        <TableColumn fx:id="dateCol" prefWidth="118.0" text="Время" visible="false" />
                         <TableColumn fx:id="codeCol" prefWidth="122.0" text="Код товара" />
                       <TableColumn fx:id="nameCol" prefWidth="199.0" text="Название товара" />
                       <TableColumn fx:id="amountCol" prefWidth="106.0" text="Кол-во" />
-                        <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="0.0" text="Цена" visible="false" />
+                        <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="118.0" text="Цена" />
                     </columns>
                   </TableView>
                </children></Pane>

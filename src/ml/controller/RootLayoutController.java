@@ -28,7 +28,9 @@ import javafx.util.Duration;
 import ml.authentication.GrantedAuth;
 import ml.exit.ExitApp;
 import ml.modelLicense.Comp;
-import ml.query.compCard.CompMessage;
+import ml.util.CheckConnection;
+import ml.util.CheckInternetConnection;
+import ml.util.NewThread;
 import ml.window.ArrivalReportsWindow;
 import ml.window.ArrivalWindow;
 import ml.window.CancelReportsWindow;
@@ -155,7 +157,11 @@ public class RootLayoutController implements Initializable {
     private GrantedAuth grantedAuth = new GrantedAuth();
     private Object auth = grantedAuth.role();
     private Timeline timeline = new Timeline();
+    private CheckConnection checkConnection = new CheckConnection();
+
     private Comp comp = new Comp();
+    boolean firstState = false;
+    boolean lastState = false;
 
     /**
      * Открывает меню движения товара.
@@ -579,7 +585,8 @@ public class RootLayoutController implements Initializable {
 
         }
     }
-    public void setCompCard(Comp comp){
+
+    public void setCompCard(Comp comp) {
         this.comp = comp;
 
         System.out.println("");
@@ -591,6 +598,7 @@ public class RootLayoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        CheckInternetConnection connection = new CheckInternetConnection();
 
         sellPane.setVisible(false);
         moneyPane.setVisible(false);
@@ -606,16 +614,35 @@ public class RootLayoutController implements Initializable {
         // Created c = new Created();
         AddUserLicense addUserLicense = new AddUserLicense();
         License license = testTrial.license();*/
-
         //Сообщение
-        timeline = new Timeline(new KeyFrame(Duration.seconds(60), ev -> {
-            CompMessage compMessage = new CompMessage();
+        timeline = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
+            /*CompMessage compMessage = new CompMessage();
             compMessage.setComp(comp);
-            message.setText(compMessage.displayResult().getMessage());
+            message.setText(compMessage.displayResult().getMessage());*/
+
+            //Проверка связи с бд
+            if ("true".equals(connection.call())) {
+
+                firstState = true;
+
+            } else {
+                //checkConnection.closeConnection();
+                firstState = false;
+                lastState = true;
+            }
+
+            if ((firstState == true) && (lastState == true)) {
+                firstState = false;
+                lastState = false;
+                checkConnection.restartConnection();
+            }
+
         }));
 
         timeline.setCycleCount(100);
         timeline.play();
+        
+        new NewThread("Do it!").start();
     }
 
 }

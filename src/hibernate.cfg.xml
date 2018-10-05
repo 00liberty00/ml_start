@@ -4,15 +4,10 @@
 <session-factory>
 <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/marleo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull</property>
-<property name="hibernate.connection.username">root</property>
-<property name="hibernate.connection.password">KWLHrb7yaU82iBfWjTnYdg==</property>
+<property name="hibernate.connection.url">jdbc:mysql://185.69.155.59:3306/marleo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull</property>
+<property name="hibernate.connection.username">essa</property>
+<property name="hibernate.connection.password">Zy08V65idFNzKnPGDxfMNw==</property>
 <property name="hibernate.show_sql">true</property>
-
-<property name="connection.autoReconnect">true</property>
-<property name="connection.autoReconnectForPools">true</property>
-<property name="connection.is-connection-validation-required">true</property>
-
 <mapping resource="ml/model/Accounting.hbm.xml"/>
 <mapping resource="ml/model/CategoryFavorite.hbm.xml"/>
 <mapping resource="ml/model/GoodsBackup.hbm.xml"/>

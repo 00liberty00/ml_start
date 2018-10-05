@@ -32,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -52,6 +53,8 @@ import ml.table.ReportsCheckTable;
  */
 public class ReportsCheckController implements Initializable {
 
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private DatePicker date;
     @FXML
@@ -441,6 +444,50 @@ public class ReportsCheckController implements Initializable {
                         displayCheckListResult(cr);
                     }
                 }
+
+                //Вывод всех продаж по нажатию ESC
+                borderPane.setOnKeyPressed(
+                        event -> {
+                            switch (event.getCode()) {
+
+                                case ESCAPE:
+                                    Check crr = null;
+                                    for (Check gg1 : chList) {
+                                        crr = gg1;
+                                        if (crr != null) {
+                                            //displayCheckResult(crr);
+                                            System.out.println("ПРИВЕТ!!!");
+                                            reportsCheckListData.clear();           //Очищает таблицу
+                                            checkPane.setVisible(false);
+                                            tablePane.setVisible(true);
+                                            displayCheckListResult(crr);
+                                        }
+                                    }
+                                    break;
+
+                            }
+                        });
+                tableReportsCheck.setOnKeyPressed(
+                        event -> {
+                            switch (event.getCode()) {
+
+                                case ESCAPE:
+                                    Check crr = null;
+                                    for (Check gg1 : chList) {
+                                        crr = gg1;
+                                        if (crr != null) {
+                                            //displayCheckResult(crr);
+                                            System.out.println("ПРИВЕТ!!!");
+                                            reportsCheckListData.clear();           //Очищает таблицу
+                                            checkPane.setVisible(false);
+                                            tablePane.setVisible(true);
+                                            displayCheckListResult(crr);
+                                        }
+                                    }
+                                    break;
+
+                            }
+                        });
 
             }
         });

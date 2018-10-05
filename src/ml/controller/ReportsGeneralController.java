@@ -8,11 +8,12 @@ package ml.controller;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -93,6 +94,8 @@ public class ReportsGeneralController implements Initializable {
     @FXML
     private Label sumGoodCancellLabel;
     @FXML
+    private Label sumProfitLabel;
+    @FXML
     private TabPane tabPane;
     @FXML
     private Tab reportOfGoodsTabPane;
@@ -108,10 +111,10 @@ public class ReportsGeneralController implements Initializable {
     private List<Check> check;
     private List<Arrival> arrival;
     private List<ArrivalList> arrivalList;
-    private List<Writeoff> cancellation;
+    private List<WriteoffList> cancellation;
     private List<WriteoffList> cancellationList;
     private List<CaseRecord> caseRecords;
-
+    private BigDecimal sumProfitFromTable = new BigDecimal(0.00);
     private CategoryGoodList categoryGoodList = new CategoryGoodList();
     private ObservableList<String> options = FXCollections.observableArrayList();
     private CategoryGoodsByName categoryGoodsByName = new CategoryGoodsByName();
@@ -173,8 +176,7 @@ public class ReportsGeneralController implements Initializable {
         caseRecords = betweenDatesCaseRecords.displayResult();
 
         //список чеков по дате
-        betweenDatesCheck.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
-        check = betweenDatesCheck.displayResult();
+        betweenDatesCheck.setDateMoveGoods(dateFrom.getValue(), dateTo.getValue());
 
         for (int i = 0; i < caseRecords.size(); i++) {
             a = caseRecords.get(i).getArrival();
@@ -187,13 +189,33 @@ public class ReportsGeneralController implements Initializable {
             }
         }
 
-        for (Check ch : check) {
-            sumCheck = sumCheck.add(ch.getSum());
-        }
-
-        sumSalesLabel.setText(sumCheck.toString());
+        sumSalesLabel.setText(betweenDatesCheck.displayResult().toString());
         sumArrivalLabel.setText(sumArrival.toString());
         sumCancellLabel.setText(sumCancellation.toString());
+
+    }
+
+    //Добавить  00:00:00
+    private Date addStartDay(Date date) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        return cal.getTime();
+
+    }
+
+    //Добавить  23:59:59
+    private Date addEndDay(Date date) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        return cal.getTime();
 
     }
 
@@ -238,85 +260,145 @@ public class ReportsGeneralController implements Initializable {
             tableReportsGeneral.getItems().clear();
         }
 
+        //Convert LocalDate to Date
+        Date dateStart = Date.from(dateFrom.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dateEnd = Date.from(dateTo.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        //System.out.println("Start:");
+        //System.out.println("Fin:");
         //список чеков по дате
-        betweenDatesCheck.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
-        check = betweenDatesCheck.displayResult();
+        System.out.println("Start: список чеков по дате");
+        betweenDatesCheck.setDate(dateFrom.getValue(), dateTo.getValue(), categoryGoods);
+        checkList = betweenDatesCheck.displayResultPlus();
+        System.out.println("Fin: список чеков по дате");
+        System.out.println("");
 
         //список прихода по дате
-        betweenDatesArrival.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
-        arrival = betweenDatesArrival.displayResult();
+        System.out.println("Start: список прихода по дате");
+        betweenDatesArrival.setDate(dateFrom.getValue(), dateTo.getValue(), categoryGoods);
+        arrivalList = betweenDatesArrival.displayResultPlus();
+        System.out.println("Fin: список прихода по дате");
+        System.out.println("");
 
         //список списания по дате
-        betweenDatesCancellation.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
-        cancellation = betweenDatesCancellation.displayResult();
+        System.out.println("Start: список списания по дате");
+        betweenDatesCancellation.setDate(dateFrom.getValue(), dateTo.getValue(), categoryGoods);
+        cancellationList = betweenDatesCancellation.displayResultPlus();
+        System.out.println("Fin: список списания по дате");
+        System.out.println("");
 
         //Вывод списка проданного товара по категории
-        for (Check cg : check) {
+        System.out.println("Start: Вывод списка проданного товара по категории");
+        for (int i = 0; i < checkList.size(); i++) {
+            //checkList.getGoods().getCategoryGoods();
+            //Вывод на экран если категориии одинаковы с выбранной категорией
+            if (categoryGoods == checkList.get(i).getGoods().getCategoryGoods()) {
 
-            Set<CheckList> s = cg.getCheckLists();
-            Iterator<CheckList> it = s.iterator();
-
-            while (it.hasNext()) {
-                CheckList checkList = it.next();
-                checkList.getGoods().getCategoryGoods();
-                //Вывод на экран если категориии одинаковы с выбранной категорией
-                if (categoryGoods == checkList.getGoods().getCategoryGoods()) {
-
-                    nameCheck.add(checkList.getGoods().getName());
-                    amountCheck.add(checkList.getAmount());
-                    profit.add(checkList.getProfit());
-                    balance.add(checkList.getGoods().getResidue());
-                    //Сумма проданного товара по категории
-                    sumCheck = sumCheck.add(checkList.getGoods().getPrice().multiply(checkList.getAmount()));
-                }
+                nameCheck.add(checkList.get(i).getGoods().getName());
+                amountCheck.add(checkList.get(i).getAmount());
+                profit.add(checkList.get(i).getProfit());
+                balance.add(checkList.get(i).getGoods().getResidue());
             }
-        };
+        }
+        System.out.println("Fin: Вывод списка проданного товара по категории");
+        System.out.println("");
+
+        //Сумма проданного товара по категории
+        System.out.println("Start: Сумма проданного товара по категории");
+        sumCheck = betweenDatesCheck.displayResultSumCheck();
+        System.out.println("Fin: Сумма проданного товара по категории");
+        System.out.println("");
+
+        //Сумма приходного товара по категории
+        System.out.println("Start: Сумма приходного товара по категории");
+        sumArrival = betweenDatesArrival.displayResultSumArrival();
+        System.out.println("Fin: Сумма приходного товара по категории");
+        System.out.println("");
+
+        //Сумма списанного товара по категории
+        System.out.println("Start: Сумма списанного товара по категории");
+        sumCancellation = betweenDatesCancellation.displayResultSumCancellation();
+        System.out.println("Fin: Сумма списанного товара по категории");
+        System.out.println("");
 
         //Вывод списка приходного товара по категории
-        for (Arrival ar : arrival) {
+        System.out.println("Start: Вывод списка приходного товара по категории");
 
-            Set<ArrivalList> s = ar.getArrivalLists();
-            Iterator<ArrivalList> it = s.iterator();
+        for (int i = 0; i < arrivalList.size(); i++) {
+            //checkList.getGoods().getCategoryGoods();
+            //Вывод на экран если категориии одинаковы с выбранной категорией
+            if (categoryGoods == arrivalList.get(i).getGoods().getCategoryGoods()) {
 
-            while (it.hasNext()) {
-                ArrivalList arrivalList = it.next();
-                arrivalList.getGoods().getCategoryGoods();
-                //Вывод на экран если категориии одинаковы с выбранной категорией
-                if (categoryGoods == arrivalList.getGoods().getCategoryGoods()) {
-
-                    nameArrival.add(arrivalList.getGoods().getName());
-                    amountArrival.add(arrivalList.getAmount());
-                    balanceArrival.add(arrivalList.getGoods().getResidue());
-                    //Сумма приходного товара по категории
-                    sumArrival = sumArrival.add(arrivalList.getGoods().getPriceOpt().multiply(arrivalList.getAmount()));
-                }
+                nameArrival.add(arrivalList.get(i).getGoods().getName());
+                amountArrival.add(arrivalList.get(i).getAmount());
+                balanceArrival.add(arrivalList.get(i).getGoods().getResidue());
+                //Сумма приходного товара по категории
+                //sumArrival = sumArrival.add(arrivalList.get(i).getGoods().getPriceOpt().multiply(arrivalList.get(i).getAmount()));
             }
-        };
+        }
+
+        /*for (Arrival ar : arrival) {
+        
+        Set<ArrivalList> s = ar.getArrivalLists();
+        Iterator<ArrivalList> it = s.iterator();
+        
+        while (it.hasNext()) {
+        ArrivalList arrivalList = it.next();
+        arrivalList.getGoods().getCategoryGoods();
+        //Вывод на экран если категориии одинаковы с выбранной категорией
+        if (categoryGoods == arrivalList.getGoods().getCategoryGoods()) {
+        
+        nameArrival.add(arrivalList.getGoods().getName());
+        amountArrival.add(arrivalList.getAmount());
+        balanceArrival.add(arrivalList.getGoods().getResidue());
+        //Сумма приходного товара по категории
+        sumArrival = sumArrival.add(arrivalList.getGoods().getPriceOpt().multiply(arrivalList.getAmount()));
+        }
+        }
+        };*/
+        System.out.println("Fin: Вывод списка приходного товара по категории");
+        System.out.println("");
 
         //Вывод списка списанного товара по категории
-        for (Writeoff wr : cancellation) {
-            Set<WriteoffList> s = wr.getWriteoffLists();
-            Iterator<WriteoffList> it = s.iterator();
+        System.out.println("Start: Вывод списка списанного товара по категории");
+        for (int i = 0; i < cancellationList.size(); i++) {
+            //checkList.getGoods().getCategoryGoods();
+            //Вывод на экран если категориии одинаковы с выбранной категорией
+            if (categoryGoods == cancellationList.get(i).getGoods().getCategoryGoods()) {
 
-            while (it.hasNext()) {
-                WriteoffList writeoffList = it.next();
-                writeoffList.getGoods().getCategoryGoods();
-                //Вывод на экран если категориии одинаковы с выбранной категорией
-                if (categoryGoods == writeoffList.getGoods().getCategoryGoods()) {
-
-                    nameCancell.add(writeoffList.getGoods().getName());
-                    amountCancell.add(writeoffList.getAmount());
-                    balanceCancell.add(writeoffList.getGoods().getResidue());
-                    //Сумма списанного товара по категории
-                    sumCancellation = sumCancellation.add(writeoffList.getGoods().getPrice().multiply(writeoffList.getAmount()));
-                }
+                nameCancell.add(cancellationList.get(i).getGoods().getName());
+                amountCancell.add(cancellationList.get(i).getAmount());
+                balanceCancell.add(cancellationList.get(i).getGoods().getResidue());
+                //Сумма приходного товара по категории
+                //sumArrival = sumArrival.add(arrivalList.get(i).getGoods().getPriceOpt().multiply(arrivalList.get(i).getAmount()));
             }
-        };
+        }
+
+        /*for (Writeoff wr : cancellation) {
+        Set<WriteoffList> s = wr.getWriteoffLists();
+        Iterator<WriteoffList> it = s.iterator();
+        
+        while (it.hasNext()) {
+        WriteoffList writeoffList = it.next();
+        writeoffList.getGoods().getCategoryGoods();
+        //Вывод на экран если категориии одинаковы с выбранной категорией
+        if (categoryGoods == writeoffList.getGoods().getCategoryGoods()) {
+        
+        nameCancell.add(writeoffList.getGoods().getName());
+        amountCancell.add(writeoffList.getAmount());
+        balanceCancell.add(writeoffList.getGoods().getResidue());
+        //Сумма списанного товара по категории
+        sumCancellation = sumCancellation.add(writeoffList.getGoods().getPrice().multiply(writeoffList.getAmount()));
+        }
+        }
+        };*/
+        System.out.println("Fin: Вывод списка списанного товара по категории");
+        System.out.println("");
 
         //Запись в новый список названия проданного товара
         for (int i = 0; i < nameCheck.size(); i++) {
             nCheck = nameCheck.get(i);
-            amCheck = amountCheck.get(i);
+            //amCheck = amountCheck.get(i);
             b = balance.get(i);
             //если новый список пуст, то записать в него первое название товара и кол-во 0
             if (nameNewCheck.isEmpty()) {
@@ -344,7 +426,7 @@ public class ReportsGeneralController implements Initializable {
         //Запись в новый список названия приходного товара
         for (int i = 0; i < nameArrival.size(); i++) {
             nArrival = nameArrival.get(i);
-            amArrival = amountArrival.get(i);
+            //amArrival = amountArrival.get(i);
             b = balanceArrival.get(i);
             //если новый список пуст, то записать в него первое название товара и кол-во 0
             if (nameNewCheck.isEmpty()) {
@@ -372,7 +454,7 @@ public class ReportsGeneralController implements Initializable {
         //Запись в новый список названия списанного товара
         for (int i = 0; i < nameCancell.size(); i++) {
             nCancell = nameCancell.get(i);
-            amCancell = amountCancell.get(i);
+            //amCancell = amountCancell.get(i);
             b = balanceCancell.get(i);
             //если новый список пуст, то записать в него первое название товара и кол-во 0
             if (nameNewCheck.isEmpty()) {
@@ -443,6 +525,10 @@ public class ReportsGeneralController implements Initializable {
         sumGoodArrivalLabel.setText(sumArrival.toString());
         sumGoodCancellLabel.setText(sumCancellation.toString());
 
+        //Расчет суммы прибыли
+        sumProfitFromTable = profitNew.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        sumProfitLabel.setText(sumProfitFromTable.toString());
+
         //запись в таблицу
         for (int i = 0; i < nameNewCheck.size(); i++) {
 
@@ -455,6 +541,7 @@ public class ReportsGeneralController implements Initializable {
 
             displayResult(generalReportsModel);
         }
+
     }
 
     /**
@@ -496,11 +583,14 @@ public class ReportsGeneralController implements Initializable {
         dateTo.setValue(LocalDate.now());
 
         //Список всего товара
+        System.out.println("Start: Список категорий всего товара");
         categoryList = categoryGoodList.getList();
         categoryList.forEach((cg) -> {
             options.add(cg.getName());
         });
         categoryGood.setItems(options);
+        System.out.println("Fin: Список категорий всего товара");
+        System.out.println("");
 
         //Заполнение ComboBox в зависимости от выбраного Tab
         tabPane.getSelectionModel().selectedItemProperty().addListener(
