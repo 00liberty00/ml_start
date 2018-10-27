@@ -107,7 +107,6 @@ public class EndCheckController implements Initializable {
 
     public void setSumText(String convertSum, String convertSumWithDiscount) {
         // set text from another class
-        System.out.println("Получаем мы: " + convertSum);
         sumCheckTextField.setText(convertSum);
         discountCheckTextField.setText(convertSumWithDiscount);
     }

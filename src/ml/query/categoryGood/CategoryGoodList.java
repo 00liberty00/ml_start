@@ -21,7 +21,7 @@ public class CategoryGoodList {
     @SuppressWarnings("unchecked")
     public List<CategoryGoods> getList() {
 
-        return sess.createQuery("from CategoryGoods")
+        return sess.createQuery("from CategoryGoods order by name")
                 .list();
     }
     

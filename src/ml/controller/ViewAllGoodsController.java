@@ -8,6 +8,7 @@ package ml.controller;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,8 +17,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +31,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import ml.model.CategoryGoods;
 import ml.model.Goods;
 import ml.query.categoryGood.CategoryGoodList;
+import ml.query.goods.DeleteGood;
 import ml.query.goods.GoodByCode;
 import ml.query.goods.GoodsListByCategory;
 import ml.query.goods.QueryAllGoodsList;
@@ -58,18 +64,21 @@ public class ViewAllGoodsController implements Initializable {
     private ComboBox<String> categoryGood;
     @FXML
     private TextField searchGoodTextField;
+    @FXML
+    private MenuItem deleteGood;
 
     private ObservableList<AllGoodsTable> allGoodData = FXCollections.observableArrayList();
     private QueryAllGoodsList allGoodsList = new QueryAllGoodsList();
     private List<Goods> goodsList;
+
     private CategoryGoodList categoryGoodList = new CategoryGoodList();
     private List<CategoryGoods> categoryList;
     private String textComboBox;
     private CategoryGoods category = new CategoryGoods();
     private ObservableList<String> options = FXCollections.observableArrayList();
     private GoodsListByCategory goodsListByCategory = new GoodsListByCategory();
-    // private ObservableList<AllGoodsTable> goodsListData = FXCollections.observableArrayList();
 
+    // private ObservableList<AllGoodsTable> goodsListData = FXCollections.observableArrayList();
     /**
      * Обновление кода товара
      *
@@ -115,6 +124,7 @@ public class ViewAllGoodsController implements Initializable {
      */
     @FXML
     private void categoryGoodAction(ActionEvent event) {
+
         allGoodData.clear();
         for (CategoryGoods cg : categoryList) {
             categoryGood.getValue();
@@ -130,20 +140,21 @@ public class ViewAllGoodsController implements Initializable {
                 goodsList.forEach((g) -> {
                     displayResult(g);
                 });
-            } else if (("Все категории").equals(categoryGood.getValue())) {
-                //удаление строк в таблице
-                for (int i = -1; i < allGoodTable.getItems().size(); i++) {
-                    allGoodTable.getItems().clear();
-                }
-
-                allGoodsList.clearList();
-                goodsList = allGoodsList.listGoods();
-                goodsList.forEach((g) -> {
-                    displayResult(g);
-                });
             }
-        }
 
+        }
+        if (("Все категории").equals(categoryGood.getValue())) {
+            //удаление строк в таблице
+            for (int i = -1; i < allGoodTable.getItems().size(); i++) {
+                allGoodTable.getItems().clear();
+            }
+
+            //allGoodsList.clearList();
+            goodsList = allGoodsList.listGoods();
+            goodsList.forEach((g) -> {
+                displayResult(g);
+            });
+        }
     }
 
     @FXML
@@ -223,9 +234,14 @@ public class ViewAllGoodsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Запуск отдельного потока
+        //threadListGoods.run();
+
         // TODO
         allGoodsList.clearList();
+
         goodsList = allGoodsList.listGoods();
+
         goodsList.forEach((g) -> {
             displayResult(g);
         });
@@ -239,6 +255,47 @@ public class ViewAllGoodsController implements Initializable {
 
         categoryGood.setItems(options);
 
+    }
+
+    /**
+     * Удаление товара
+     */
+    @FXML
+    private void deletePosition(ActionEvent event) {
+        AllGoodsTable table = allGoodTable.getSelectionModel().getSelectedItem();
+        String code = table.getCode();
+        String name = table.getName();
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Удаление товара!");
+        alert.setHeaderText("Удалить данный товар?");
+        alert.setContentText(code + " | " + name);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            DeleteGood deleteGood = new DeleteGood();
+            GoodByCode goodByCode = new GoodByCode();
+            Goods g = new Goods();
+            //удаление позиции
+            goodByCode.setCode(code);
+            g = goodByCode.displayResult();
+
+            deleteGood.delete(g);
+
+            //удаление строк в таблице
+            /*for (int i = -1; i < allGoodTable.getItems().size(); i++) {
+            allGoodTable.getItems().clear();
+            }*/
+            allGoodData.clear();
+            //allGoodsList.clearList();
+            goodsList = allGoodsList.listGoods();
+            goodsList.forEach((gg) -> {
+                displayResult(gg);
+            });
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
     }
 
 }

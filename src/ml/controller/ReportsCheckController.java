@@ -133,17 +133,29 @@ public class ReportsCheckController implements Initializable {
         reportsCheckData.clear();               //Очищает таблицу
         reportsCheckListData.clear();           //Очищает таблицу
         reportsSmallCheckListData.clear();      //Очищает таблицу
-        dateCheck.setDate(date.getValue().toString());
-        chList = dateCheck.displayResult();
+        dateCheck.setDate(date.getValue());
+        chList = dateCheck.displayResultPlus();
 
-        Check cr = null;
-        for (Check gg1 : chList) {
-            cr = gg1;
-            if (cr != null) {
-                displayCheckResult(cr);
-                displayCheckListResult(cr);
+        System.out.println("Start: список чеков по дате");
+
+        //Вывод списка проданного товара по категории
+        for (int i = 0; i < chList.size(); i++) {
+            if (chList != null) {
+                displayCheckResult(chList.get(i));
+                displayCheckListResult(chList.get(i));
             }
         }
+
+        /*Check cr = null;
+        for (Check gg1 : chList) {
+        cr = gg1;
+        if (cr != null) {
+        displayCheckResult(cr);
+        displayCheckListResult(cr);
+        }
+        }*/
+        System.out.println("Fin: список чеков по дате");
+        System.out.println("");
     }
 
     @FXML
@@ -434,8 +446,8 @@ public class ReportsCheckController implements Initializable {
             @Override
             public void run() {
 
-                dateCheck.setDate(LocalDate.now().toString());
-                chList = dateCheck.displayResult();
+                dateCheck.setDate(LocalDate.now());
+                chList = dateCheck.displayResultPlus();
                 Check cr = null;
                 for (Check gg1 : chList) {
                     cr = gg1;

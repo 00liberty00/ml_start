@@ -22,6 +22,7 @@ public class CheckConnection {
         HibernateUtil.restartSessionFactory();
 
         Session sess = HibernateUtil.openSession();
+        System.out.println("Перезапуск соединения с БД");
         return sess;
     }
 
@@ -29,6 +30,8 @@ public class CheckConnection {
         HibernateUtil.closeSession();
         HibernateUtil.closeSessionFactory();
         HibernateUtil.restartSessionFactory();
+        System.out.println("Закрытие соединения с БД");
+
     }
 
 }

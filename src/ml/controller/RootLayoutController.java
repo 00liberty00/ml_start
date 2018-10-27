@@ -28,9 +28,9 @@ import javafx.util.Duration;
 import ml.authentication.GrantedAuth;
 import ml.exit.ExitApp;
 import ml.modelLicense.Comp;
+import ml.query.goods.QueryAllGoodsList;
 import ml.util.CheckConnection;
 import ml.util.CheckInternetConnection;
-import ml.util.NewThread;
 import ml.window.ArrivalReportsWindow;
 import ml.window.ArrivalWindow;
 import ml.window.CancelReportsWindow;
@@ -158,6 +158,7 @@ public class RootLayoutController implements Initializable {
     private Object auth = grantedAuth.role();
     private Timeline timeline = new Timeline();
     private CheckConnection checkConnection = new CheckConnection();
+    private QueryAllGoodsList allGoodsList = new QueryAllGoodsList();
 
     private Comp comp = new Comp();
     boolean firstState = false;
@@ -641,8 +642,10 @@ public class RootLayoutController implements Initializable {
 
         timeline.setCycleCount(100);
         timeline.play();
-        
-        new NewThread("Do it!").start();
+
+        //allGoodsList.listGoods();
+        //executor.shutdownNow();
+        //new NewThread("Do it!").start();
     }
 
 }
