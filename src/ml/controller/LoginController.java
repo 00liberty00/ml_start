@@ -27,7 +27,6 @@ import ml.model.UserSwing;
 import ml.modelLicense.Comp;
 import ml.modelLicense.License;
 import ml.query.license.AddMac;
-import ml.query.license.AddUserLicense;
 import ml.query.compCard.CompCard;
 import ml.query.user.AuthUser;
 import ml.trial.TestTrial;
@@ -114,7 +113,6 @@ public class LoginController implements Initializable {
 
         TestTrial testTrial = new TestTrial();
         // Created c = new Created();
-        AddUserLicense addUserLicense = new AddUserLicense();
         License license = testTrial.license();
 
         if (!resultList.isEmpty()) {

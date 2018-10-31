@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="810.0" prefWidth="1100.0" stylesheets="@../resources/css/Arrival.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ArrivalController">
+<BorderPane fx:id="borderPane" prefHeight="768.0" prefWidth="1100.0" stylesheets="@../resources/css/Arrival.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ArrivalController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableArrival" editable="true" onMouseClicked="#getRow" prefHeight="565.0" prefWidth="825.0">
+            <TableView fx:id="tableArrival" editable="true" onMouseClicked="#getRow" prefHeight="528.0" prefWidth="825.0">
                <columns>
                   <TableColumn fx:id="codeArrivalColumn" prefWidth="99.99993896484375" styleClass="code-column" text="Код" />
                   <TableColumn fx:id="nameArrivalColumn" prefWidth="174.0" text="Название" />
@@ -69,7 +69,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </TextField>
-            <Button fx:id="okArrival" layoutX="848.0" layoutY="454.0" mnemonicParsing="false" onAction="#okArrival" prefHeight="80.0" prefWidth="220.0" text="OK">
+            <Button fx:id="okArrival" layoutX="848.0" layoutY="438.0" mnemonicParsing="false" onAction="#okArrival" prefHeight="80.0" prefWidth="220.0" text="OK">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>

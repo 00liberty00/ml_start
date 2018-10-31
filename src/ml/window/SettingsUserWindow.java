@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ml.window;
+
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+/**
+ * Настройки пользователя
+ * @author dave
+ */
+public class SettingsUserWindow {
+
+
+    public SettingsUserWindow() {
+        //Продажа товара
+        try {
+
+            // Load root layout from fxml file.
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ml/view/SettingsUser.fxml"));
+            AnchorPane rootLayout = (AnchorPane) loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Настройки пользователя");
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
+            //scene.getStylesheets().add("/styles/Styles.css");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

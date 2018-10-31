@@ -48,6 +48,7 @@ import ml.window.IndebtednessWindow;
 import ml.window.NewSessionWindow;
 import ml.window.SettingsAppWindow;
 import ml.window.SettingsPrintCheckWindow;
+import ml.window.SettingsUserWindow;
 import ml.window.ViewAllGoodsWindow;
 
 /**
@@ -484,6 +485,16 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
+     * Настройки пользователя
+     * @param event 
+     */
+    @FXML
+    private void settingsUser(ActionEvent event) {
+        new SettingsUserWindow();
+    }
+    
+    
+    /**
      * Создание избранного.
      *
      * @param event
@@ -647,5 +658,7 @@ public class RootLayoutController implements Initializable {
         //executor.shutdownNow();
         //new NewThread("Do it!").start();
     }
+
+    
 
 }
