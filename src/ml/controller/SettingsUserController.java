@@ -71,7 +71,7 @@ public class SettingsUserController implements Initializable {
 
             if (shaPasswordEncoder.isPasswordValid(u.getPassword(), password, null)) {
                 if (this.pass.getText().equals(rePass.getText())) {
-                    message.setText("Новый пароль совпадает");
+                    message.setText("Пароль изменен!");
                     u.setPassword(shaPasswordEncoder.encodePassword(pass.getText(), null));
                     updateAdmin.update(u);
                 } else {

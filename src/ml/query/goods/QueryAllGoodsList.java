@@ -21,7 +21,7 @@ public class QueryAllGoodsList {
     @SuppressWarnings("unchecked")
     public List<Goods> listGoods() {
         sess = HibernateUtil.openSession();
-        return sess.createQuery("from Goods")
+        return sess.createQuery("from Goods order by code")
                 .list();
     }
 

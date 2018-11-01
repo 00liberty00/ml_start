@@ -4428,3 +4428,109 @@ line 1:29: unexpected token: asc
 2018-10-31 09:20:23 INFO  Dialect:145 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
 2018-10-31 09:20:23 INFO  TransactionFactoryInitiator:62 - HHH000399: Using default transaction strategy (direct JDBC transactions)
 2018-10-31 09:20:23 INFO  ASTQueryTranslatorFactory:47 - HHH000397: Using ASTQueryTranslatorFactory
+2018-11-01 10:34:16 INFO  Version:66 - HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2018-11-01 10:34:16 INFO  Version:54 - HHH000412: Hibernate Core {4.3.1.Final}
+2018-11-01 10:34:16 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2018-11-01 10:34:16 INFO  Environment:346 - HHH000021: Bytecode provider name : javassist
+2018-11-01 10:34:16 INFO  Configuration:2131 - HHH000042: Configuring from file: hibernate.cfg.xml
+2018-11-01 10:34:16 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Accounting.hbm.xml
+2018-11-01 10:34:16 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CategoryFavorite.hbm.xml
+2018-11-01 10:34:16 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/GoodsBackup.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Discount.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Goods.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Arrival.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/UserSwing.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/UserRoles.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/WriteoffList.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CheckDiscount.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Total.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Barcode.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Trial.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Check.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Favorite.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CategoryGoods.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CheckList.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Writeoff.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CashIn.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CashOut.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/ReportsAccounting.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Orders.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/ArrivalList.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CaseRecord.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/GoodsAccounting.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CheckListNewPrice.hbm.xml
+2018-11-01 10:34:17 INFO  Configuration:2214 - HHH000041: Configured SessionFactory: null
+2018-11-01 10:34:18 WARN  DriverManagerConnectionProviderImpl:93 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2018-11-01 10:34:18 INFO  DriverManagerConnectionProviderImpl:166 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://185.69.152.97:3306/marleo?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]
+2018-11-01 10:34:18 INFO  DriverManagerConnectionProviderImpl:175 - HHH000046: Connection properties: {user=kiosk, password=****}
+2018-11-01 10:34:18 INFO  DriverManagerConnectionProviderImpl:180 - HHH000006: Autocommit mode: false
+2018-11-01 10:34:18 INFO  DriverManagerConnectionProviderImpl:102 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2018-11-01 10:34:21 INFO  Dialect:145 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2018-11-01 10:34:21 INFO  TransactionFactoryInitiator:62 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2018-11-01 10:34:21 INFO  ASTQueryTranslatorFactory:47 - HHH000397: Using ASTQueryTranslatorFactory
+2018-11-01 10:34:24 INFO  Configuration:2131 - HHH000042: Configuring from file: hibernate_license.cfg.xml
+2018-11-01 10:34:24 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/modelLicense/Comp.hbm.xml
+2018-11-01 10:34:24 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/modelLicense/License.hbm.xml
+2018-11-01 10:34:24 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/modelLicense/User.hbm.xml
+2018-11-01 10:34:24 INFO  Configuration:2214 - HHH000041: Configured SessionFactory: null
+2018-11-01 10:34:24 WARN  DriverManagerConnectionProviderImpl:93 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2018-11-01 10:34:24 INFO  DriverManagerConnectionProviderImpl:166 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://185.25.117.219:3306/license_ml?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull]
+2018-11-01 10:34:24 INFO  DriverManagerConnectionProviderImpl:175 - HHH000046: Connection properties: {user=lic, password=****}
+2018-11-01 10:34:24 INFO  DriverManagerConnectionProviderImpl:180 - HHH000006: Autocommit mode: false
+2018-11-01 10:34:24 INFO  DriverManagerConnectionProviderImpl:102 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2018-11-01 10:34:25 INFO  Dialect:145 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2018-11-01 10:34:25 INFO  TransactionFactoryInitiator:62 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2018-11-01 10:34:25 INFO  ASTQueryTranslatorFactory:47 - HHH000397: Using ASTQueryTranslatorFactory
+2018-11-01 10:38:32 INFO  Version:66 - HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2018-11-01 10:38:32 INFO  Version:54 - HHH000412: Hibernate Core {4.3.1.Final}
+2018-11-01 10:38:32 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2018-11-01 10:38:32 INFO  Environment:346 - HHH000021: Bytecode provider name : javassist
+2018-11-01 10:38:32 INFO  Configuration:2131 - HHH000042: Configuring from file: hibernate.cfg.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Accounting.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CategoryFavorite.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/GoodsBackup.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Discount.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Goods.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Arrival.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/UserSwing.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/UserRoles.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/WriteoffList.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CheckDiscount.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Total.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Barcode.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Trial.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Check.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Favorite.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CategoryGoods.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CheckList.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Writeoff.hbm.xml
+2018-11-01 10:38:33 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CashIn.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CashOut.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/ReportsAccounting.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/Orders.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/ArrivalList.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CaseRecord.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/GoodsAccounting.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/model/CheckListNewPrice.hbm.xml
+2018-11-01 10:38:34 INFO  Configuration:2214 - HHH000041: Configured SessionFactory: null
+2018-11-01 10:38:35 WARN  DriverManagerConnectionProviderImpl:93 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2018-11-01 10:38:35 INFO  DriverManagerConnectionProviderImpl:166 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://185.69.152.97:3306/marleo?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull]
+2018-11-01 10:38:35 INFO  DriverManagerConnectionProviderImpl:175 - HHH000046: Connection properties: {user=kiosk, password=****}
+2018-11-01 10:38:35 INFO  DriverManagerConnectionProviderImpl:180 - HHH000006: Autocommit mode: false
+2018-11-01 10:38:35 INFO  DriverManagerConnectionProviderImpl:102 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2018-11-01 10:38:36 INFO  Dialect:145 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2018-11-01 10:38:36 INFO  TransactionFactoryInitiator:62 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2018-11-01 10:38:36 INFO  ASTQueryTranslatorFactory:47 - HHH000397: Using ASTQueryTranslatorFactory
+2018-11-01 10:38:39 INFO  Configuration:2131 - HHH000042: Configuring from file: hibernate_license.cfg.xml
+2018-11-01 10:38:39 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/modelLicense/Comp.hbm.xml
+2018-11-01 10:38:39 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/modelLicense/License.hbm.xml
+2018-11-01 10:38:39 INFO  Configuration:757 - HHH000221: Reading mappings from resource: ml/modelLicense/User.hbm.xml
+2018-11-01 10:38:39 INFO  Configuration:2214 - HHH000041: Configured SessionFactory: null
+2018-11-01 10:38:39 WARN  DriverManagerConnectionProviderImpl:93 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2018-11-01 10:38:39 INFO  DriverManagerConnectionProviderImpl:166 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://185.25.117.219:3306/license_ml?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull]
+2018-11-01 10:38:39 INFO  DriverManagerConnectionProviderImpl:175 - HHH000046: Connection properties: {user=lic, password=****}
+2018-11-01 10:38:39 INFO  DriverManagerConnectionProviderImpl:180 - HHH000006: Autocommit mode: false
+2018-11-01 10:38:39 INFO  DriverManagerConnectionProviderImpl:102 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2018-11-01 10:38:40 INFO  Dialect:145 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2018-11-01 10:38:40 INFO  TransactionFactoryInitiator:62 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2018-11-01 10:38:40 INFO  ASTQueryTranslatorFactory:47 - HHH000397: Using ASTQueryTranslatorFactory
