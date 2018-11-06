@@ -32,7 +32,6 @@ public class DateCaseRecord {
         totalSalary(date);
     }
 
-
     //Добавить  00:00:00
     private Date addStartDay(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -66,11 +65,11 @@ public class DateCaseRecord {
 
         //больше или равно 
         criteria.add(Restrictions.ge("date", addStartDay(dateStart)));
+
         //меньше чем
-        //criteria.add(Restrictions.lt("date", addEndDay(new Date())));
+        criteria.add(Restrictions.lt("date", addEndDay(dateStart)));
 
         //criteria.setProjection(Projections.sum("sum"));
-
         resultList = criteria.list();
         displayResult();
 

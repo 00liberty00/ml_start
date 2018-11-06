@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ml.controller.CheckLayoutController;
+import ml.modelLicense.Comp;
 
 /**
  *
@@ -17,14 +19,17 @@ import javafx.stage.Stage;
  */
 public class CheckWindow {
 
+    
 
-    public CheckWindow() {
+    public CheckWindow(Comp comp) {
         //Продажа товара
         try {
 
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ml/view/Check.fxml"));
             BorderPane rootLayout = (BorderPane) loader.load();
+            CheckLayoutController checkLayoutController = loader.getController();
+            checkLayoutController.setCompCard(comp);
             Stage stage = new Stage();
             stage.setTitle("Продажа товара");
             // Show the scene containing the root layout.

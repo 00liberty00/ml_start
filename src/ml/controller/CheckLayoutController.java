@@ -52,6 +52,8 @@ import ml.model.CheckList;
 import ml.model.Discount;
 import ml.model.Goods;
 import ml.model.UserSwing;
+import ml.modelLicense.Comp;
+import ml.query.compCard.CompMessage;
 import ml.query.discount.NumberDiscount;
 import ml.query.favorite.CategoryByName;
 import ml.query.favorite.CategoryFavoriteList;
@@ -131,6 +133,8 @@ public class CheckLayoutController implements Initializable {
     private Button newCheck;
     @FXML
     private Label getConnDB;
+    @FXML
+    private Label message;
 
     private Stage primaryStage;
     private List<Goods> goodsList;
@@ -154,8 +158,12 @@ public class CheckLayoutController implements Initializable {
     private BigDecimal newPrice = new BigDecimal(0.00);
     private CheckConnection checkConnection = new CheckConnection();
     private Timeline timeline = new Timeline();
+    private Timeline timelineForMessage = new Timeline();
+
     boolean firstState = false;
     boolean lastState = false;
+    private CompMessage compMessage = new CompMessage();
+    private Comp comp = new Comp();
 
     /**
      * Поиск товара по коду, по наименованию
@@ -797,11 +805,25 @@ public class CheckLayoutController implements Initializable {
 
     }
 
+    public void setCompCard(Comp comp) {
+        this.comp = comp;
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        //Сообщение
+        timelineForMessage = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
+
+            compMessage.setComp(comp);
+            message.setText(compMessage.displayResult().getMessage());
+
+        }));
+        timelineForMessage.setCycleCount(100);
+        timelineForMessage.play();
 
         Platform.runLater(new Runnable() {
             @Override

@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import ml.authentication.GrantedAuth;
 import ml.exit.ExitApp;
 import ml.modelLicense.Comp;
+import ml.query.compCard.CompMessage;
 import ml.query.goods.QueryAllGoodsList;
 import ml.util.CheckConnection;
 import ml.util.CheckInternetConnection;
@@ -161,6 +162,7 @@ public class RootLayoutController implements Initializable {
     private CheckConnection checkConnection = new CheckConnection();
     private QueryAllGoodsList allGoodsList = new QueryAllGoodsList();
 
+    private CompMessage compMessage = new CompMessage();
     private Comp comp = new Comp();
     boolean firstState = false;
     boolean lastState = false;
@@ -324,7 +326,7 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void okSellClicked(ActionEvent event) {
 
-        new CheckWindow();
+        new CheckWindow(comp);
     }
 
     /**
@@ -628,9 +630,9 @@ public class RootLayoutController implements Initializable {
         License license = testTrial.license();*/
         //Сообщение
         timeline = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
-            /*CompMessage compMessage = new CompMessage();
-            compMessage.setComp(comp);
-            message.setText(compMessage.displayResult().getMessage());*/
+            
+            //compMessage.setComp(comp);
+            //message.setText(compMessage.displayResult().getMessage());
 
             //Проверка связи с бд
             if ("true".equals(connection.call())) {

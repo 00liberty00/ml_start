@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.CancelController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.CancelController">
    <top>
       <Pane prefHeight="223.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
@@ -49,7 +49,7 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableCancel" editable="true" onMouseClicked="#getRow" prefHeight="502.0" prefWidth="886.0">
+            <TableView fx:id="tableCancel" editable="true" onMouseClicked="#getRow" prefHeight="502.0" prefWidth="772.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
@@ -61,32 +61,32 @@
                   <TableColumn fx:id="residueCancelColumn" minWidth="0.0" prefWidth="139.0" text="Остаток" />
                </columns>
             </TableView>
-            <Label layoutX="893.0" text="Сумма">
+            <Label layoutX="893.0" layoutY="-2.0" text="Сумма">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="sumCancel" alignment="CENTER" editable="false" layoutX="893.0" layoutY="43.0" prefHeight="60.0" prefWidth="270.0" text="0.00">
+            <TextField fx:id="sumCancel" alignment="CENTER" editable="false" layoutX="800.0" layoutY="32.0" prefHeight="60.0" prefWidth="270.0" text="0.00">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </TextField>
-            <Label layoutX="893.0" layoutY="142.0" text="Описание">
+            <Label layoutX="876.0" layoutY="142.0" text="Описание">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="noteCancel" alignment="CENTER" layoutX="893.0" layoutY="185.0" prefHeight="60.0" prefWidth="270.0">
+            <TextField fx:id="noteCancel" alignment="CENTER" layoutX="800.0" layoutY="174.0" prefHeight="60.0" prefWidth="270.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </TextField>
-            <Button fx:id="newCancel" layoutX="893.0" layoutY="331.0" mnemonicParsing="false" onAction="#newCancel" prefHeight="68.0" prefWidth="302.0" text="Новое списание">
+            <Button fx:id="newCancel" layoutX="784.0" layoutY="355.0" mnemonicParsing="false" onAction="#newCancel" prefHeight="68.0" prefWidth="302.0" text="Новое списание">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Button>
-            <Button fx:id="okCancel" layoutX="893.0" layoutY="434.0" mnemonicParsing="false" onAction="#okCancel" prefHeight="68.0" prefWidth="302.0" text="OK">
+            <Button fx:id="okCancel" layoutX="784.0" layoutY="434.0" mnemonicParsing="false" onAction="#okCancel" prefHeight="68.0" prefWidth="302.0" text="OK">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

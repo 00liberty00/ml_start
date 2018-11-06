@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="768.0" prefWidth="1100.0" stylesheets="@../resources/css/Arrival.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ArrivalController">
+<BorderPane fx:id="borderPane" prefHeight="740.0" prefWidth="1100.0" stylesheets="@../resources/css/Arrival.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ArrivalController">
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="438.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableArrival" editable="true" onMouseClicked="#getRow" prefHeight="528.0" prefWidth="825.0">
+            <TableView fx:id="tableArrival" editable="true" onMouseClicked="#getRow" prefHeight="461.0" prefWidth="825.0">
                <columns>
                   <TableColumn fx:id="codeArrivalColumn" prefWidth="99.99993896484375" styleClass="code-column" text="Код" />
                   <TableColumn fx:id="nameArrivalColumn" prefWidth="174.0" text="Название" />
@@ -59,26 +59,25 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </TextField>
-            <Label layoutX="848.0" layoutY="321.0" text="Номер накладной">
+            <Label layoutX="847.0" layoutY="310.0" text="Номер накладной">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="numberInvoice" alignment="CENTER" layoutX="848.0" layoutY="358.0" prefHeight="60.0" prefWidth="220.0" text="№">
+            <TextField fx:id="numberInvoice" alignment="CENTER" layoutX="848.0" layoutY="342.0" prefHeight="60.0" prefWidth="220.0" text="№">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </TextField>
-            <Button fx:id="okArrival" layoutX="848.0" layoutY="438.0" mnemonicParsing="false" onAction="#okArrival" prefHeight="80.0" prefWidth="220.0" text="OK">
+            <Button fx:id="okArrival" layoutX="848.0" layoutY="413.0" mnemonicParsing="false" onAction="#okArrival" prefHeight="46.0" prefWidth="220.0" text="OK">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Button>
-            <Label fx:id="getConnDB" layoutX="848.0" layoutY="565.0" />
          </children></Pane>
    </center>
    <top>
-      <Pane prefHeight="236.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="236.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="22.0" layoutY="14.0" text="Категория товара">
                <font>
@@ -151,6 +150,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Button>
+            <Label fx:id="getConnDB" layoutX="517.0" layoutY="20.0" prefHeight="21.0" prefWidth="196.0" />
          </children>
          <effect>
             <Lighting diffuseConstant="1.32" specularConstant="1.2" specularExponent="40.0" surfaceScale="0.89">
