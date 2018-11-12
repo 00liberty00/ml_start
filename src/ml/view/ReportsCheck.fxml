@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -10,9 +11,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ReportsCheckController">
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ReportsCheckController">
    <top>
-      <Pane prefHeight="120.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="16.0" text="Выберите дату:">
                <font>
@@ -41,12 +42,15 @@
                </font>
             </Label>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
       </Pane>
    </top>
    <left>
-      <Pane prefHeight="680.0" prefWidth="375.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableReportsCheck" onMouseClicked="#viewCheck" prefHeight="680.0" prefWidth="375.0">
+            <TableView fx:id="tableReportsCheck" onMouseClicked="#viewCheck" prefHeight="630.0">
               <columns>
                   <TableColumn fx:id="numberCheckColumn" prefWidth="100.0" text="№ чека" />
                 <TableColumn fx:id="dateColumn" prefWidth="135.0" text="Время продажи" />
@@ -57,11 +61,11 @@
       </Pane>
    </left>
    <center>
-      <Pane prefHeight="680.0" prefWidth="625.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="tablePane" prefHeight="680.0" prefWidth="625.0">
+            <Pane fx:id="tablePane">
                <children>
-                  <TableView fx:id="tableCheckList" prefHeight="680.0" prefWidth="625.0">
+                  <TableView fx:id="tableCheckList" prefHeight="630.0">
                     <columns>
                         <TableColumn fx:id="numberCol" prefWidth="79.0" text="№ чека" />
                         <TableColumn fx:id="dateCol" prefWidth="118.0" text="Время" visible="false" />
@@ -72,7 +76,7 @@
                     </columns>
                   </TableView>
                </children></Pane>
-            <Pane fx:id="checkPane" prefHeight="680.0" prefWidth="625.0">
+            <Pane fx:id="checkPane">
                <children>
                   <Label layoutX="260.0" layoutY="30.0" text="Чек №">
                      <font>
@@ -82,7 +86,7 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <TableView fx:id="tableSmallCheckList" layoutX="139.0" layoutY="62.0" onMouseClicked="#focusTable" prefHeight="300.0" prefWidth="347.0">
+                  <TableView fx:id="tableSmallCheckList" layoutX="139.0" layoutY="62.0" onMouseClicked="#focusTable" prefHeight="300.0">
                     <columns>
                       <TableColumn fx:id="nameSmallCol" prefWidth="165.0" text="Название товара" />
                       <TableColumn fx:id="amountSmallCol" prefWidth="90.0" text="Кол-во" />
@@ -104,7 +108,7 @@
       </Pane>
    </center>
    <right>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="nameUserLabel" layoutX="13.0" layoutY="22.0" text="Чек провел:" visible="false">
                <font>
@@ -131,6 +135,9 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-         </children></Pane>
+         </children>
+         <BorderPane.margin>
+            <Insets left="5.0" right="10.0" />
+         </BorderPane.margin></Pane>
    </right>
 </BorderPane>

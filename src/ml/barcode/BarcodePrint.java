@@ -7,13 +7,6 @@ package ml.barcode;
 
 import java.awt.print.PrinterJob;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;

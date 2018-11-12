@@ -10,6 +10,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -17,8 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -53,8 +57,11 @@ public class IndebtednessController implements Initializable {
     private TableColumn<IndebtednessReportsTable, Date> dateReportsColumn;
     @FXML
     private TableColumn<IndebtednessReportsTable, String> recordReportsColumn;
+    @FXML
+    private MenuItem payContext;
 
     private List<Orders> crList;
+    private boolean checkIndebt = false;
     private ObservableList<IndebtednessReportsTable> indebtednessReportsData = FXCollections.observableArrayList();
 
     @FXML
@@ -71,7 +78,6 @@ public class IndebtednessController implements Initializable {
     //Погашение/Оплата задолжности/заказа
     @FXML
     private void okReports(ActionEvent event) {
-        UpdateIndebt ui = new UpdateIndebt();
         IndebtednessReportsTable i = tableReports.getSelectionModel().getSelectedItem();
 
         IndebtByCode indebtByCode = new IndebtByCode();
@@ -79,19 +85,54 @@ public class IndebtednessController implements Initializable {
 
         Orders o = indebtByCode.displayResult();
 
-        o.setNote(i.getNote() + " / Погашена(Оплачена)");
-        ui.update(o);
+        //o.setNote(i.getNote() + " / Погашена(Оплачена)");
+        new CashOutWindow(i.getSum().toString(), i.getNote(), o);
+        if (checkIndebt == true) {
+            //удаление строк в таблице
+            for (int j = -1; j < tableReports.getItems().size(); j++) {
+                tableReports.getItems().clear();
 
-        //удаление строк в таблице
-        for (int j = -1; j < tableReports.getItems().size(); j++) {
-            tableReports.getItems().clear();
-
+            }
+            getIndebtDate(dateReport.getValue());
         }
-        new CashOutWindow(i.getSum().toString(), i.getNote());
-
-        getIndebtDate(dateReport.getValue());
 
         //new CashOutWindow();
+    }
+
+    @FXML
+    private void setPay(ActionEvent event) {
+        Orders orders = new Orders();
+        UpdateIndebt ui = new UpdateIndebt();
+        IndebtByCode indebtByCode = new IndebtByCode();
+
+        IndebtednessReportsTable table = tableReports.getSelectionModel().getSelectedItem();
+        String note = table.getNote();
+        indebtByCode.setId(table.getId());
+        orders = indebtByCode.displayResult();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Оплата накладной!");
+        alert.setHeaderText("Накладная оплачена?");
+        alert.setContentText(note);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+
+            orders.setNote(note + " / Погашена(Оплачена)");
+            ui.update(orders);
+
+            for (int j = -1; j < tableReports.getItems().size(); j++) {
+                tableReports.getItems().clear();
+
+            }
+            getIndebtDate(dateReport.getValue());
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+    public void getCheckIndebt(boolean checkIndebt) {
+        this.checkIndebt = checkIndebt;
     }
 
     private void getIndebtDate(LocalDate date) {
@@ -107,6 +148,7 @@ public class IndebtednessController implements Initializable {
                 displayResult(cr);
             }
         }
+        crList.clear();
     }
 
     private void displayResult(Orders orders) {
@@ -146,4 +188,5 @@ public class IndebtednessController implements Initializable {
             }
         });
     }
+
 }

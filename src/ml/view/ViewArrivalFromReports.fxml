@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -9,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ViewArrivalFromReportsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ViewArrivalFromReportsController">
    <top>
-      <Pane prefHeight="120.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="14.0" layoutY="16.0" text="Выберите дату:">
                <font>
@@ -30,12 +31,15 @@
                </font>
             </TextField>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
       </Pane>
    </top>
    <left>
-      <Pane prefHeight="680.0" prefWidth="375.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableReportsArrival" onMouseClicked="#viewArrival" prefHeight="680.0" prefWidth="375.0">
+            <TableView fx:id="tableReportsArrival" onMouseClicked="#viewArrival" prefHeight="600.0">
               <columns>
                   <TableColumn fx:id="numberArrivalColumn" prefWidth="100.0" text="№ прихода" />
                 <TableColumn fx:id="dateColumn" prefWidth="135.0" text="Время прихода" />
@@ -50,7 +54,7 @@
          <children>
             <Pane fx:id="tablePane" prefHeight="680.0" prefWidth="625.0">
                <children>
-                  <TableView fx:id="tableArrivalList" prefHeight="680.0" prefWidth="625.0">
+                  <TableView fx:id="tableArrivalList" prefHeight="600.0">
                     <columns>
                         <TableColumn fx:id="codeCol" prefWidth="120.0" text="Код товара" />
                       <TableColumn fx:id="nameCol" prefWidth="175.0" text="Название товара" />
@@ -64,7 +68,7 @@
       </Pane>
    </center>
    <right>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="nameUserLabel" layoutX="5.0" layoutY="22.0" text="Приход провел:" visible="false">
                <font>

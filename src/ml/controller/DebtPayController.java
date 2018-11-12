@@ -6,6 +6,7 @@
 package ml.controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -91,12 +92,15 @@ public class DebtPayController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YYYY");
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                    note.setText(arrival.getNote() + " / " + arrival.getNumberWaybill());
-                    debt.setText(arrival.getSumInvoice().toString());
-                    
+                datePicker.setValue(LocalDate.now());
+                
+                note.setText(arrival.getNote() + " / " + arrival.getNumberWaybill() + " от " + sdf.format(arrival.getDate()));
+                debt.setText(arrival.getSumInvoice().toString());
+
             }
         });
     }

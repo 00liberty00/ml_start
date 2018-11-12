@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -14,70 +15,28 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" prefHeight="740.0" prefWidth="1100.0" stylesheets="@../resources/css/Arrival.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ArrivalController">
+<BorderPane fx:id="borderPane" stylesheets="@../resources/css/Arrival.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ArrivalController">
    <center>
-      <Pane prefHeight="438.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableArrival" editable="true" onMouseClicked="#getRow" prefHeight="461.0" prefWidth="825.0">
+            <TableView fx:id="tableArrival" editable="true" layoutX="14.0" layoutY="14.0" onMouseClicked="#getRow">
                <columns>
-                  <TableColumn fx:id="codeArrivalColumn" prefWidth="99.99993896484375" styleClass="code-column" text="Код" />
-                  <TableColumn fx:id="nameArrivalColumn" prefWidth="174.0" text="Название" />
-                  <TableColumn fx:id="amountArrivalColumn" prefWidth="110.0" text="Кол-во" />
-                  <TableColumn fx:id="oldPriceArrivalColumn" prefWidth="110.0" text="Прошлая цена" />
-                  <TableColumn fx:id="invoicePriceArrivalColumn" prefWidth="110.0" text="Цена в накладной" />
-                  <TableColumn fx:id="newPriceArrivalColumn" prefWidth="110.0" text="Новая цена" />
-                  <TableColumn fx:id="residueArrivalColumn" minWidth="50.0" prefWidth="110.0" text="Остаток" />
+                  <TableColumn fx:id="codeArrivalColumn" prefWidth="130.0" styleClass="code-column" text="Код" />
+                  <TableColumn fx:id="nameArrivalColumn" prefWidth="300.0" text="Название" />
+                  <TableColumn fx:id="amountArrivalColumn" prefWidth="100.0" text="Кол-во" />
+                  <TableColumn fx:id="oldPriceArrivalColumn" prefWidth="150.0" text="Прошлая цена" />
+                  <TableColumn fx:id="invoicePriceArrivalColumn" prefWidth="150.0" text="Цена в накладной" />
+                  <TableColumn fx:id="newPriceArrivalColumn" prefWidth="150.0" text="Новая цена" />
+                  <TableColumn fx:id="residueArrivalColumn" minWidth="50.0" prefWidth="140.0" text="Остаток" />
                </columns>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </TableView>
-            <Label layoutX="848.0" text="Сумма накладной">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="sumCheck" alignment="CENTER" editable="false" layoutX="848.0" layoutY="37.0" prefHeight="60.0" prefWidth="220.0" text="0.00">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </TextField>
-            <Label layoutX="848.0" layoutY="213.0" text="Сумма с надбавкой">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="sumCheckWithAllowance" alignment="CENTER" editable="false" layoutX="848.0" layoutY="250.0" prefHeight="60.0" prefWidth="220.0" text="0.00">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </TextField>
-            <Label layoutX="848.0" layoutY="109.0" text="Оплата за товар">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="paymentCheck" alignment="CENTER" layoutX="848.0" layoutY="146.0" prefHeight="60.0" prefWidth="220.0" text="0.00">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </TextField>
-            <Label layoutX="847.0" layoutY="310.0" text="Номер накладной">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numberInvoice" alignment="CENTER" layoutX="848.0" layoutY="342.0" prefHeight="60.0" prefWidth="220.0" text="№">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </TextField>
-            <Button fx:id="okArrival" layoutX="848.0" layoutY="413.0" mnemonicParsing="false" onAction="#okArrival" prefHeight="46.0" prefWidth="220.0" text="OK">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </Button>
          </children></Pane>
    </center>
    <top>
-      <Pane prefHeight="236.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="22.0" layoutY="14.0" text="Категория товара">
                <font>
@@ -164,4 +123,61 @@
          </effect>
       </Pane>
    </top>
+   <right>
+      <Pane BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="5.0" text="Сумма накладной">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <TextField fx:id="sumCheck" alignment="CENTER" editable="false" layoutX="5.0" layoutY="37.0" prefHeight="60.0" prefWidth="220.0" text="0.00">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <Label layoutX="5.0" layoutY="213.0" text="Сумма с надбавкой">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <TextField fx:id="sumCheckWithAllowance" alignment="CENTER" editable="false" layoutX="5.0" layoutY="250.0" prefHeight="60.0" prefWidth="220.0" text="0.00">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <Label layoutX="5.0" layoutY="109.0" text="Оплата за товар">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <TextField fx:id="paymentCheck" alignment="CENTER" layoutX="5.0" layoutY="146.0" prefHeight="60.0" prefWidth="220.0" text="0.00">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <Label layoutX="4.0" layoutY="310.0" text="Номер накладной">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numberInvoice" alignment="CENTER" layoutX="5.0" layoutY="342.0" prefHeight="60.0" prefWidth="220.0" text="№">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <Button fx:id="okArrival" layoutX="5.0" layoutY="413.0" mnemonicParsing="false" onAction="#okArrival" prefHeight="46.0" prefWidth="220.0" text="OK">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="10.0" />
+         </BorderPane.margin>
+      </Pane>
+   </right>
 </BorderPane>

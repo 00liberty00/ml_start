@@ -5,8 +5,6 @@
  */
 package ml.barcode;
 
-import java.util.Arrays;
-
 /**
  *
  * @author dave

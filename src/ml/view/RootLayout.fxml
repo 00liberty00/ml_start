@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.RootLayoutController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -23,7 +23,7 @@
               <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Закрыть" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Помощь">
+          <Menu mnemonicParsing="false" text="Справка">
             <items>
               <MenuItem mnemonicParsing="false" text="О программе" />
             </items>
@@ -32,11 +32,11 @@
       </MenuBar>
    </top>
    <center>
-    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+    <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
          <children>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane>
                <children>
-                  <Pane fx:id="sellPane" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane fx:id="sellPane">
                      <children>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#okSellClicked">
                            <graphic>
@@ -76,7 +76,7 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane fx:id="moneyPane" layoutX="14.0" layoutY="12.0" prefHeight="160.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane fx:id="moneyPane">
                      <children>
                         <Button fx:id="cashIn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#cashInClicked">
                            <graphic>
@@ -115,8 +115,8 @@
                            </opaqueInsets>
                         </Button>
                      </children></Pane>
-                  <Pane fx:id="ordersPane" prefHeight="200.0" prefWidth="200.0" />
-                  <Pane fx:id="goodsPane" prefHeight="200.0" prefWidth="200.0">
+                  <Pane fx:id="ordersPane" />
+                  <Pane fx:id="goodsPane">
                      <children>
                         <Button fx:id="viewGoods" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#viewGoodsClicked">
                            <graphic>
@@ -131,7 +131,7 @@
                            </opaqueInsets>
                         </Button>
                      </children></Pane>
-                  <Pane fx:id="reportsPane" prefHeight="200.0" prefWidth="200.0">
+                  <Pane fx:id="reportsPane">
                      <children>
                         <Button fx:id="dayReports" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#dayReportsClicked">
                            <graphic>
@@ -192,7 +192,7 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane fx:id="endShiftPane" prefHeight="200.0" prefWidth="200.0">
+                  <Pane fx:id="endShiftPane">
                      <children>
                         <Button fx:id="endShift" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#endShiftClicked">
                            <graphic>
@@ -207,7 +207,7 @@
                            </opaqueInsets>
                         </Button>
                      </children></Pane>
-                  <Pane fx:id="settingsPane" prefHeight="200.0" prefWidth="200.0">
+                  <Pane fx:id="settingsPane">
                      <children>
                         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newUserClicked">
                            <graphic>
@@ -259,7 +259,7 @@
                         </Button>
                      </children>
                   </Pane>
-                  <Pane fx:id="exitPane" prefHeight="200.0" prefWidth="200.0">
+                  <Pane fx:id="exitPane">
                      <children>
                         <Button fx:id="newSess" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newSessClicked">
                            <graphic>
@@ -293,9 +293,9 @@
       </AnchorPane>
    </center>
    <left>
-      <ScrollPane prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="vBox" prefHeight="627.0" prefWidth="195.0">
+            <VBox fx:id="vBox">
                <children>
                   <Button fx:id="sellMenu" mnemonicParsing="false" onAction="#okSellMenuClicked" prefHeight="50.0" prefWidth="150.0">
                      <graphic>
@@ -408,7 +408,7 @@
       </ScrollPane>
    </left>
    <bottom>
-      <Pane prefHeight="89.0" prefWidth="1250.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="message" layoutX="14.0" layoutY="14.0" textFill="RED" />
          </children>

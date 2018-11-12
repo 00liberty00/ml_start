@@ -528,7 +528,7 @@ public class CheckLayoutController implements Initializable {
         // The Java 8 way to get the response value (with lambda expression).
         result.ifPresent(code -> numberDiscount.numberDiscount(code));
         discount = numberDiscount.displayResult();
-        if (discount.getNumcard() != null) {
+        if (discount != null) {
             percent = decimal("###.###", Double.parseDouble(discount.getPercent()));
 
             result.ifPresent(numberCard -> infoFirstLabel.setText("Дисконтная карта №" + numberCard));

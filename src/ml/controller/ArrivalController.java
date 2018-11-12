@@ -217,10 +217,9 @@ public class ArrivalController implements Initializable {
             codeGood.requestFocus();
             codeGood.setText("");
             getGoodCode(code);
-        }
-        else{
+        } else {
             dialogAlert.alert("Внимание!!!", "", "Кол-во символов в коде не должно превышать 13-ти");
-            
+
         }
 
     }
@@ -1142,6 +1141,8 @@ public class ArrivalController implements Initializable {
      * Метод для просмотра результатов в "JTable".
      */
     private void displayResult(Goods goods) {
+        BigDecimal priceOpt;
+
         Integer roundingPrice = xmls.getRounding().intValue();
 
         nameArrivalColumn.setCellValueFactory(new PropertyValueFactory<ArrivalTable, String>("name"));
@@ -1168,11 +1169,16 @@ public class ArrivalController implements Initializable {
         for (int i = 0; i < 1; i++) {
             //BigDecimal price = goods.getPrice();
             //BigDecimal amount = decimal("###.###", Double.parseDouble(weight));
-            BigDecimal newPrice = allowance.divide(new BigDecimal(100)).multiply(goods.getPriceOpt()).add(goods.getPriceOpt());
+            if (goods.getPriceOpt() == null) {
+                priceOpt = BigDecimal.ZERO;
+            } else {
+                priceOpt = goods.getPriceOpt();
+            }
+            BigDecimal newPrice = allowance.divide(new BigDecimal(100)).multiply(priceOpt).add(priceOpt);
             arrivalTable.setCode(goods.getCode());
             arrivalTable.setName(goods.getName());
             arrivalTable.setOldPrice(goods.getPrice());
-            arrivalTable.setInvoicePrice(goods.getPriceOpt());
+            arrivalTable.setInvoicePrice(priceOpt);
             arrivalTable.setNewPrice(decimal("###.##", Double.parseDouble(newPrice.setScale(roundingPrice, BigDecimal.ROUND_HALF_UP).toString())));
             arrivalTable.setAmount(amount);
 //2200838707746

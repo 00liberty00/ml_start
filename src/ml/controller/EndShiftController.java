@@ -13,6 +13,7 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -148,7 +149,7 @@ public class EndShiftController implements Initializable {
 
         LocalDate localDate = datePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        Date date = Date.from(instant);
+        Date date = addEndDay(Date.from(instant));
 
         //CaseRecord cr = new CaseRecord();
         //Сумма чеков(Выручка по чекам)
@@ -248,6 +249,19 @@ public class EndShiftController implements Initializable {
         //Закрывает окно
         Stage stage = (Stage) ok.getScene().getWindow();
         stage.close();
+    }
+
+    //Добавить  23:59:59
+    private Date addEndDay(Date date) {
+        Calendar cal = Calendar.getInstance();
+        Calendar calTimeNow = Calendar.getInstance();
+
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, calTimeNow.get(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE, calTimeNow.get(Calendar.MINUTE));
+        cal.set(Calendar.SECOND, calTimeNow.get(Calendar.SECOND));
+        return cal.getTime();
+
     }
 
     /**

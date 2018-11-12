@@ -59,3 +59,13 @@ and open the template in the editor.
 .auto-complete-popup > .list-view > .placeholder > .label {
     -fx-text-fill: #65728B;
 }
+
+/*
+ //Style of each table cell
+*/
+.table-view .table-cell{
+    -fx-font-weight:bold;
+    -fx-font-size:25px;           
+    /* -fx-text-fill:orange; */
+
+}

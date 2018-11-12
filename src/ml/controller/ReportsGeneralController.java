@@ -30,6 +30,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ml.dialog.DialogAlert;
 import ml.model.Arrival;
 import ml.model.ArrivalList;
 import ml.model.CaseRecord;
@@ -96,6 +97,8 @@ public class ReportsGeneralController implements Initializable {
     @FXML
     private Label sumProfitLabel;
     @FXML
+    private Label sumProfitPeriodLabel;
+    @FXML
     private TabPane tabPane;
     @FXML
     private Tab reportOfGoodsTabPane;
@@ -128,6 +131,7 @@ public class ReportsGeneralController implements Initializable {
     private BetweenDatesArrival betweenDatesArrival = new BetweenDatesArrival();
     private BetweenDatesCancellation betweenDatesCancellation = new BetweenDatesCancellation();
     private BetweenDatesCaseRecords betweenDatesCaseRecords = new BetweenDatesCaseRecords();
+    private DialogAlert dialogAlert = new DialogAlert();
 
     private GeneralReportsModel generalReportsModel = new GeneralReportsModel();
 
@@ -136,8 +140,11 @@ public class ReportsGeneralController implements Initializable {
 
         //возврат выбранной из списка id_category
         textComboBox = categoryGood.getValue();
-        categoryGoodsByName.setCode(textComboBox);
-        categoryGoods = categoryGoodsByName.displayResult();
+        if (textComboBox != null) {
+            categoryGoodsByName.setCode(textComboBox);
+            categoryGoods = categoryGoodsByName.displayResult();
+        }
+
     }
 
     @FXML
@@ -153,7 +160,13 @@ public class ReportsGeneralController implements Initializable {
     @FXML
     private void getOk(ActionEvent event) {
         if (reportOfGoodsTabPane.isSelected()) {
-            reportsOfGoods();
+            if (textComboBox == null) {
+                dialogAlert.alert("Внимание!!!", "", "Выберите категорию товара");
+
+            } else {
+                reportsOfGoods();
+
+            }
         }
         if (reportOfMoneyTabPane.isSelected()) {
         }
@@ -173,6 +186,10 @@ public class ReportsGeneralController implements Initializable {
         Writeoff w;
         //список CaseRecords по дате
         betweenDatesCaseRecords.setDate(dateFrom.getValue().toString(), dateTo.getValue().toString());
+        
+        
+        betweenDatesCaseRecords.setDates(dateFrom.getValue(), dateTo.getValue());
+
         caseRecords = betweenDatesCaseRecords.displayResult();
 
         //список чеков по дате
@@ -192,6 +209,7 @@ public class ReportsGeneralController implements Initializable {
         sumSalesLabel.setText(betweenDatesCheck.displayResult().toString());
         sumArrivalLabel.setText(sumArrival.toString());
         sumCancellLabel.setText(sumCancellation.toString());
+        sumProfitPeriodLabel.setText(betweenDatesCaseRecords.displayResultX().toString());
 
     }
 
@@ -267,28 +285,18 @@ public class ReportsGeneralController implements Initializable {
         //System.out.println("Start:");
         //System.out.println("Fin:");
         //список чеков по дате
-        System.out.println("Start: список чеков по дате");
         betweenDatesCheck.setDate(dateFrom.getValue(), dateTo.getValue(), categoryGoods);
         checkList = betweenDatesCheck.displayResultPlus();
-        System.out.println("Fin: список чеков по дате");
-        System.out.println("");
 
         //список прихода по дате
-        System.out.println("Start: список прихода по дате");
         betweenDatesArrival.setDate(dateFrom.getValue(), dateTo.getValue(), categoryGoods);
         arrivalList = betweenDatesArrival.displayResultPlus();
-        System.out.println("Fin: список прихода по дате");
-        System.out.println("");
 
         //список списания по дате
-        System.out.println("Start: список списания по дате");
         betweenDatesCancellation.setDate(dateFrom.getValue(), dateTo.getValue(), categoryGoods);
         cancellationList = betweenDatesCancellation.displayResultPlus();
-        System.out.println("Fin: список списания по дате");
-        System.out.println("");
 
         //Вывод списка проданного товара по категории
-        System.out.println("Start: Вывод списка проданного товара по категории");
         for (int i = 0; i < checkList.size(); i++) {
             //checkList.getGoods().getCategoryGoods();
             //Вывод на экран если категориии одинаковы с выбранной категорией
@@ -300,30 +308,17 @@ public class ReportsGeneralController implements Initializable {
                 balance.add(checkList.get(i).getGoods().getResidue());
             }
         }
-        System.out.println("Fin: Вывод списка проданного товара по категории");
-        System.out.println("");
 
         //Сумма проданного товара по категории
-        System.out.println("Start: Сумма проданного товара по категории");
         sumCheck = betweenDatesCheck.displayResultSumCheck();
-        System.out.println("Fin: Сумма проданного товара по категории");
-        System.out.println("");
 
         //Сумма приходного товара по категории
-        System.out.println("Start: Сумма приходного товара по категории");
         sumArrival = betweenDatesArrival.displayResultSumArrival();
-        System.out.println("Fin: Сумма приходного товара по категории");
-        System.out.println("");
 
         //Сумма списанного товара по категории
-        System.out.println("Start: Сумма списанного товара по категории");
         sumCancellation = betweenDatesCancellation.displayResultSumCancellation();
-        System.out.println("Fin: Сумма списанного товара по категории");
-        System.out.println("");
 
         //Вывод списка приходного товара по категории
-        System.out.println("Start: Вывод списка приходного товара по категории");
-
         for (int i = 0; i < arrivalList.size(); i++) {
             //checkList.getGoods().getCategoryGoods();
             //Вывод на экран если категориии одинаковы с выбранной категорией
@@ -356,11 +351,7 @@ public class ReportsGeneralController implements Initializable {
         }
         }
         };*/
-        System.out.println("Fin: Вывод списка приходного товара по категории");
-        System.out.println("");
-
         //Вывод списка списанного товара по категории
-        System.out.println("Start: Вывод списка списанного товара по категории");
         for (int i = 0; i < cancellationList.size(); i++) {
             //checkList.getGoods().getCategoryGoods();
             //Вывод на экран если категориии одинаковы с выбранной категорией
@@ -392,9 +383,6 @@ public class ReportsGeneralController implements Initializable {
         }
         }
         };*/
-        System.out.println("Fin: Вывод списка списанного товара по категории");
-        System.out.println("");
-
         //Запись в новый список названия проданного товара
         for (int i = 0; i < nameCheck.size(); i++) {
             nCheck = nameCheck.get(i);

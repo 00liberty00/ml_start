@@ -23,6 +23,8 @@ import ml.query.caserecord.AddCaseRecord;
 import ml.query.cashout.AddCashOut;
 import ml.query.user.IdUserByName;
 import ml.dialog.DialogAlert;
+import ml.model.Orders;
+import ml.query.indebtedness.UpdateIndebt;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -44,16 +46,21 @@ public class CashOutController implements Initializable {
 
     private DialogAlert dialogAlert = new DialogAlert();
     private Stage dialogStage;
+    private Orders orders = new Orders();
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-    
+
     public void setTopText(String sumOut, String noteOut) {
         // set text from another class
         sum.setText(sumOut);
         note.setText(noteOut);
-    } 
+    }
+
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
 
     @FXML
     private void ok(ActionEvent event) {
@@ -72,6 +79,18 @@ public class CashOutController implements Initializable {
             String login = authentication.getName();
             idUserByName.setLoginUser(login);   //метод для idUser по логину
             userSwing = idUserByName.displayResult(); //Возвращает пользователя
+
+            /**
+             * Если вывод денег связан с долгом
+             */
+            if (orders.getIdOrder() != null) {
+                IndebtednessController controller = new IndebtednessController();
+                UpdateIndebt ui = new UpdateIndebt();
+                orders.setNote(note.getText() + " / Погашена(Оплачена)");
+                ui.update(orders);
+                
+                controller.getCheckIndebt(true);
+            }
 
             //Запись в CashOut
             String s = sum.getText();

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ml.controller.CashOutController;
+import ml.model.Orders;
 
 /**
  * Окно вывода денег.
@@ -37,9 +38,14 @@ public class CashOutWindow {
             e.printStackTrace();
         }
     }
-    
-    
-    public CashOutWindow(String sumOut, String note) {
+
+    /**
+     * Вывод денег для оплаты долга
+     *
+     * @param sumOut
+     * @param note
+     */
+    public CashOutWindow(String sumOut, String note, Orders orders) {
         try {
 
             // Load root layout from fxml file.
@@ -49,6 +55,7 @@ public class CashOutWindow {
             CashOutController controller = (CashOutController) loader.getController();
 
             controller.setTopText(sumOut, note);
+            controller.setOrders(orders);
 
             Stage stage = new Stage();
             stage.setTitle("Вывод денежных средств");
@@ -58,6 +65,7 @@ public class CashOutWindow {
             //stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
