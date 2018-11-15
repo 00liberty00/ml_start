@@ -10,10 +10,8 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -83,8 +82,8 @@ public class ReportsCheckController implements Initializable {
     private TableColumn<ReportsCheckTable, String> dateColumn;
     @FXML
     private TableColumn<ReportsCheckTable, BigDecimal> sumCheckColumn;
-    @FXML
-    private Pane tablePane;
+    /*@FXML
+    private Pane tablePane;*/
     @FXML
     private Pane checkPane;
 
@@ -123,49 +122,42 @@ public class ReportsCheckController implements Initializable {
     private DateCheck dateCheck = new DateCheck();
     private List<Check> chList;
     private List<CheckList> checkViewList;
+    private List<CheckList> checkList;
     private int selectRow = -1;
     private String numCheck = "";
 
     @FXML
     private void getDate(ActionEvent event) {
         checkPane.setVisible(false);
-        tablePane.setVisible(true);
+        //tablePane.setVisible(true);
+        tableCheckList.setVisible(true);
         reportsCheckData.clear();               //Очищает таблицу
         reportsCheckListData.clear();           //Очищает таблицу
         reportsSmallCheckListData.clear();      //Очищает таблицу
         dateCheck.setDate(date.getValue());
         chList = dateCheck.displayResultPlus();
+        checkList = dateCheck.displayResultCheckList();
 
-        System.out.println("Start: список чеков по дате");
-
-        //Вывод списка проданного товара по категории
+        //Вывод списка чеков проданного товара по дате
         for (int i = 0; i < chList.size(); i++) {
             if (chList != null) {
                 displayCheckResult(chList.get(i));
-                displayCheckListResult(chList.get(i));
             }
         }
-
-        /*Check cr = null;
-        for (Check gg1 : chList) {
-        cr = gg1;
-        if (cr != null) {
-        displayCheckResult(cr);
-        displayCheckListResult(cr);
+        //Вывод списка всего проданного товара по дате
+        for (int i = 0; i < checkList.size(); i++) {
+            if (checkList != null) {
+                displayCheckListResult(checkList.get(i));
+            }
         }
-        }*/
-        System.out.println("Fin: список чеков по дате");
-        System.out.println("");
     }
 
     @FXML
     private void getCheck(ActionEvent event) {
 
-        //reportsCheckData.clear();           //Очищает таблицу
         reportsCheckListData.clear();           //Очищает таблицу
         checkPane.setVisible(true);
-        tablePane.setVisible(false);
-
+        tableCheckList.setVisible(false);
     }
 
     /**
@@ -204,7 +196,6 @@ public class ReportsCheckController implements Initializable {
 
         // 5. Add sorted (and filtered) data to the table.
         tableCheckList.setItems(sortedData);
-
     }
 
     /**
@@ -221,7 +212,8 @@ public class ReportsCheckController implements Initializable {
         ReportsCheckTable check = tableReportsCheck.getSelectionModel().getSelectedItem();
         if (check != null) {
             checkPane.setVisible(true);
-            tablePane.setVisible(false);
+            //tablePane.setVisible(false);
+            tableCheckList.setVisible(false);
             checkNumberLabel.setText(check.getNumberCheck().toString());
             checkViewList = byIdCheck.listCheck(check.getNumberCheck());
 
@@ -229,15 +221,12 @@ public class ReportsCheckController implements Initializable {
             for (CheckList gg1 : checkViewList) {
                 cr = gg1;
                 if (cr != null) {
-                    //System.out.println("Проценты равны : " + cr.getCheck().getCheckDiscount().getDiscount().getPercent());
                     displaySmallCheckListResult(cr);
                 }
             }
             nameUserLabel.setVisible(true);
             nameUser.setText(cr.getCheck().getUserSwing().getName());
-
             noteText.setText(cr.getCheck().getNote());
-
         }
     }
 
@@ -249,18 +238,15 @@ public class ReportsCheckController implements Initializable {
         CheckListByIdCheck byIdCheck = new CheckListByIdCheck();
         reportsSmallCheckListData.clear();      //Очищает таблицу
         checkPane.setVisible(true);
-        tablePane.setVisible(false);
-
+        //tablePane.setVisible(false);
+        tableCheckList.setVisible(false);
         numCheck = numCheckTextField.getText();
         checkNumberLabel.setText(numCheck);
-        checkViewList = byIdCheck.listCheck(Integer.parseInt(numCheck));
-
-        CheckList cr = null;
-        for (CheckList gg1 : checkViewList) {
-            cr = gg1;
-            if (cr != null) {
-                displaySmallCheckListResult(cr);
-            }
+        byIdCheck.setIdCheck(Integer.parseInt(numCheck));
+        checkViewList = byIdCheck.displayResult();
+        
+        for (int i = 0; i < checkViewList.size(); i++) {
+            displaySmallCheckListResult(checkViewList.get(i));
         }
     }
 
@@ -326,10 +312,6 @@ public class ReportsCheckController implements Initializable {
             reportsCheckTable.setNumberCheck(cr.getIdCheck());
             reportsCheckTable.setDate(sdf.format(cr.getDate()));
             reportsCheckTable.setSumCheck(cr.getSum());
-
-            /*if ("ROLE_ADMIN".equals(auth.toString())) {
-            reportsDayTable.setResidue(goods.getResidue());
-            }*/
             // заполняем таблицу данными
             reportsCheckData.add(reportsCheckTable);
         }
@@ -339,7 +321,7 @@ public class ReportsCheckController implements Initializable {
     /**
      * Метод для просмотра результатов в "JTable".
      */
-    private void displayCheckListResult(Check cr) {
+    private void displayCheckListResult(CheckList cr) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         numberCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, Integer>("number"));
@@ -349,31 +331,22 @@ public class ReportsCheckController implements Initializable {
         amountCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, BigDecimal>("amount"));
         priceCol.setCellValueFactory(new PropertyValueFactory<ReportsCheckListTable, BigDecimal>("price"));
 
-        ReportsCheckListTable reportsCheckListTable;
-        Set<CheckList> s = cr.getCheckLists();
-        Iterator<CheckList> it = s.iterator();
+        ReportsCheckListTable reportsCheckListTable = new ReportsCheckListTable();
 
-        while (it.hasNext()) {
-            CheckList checkList = it.next();
-            reportsCheckListTable = new ReportsCheckListTable();
+        reportsCheckListTable.setNumber(cr.getCheck().getIdCheck());
+        reportsCheckListTable.setDate(sdf.format(cr.getCheck().getDate()));
+        reportsCheckListTable.setAmount(cr.getAmount());
+        reportsCheckListTable.setName(cr.getGoods().getName());
+        reportsCheckListTable.setCode(cr.getGoods().getCode());
 
-            reportsCheckListTable.setNumber(cr.getIdCheck());
-            reportsCheckListTable.setDate(sdf.format(cr.getDate()));
-            reportsCheckListTable.setAmount(checkList.getAmount());
-            reportsCheckListTable.setName(checkList.getGoods().getName());
-            reportsCheckListTable.setCode(checkList.getGoods().getCode());
-
-            //Проверка на наличии новой цены
-            if (checkList.getNewPrice() == true) {
-                //CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
-                //checkListNewPrice.setCheckList(checkList);
-                reportsCheckListTable.setPrice(checkList.getCheckListNewPrice().getNewPrice());
-            } else {
-                reportsCheckListTable.setPrice(checkList.getGoods().getPrice());
-            }
-            // заполняем таблицу данными
-            reportsCheckListData.add(reportsCheckListTable);
+        //Проверка на наличии новой цены
+        if (cr.getNewPrice() == true) {
+            reportsCheckListTable.setPrice(cr.getCheckListNewPrice().getNewPrice());
+        } else {
+            reportsCheckListTable.setPrice(cr.getGoods().getPrice());
         }
+        // заполняем таблицу данными
+        reportsCheckListData.add(reportsCheckListTable);
 
         tableCheckList.setItems(reportsCheckListData);
     }
@@ -392,14 +365,11 @@ public class ReportsCheckController implements Initializable {
         for (int i = 0; i < 1; i++) {
 
             reportsCheckListSmallTable.setName(cr.getGoods().getName());
-            //System.out.println("Проценты равны : " + cr.getCheck().getCheckDiscount().getDiscount().getPercent());
             //Проверка, был чек со скидкой или нет
             if (cr.getCheck().getCheckDiscount() != null) {
                 discount = new BigDecimal(cr.getCheck().getCheckDiscount().getDiscount().getPercent());
 
                 if (cr.getNewPrice() == true) {
-                    //CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
-                    //checkListNewPrice.setCheckList(checkList);
                     reportsCheckListSmallTable.setPrice(cr.getCheckListNewPrice().getNewPrice().subtract(cr.getCheckListNewPrice().getNewPrice().multiply(discount.divide(new BigDecimal(100)))));
                 } else {
                     BigDecimal priceWithPercent = cr.getGoods().getPrice().subtract(cr.getGoods().getPrice().multiply(discount.divide(new BigDecimal(100))));
@@ -410,8 +380,6 @@ public class ReportsCheckController implements Initializable {
                 discountText.setText(discount.toString() + "%");
             } else {
                 if (cr.getNewPrice() == true) {
-                    //CheckListNewPrice checkListNewPrice = new CheckListNewPrice();
-                    //checkListNewPrice.setCheckList(checkList);
                     reportsCheckListSmallTable.setPrice(cr.getCheckListNewPrice().getNewPrice());
                 } else {
                     reportsCheckListSmallTable.setPrice(cr.getGoods().getPrice());
@@ -419,10 +387,7 @@ public class ReportsCheckController implements Initializable {
 
             }
             reportsCheckListSmallTable.setAmount(cr.getAmount());
-            //System.out.println("" + cr.getGoods().getName());
-            /*if ("ROLE_ADMIN".equals(auth.toString())) {
-            reportsDayTable.setResidue(goods.getResidue());
-            }*/
+
             // заполняем таблицу данными
             reportsSmallCheckListData.add(reportsCheckListSmallTable);
         }
@@ -441,69 +406,66 @@ public class ReportsCheckController implements Initializable {
             returnGoodButton.setVisible(false);
         }
         checkPane.setVisible(false);
-        tablePane.setVisible(true);
+        tableCheckList.setVisible(true);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
                 dateCheck.setDate(LocalDate.now());
                 chList = dateCheck.displayResultPlus();
-                Check cr = null;
-                for (Check gg1 : chList) {
-                    cr = gg1;
-                    if (cr != null) {
-                        displayCheckResult(cr);
-                        displayCheckListResult(cr);
-                    }
+                checkList = dateCheck.displayResultCheckList();
+                //Вывод списка проданного товара по сегодняшней дате
+                for (int i = 0; i < chList.size(); i++) {
+                    displayCheckResult(chList.get(i));
+                }
+                //Вывод списка проданного товара по сегодняшней дате
+                for (int i = 0; i < checkList.size(); i++) {
+                    displayCheckListResult(checkList.get(i));
                 }
 
                 //Вывод всех продаж по нажатию ESC
                 borderPane.setOnKeyPressed(
                         event -> {
                             switch (event.getCode()) {
-
                                 case ESCAPE:
-                                    Check crr = null;
-                                    for (Check gg1 : chList) {
-                                        crr = gg1;
-                                        if (crr != null) {
-                                            //displayCheckResult(crr);
-                                            System.out.println("ПРИВЕТ!!!");
-                                            reportsCheckListData.clear();           //Очищает таблицу
-                                            checkPane.setVisible(false);
-                                            tablePane.setVisible(true);
-                                            displayCheckListResult(crr);
-                                        }
+                                    checkList.clear();
+                                    reportsCheckListData.clear();           //Очищает таблицу
+                                    if (date.getValue() == null) {
+                                        dateCheck.setDate(LocalDate.now());
+                                    } else {
+                                        dateCheck.setDate(date.getValue());
+                                    }
+                                    checkList = dateCheck.displayResultCheckList();
+                                    for (int i = 0; i < checkList.size(); i++) {
+                                        checkPane.setVisible(false);
+                                        tableCheckList.setVisible(true);
+                                        displayCheckListResult(checkList.get(i));
                                     }
                                     break;
-
                             }
                         });
                 tableReportsCheck.setOnKeyPressed(
-                        event -> {
+                        (KeyEvent event) -> {
                             switch (event.getCode()) {
-
                                 case ESCAPE:
-                                    Check crr = null;
-                                    for (Check gg1 : chList) {
-                                        crr = gg1;
-                                        if (crr != null) {
-                                            //displayCheckResult(crr);
-                                            System.out.println("ПРИВЕТ!!!");
-                                            reportsCheckListData.clear();           //Очищает таблицу
-                                            checkPane.setVisible(false);
-                                            tablePane.setVisible(true);
-                                            displayCheckListResult(crr);
-                                        }
+                                    checkList.clear();
+                                    System.out.println("вывод значения даты: " + date.getValue());
+
+                                    reportsCheckListData.clear();           //Очищает таблицу
+                                    if (date.getValue() == null) {
+                                        dateCheck.setDate(LocalDate.now());
+                                    } else {
+                                        dateCheck.setDate(date.getValue());
+                                    }
+                                    checkList = dateCheck.displayResultCheckList();
+                                    for (int i = 0; i < checkList.size(); i++) {
+                                        checkPane.setVisible(false);
+                                        tableCheckList.setVisible(true);
+                                        displayCheckListResult(checkList.get(i));
                                     }
                                     break;
-
                             }
                         });
-
             }
         });
-
     }
-
 }

@@ -169,6 +169,6 @@
       </Label>
       <DatePicker fx:id="dateFrom" layoutX="336.0" layoutY="114.0" onAction="#getDateFrom" />
       <DatePicker fx:id="dateTo" layoutX="695.0" layoutY="114.0" onAction="#getDateTo" />
-      <Button fx:id="okReports" layoutX="1010.0" layoutY="114.0" mnemonicParsing="false" onAction="#getOk" prefHeight="31.0" prefWidth="97.0" text="Ok" />
+      <Button fx:id="okReports" layoutX="923.0" layoutY="114.0" mnemonicParsing="false" onAction="#getOk" prefHeight="31.0" prefWidth="97.0" text="Ok" />
    </children>
 </AnchorPane>

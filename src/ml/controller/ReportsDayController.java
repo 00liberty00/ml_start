@@ -14,10 +14,8 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -60,8 +58,6 @@ public class ReportsDayController implements Initializable {
     @FXML
     private Label cashLabel;
     @FXML
-    private Button okReports;
-    @FXML
     private TableView<ReportsDayTable> tableReportsDay;
     @FXML
     private TableColumn<ReportsDayTable, BigDecimal> sumInReportsColumn;
@@ -89,9 +85,7 @@ public class ReportsDayController implements Initializable {
     private BigDecimal proceedsCheck = new BigDecimal("0.00");          //Выручка по чекам
     private List<ArrivalList> arrivalViewList;
 
-    @FXML
-    private void okReportsDay(ActionEvent event) {
-    }
+    
 
     /**
      * Берет дату
@@ -274,8 +268,8 @@ public class ReportsDayController implements Initializable {
             public void run() {
                 //Date nowDate = new Date();
                 dateReport.setValue(LocalDate.now());
-                if ("ROLE_ADMIN".equals(auth.toString())) {
-                    arrivalReportsColumn.setVisible(true);
+                if ("ROLE_USER".equals(auth.toString())) {
+                    arrivalReportsColumn.setVisible(false);
                 }
                 //getCRDate(LocalDate.now());
             }

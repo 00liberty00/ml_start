@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import ml.model.Check;
+import ml.model.CheckList;
 import ml.util.HibernateUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -26,6 +27,8 @@ public class DateCheck {
 
     private static final String QUERY_BASED_OF_GOODS = "from Check where date like '";
     private List<Check> resultList;
+    private List<CheckList> resultCheckList;
+
 
     /*//Метод запроса списка чеков по дням
     public void setDate(String date) {
@@ -68,13 +71,17 @@ public class DateCheck {
         Session session = HibernateUtil.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
+        
         Criteria crit = session.createCriteria(Check.class);
-
         crit.add(Restrictions.between("date", dateFrom, dateTo));
-
         resultList = crit.list();
-
         displayResultPlus();
+
+        Criteria critCheckList = session.createCriteria(CheckList.class);
+        Criteria suppCrit = critCheckList.createCriteria("check");
+        critCheckList.createCriteria("goods");
+        suppCrit.add(Restrictions.between("date", dateFrom, dateTo));
+        resultCheckList = suppCrit.list();
 
         transaction.commit();
     }
@@ -95,6 +102,11 @@ public class DateCheck {
     //Вывод списка
     public List<Check> displayResultPlus() {
         return resultList;
+    }
+
+    //Вывод списка
+    public List<CheckList> displayResultCheckList() {
+        return resultCheckList;
     }
 
     //Вывод списка

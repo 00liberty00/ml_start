@@ -8,7 +8,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ReportsCheckController">
@@ -47,45 +51,37 @@
          </BorderPane.margin>
       </Pane>
    </top>
-   <left>
-      <Pane BorderPane.alignment="CENTER">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <TableView fx:id="tableReportsCheck" onMouseClicked="#viewCheck" prefHeight="630.0">
+            <TableView fx:id="tableCheckList">
               <columns>
-                  <TableColumn fx:id="numberCheckColumn" prefWidth="100.0" text="№ чека" />
-                <TableColumn fx:id="dateColumn" prefWidth="135.0" text="Время продажи" />
-                <TableColumn fx:id="sumCheckColumn" prefWidth="140.0" text="Сумма чека" />
+                  <TableColumn fx:id="numberCol" prefWidth="79.0" text="№ чека" />
+                  <TableColumn fx:id="dateCol" prefWidth="118.0" text="Время" visible="false" />
+                  <TableColumn fx:id="codeCol" prefWidth="122.0" text="Код товара" />
+                <TableColumn fx:id="nameCol" prefWidth="199.0" text="Название товара" />
+                <TableColumn fx:id="amountCol" prefWidth="106.0" text="Кол-во" />
+                  <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="118.0" text="Цена" />
               </columns>
             </TableView>
-         </children>
-      </Pane>
-   </left>
-   <center>
-      <Pane BorderPane.alignment="CENTER">
-         <children>
-            <Pane fx:id="tablePane">
-               <children>
-                  <TableView fx:id="tableCheckList" prefHeight="630.0">
-                    <columns>
-                        <TableColumn fx:id="numberCol" prefWidth="79.0" text="№ чека" />
-                        <TableColumn fx:id="dateCol" prefWidth="118.0" text="Время" visible="false" />
-                        <TableColumn fx:id="codeCol" prefWidth="122.0" text="Код товара" />
-                      <TableColumn fx:id="nameCol" prefWidth="199.0" text="Название товара" />
-                      <TableColumn fx:id="amountCol" prefWidth="106.0" text="Кол-во" />
-                        <TableColumn fx:id="priceCol" minWidth="0.0" prefWidth="118.0" text="Цена" />
-                    </columns>
-                  </TableView>
-               </children></Pane>
             <Pane fx:id="checkPane">
                <children>
                   <Label layoutX="260.0" layoutY="30.0" text="Чек №">
                      <font>
                         <Font name="System Bold" size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="checkNumberLabel" layoutX="328.0" layoutY="30.0">
                      <font>
                         <Font name="System Bold" size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <TableView fx:id="tableSmallCheckList" layoutX="139.0" layoutY="62.0" onMouseClicked="#focusTable" prefHeight="300.0">
                     <columns>
                       <TableColumn fx:id="nameSmallCol" prefWidth="165.0" text="Название товара" />
@@ -103,9 +99,10 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-               </children></Pane>
+               </children>
+            </Pane>
          </children>
-      </Pane>
+      </GridPane>
    </center>
    <right>
       <Pane BorderPane.alignment="CENTER">
@@ -140,4 +137,17 @@
             <Insets left="5.0" right="10.0" />
          </BorderPane.margin></Pane>
    </right>
+   <left>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableReportsCheck" onMouseClicked="#viewCheck" VBox.vgrow="ALWAYS">
+              <columns>
+                  <TableColumn fx:id="numberCheckColumn" prefWidth="100.0" text="№ чека" />
+                <TableColumn fx:id="dateColumn" prefWidth="135.0" text="Время продажи" />
+                <TableColumn fx:id="sumCheckColumn" prefWidth="140.0" text="Сумма чека" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </left>
 </BorderPane>

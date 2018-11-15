@@ -436,7 +436,7 @@ public class ArrivalController implements Initializable {
         sumCheck.setText("0.00");
         sumCheckWithAllowance.setText("0.00");
         paymentCheck.setText("0.00");
-        numberInvoice.setText("№");
+        numberInvoice.setText("№ ");
 
         //удаление строк в таблице
         for (int i = -1; i < tableArrival.getItems().size(); i++) {
@@ -492,7 +492,7 @@ public class ArrivalController implements Initializable {
                 idUserByName.setLoginUser(login);   //метод для idUser по логину
                 userSwing = idUserByName.displayResult(); //Возвращает пользователя
 
-                arrival.setNote(categoryGood.getValue());
+                arrival.setNote(categoryGood.getValue() + " / " + numberInvoice.getText());
                 arrival.setDate(date);
                 arrival.setSumArrival(new BigDecimal(sumCheckWithAllowance.getText()));
                 arrival.setSumInvoice(new BigDecimal(sumCheck.getText()));
@@ -583,7 +583,7 @@ public class ArrivalController implements Initializable {
                             idUserByName.setLoginUser(login);   //метод для idUser по логину
                             userSwing = idUserByName.displayResult(); //Возвращает пользователя
 
-                            arrival.setNote(categoryGood.getValue());
+                            arrival.setNote(categoryGood.getValue() + " / " + numberInvoice.getText());
                             arrival.setDate(date);
                             arrival.setSumArrival(new BigDecimal(sumCheckWithAllowance.getText()));
                             arrival.setSumInvoice(new BigDecimal(sumCheck.getText()));
@@ -662,7 +662,7 @@ public class ArrivalController implements Initializable {
                         idUserByName.setLoginUser(login);   //метод для idUser по логину
                         userSwing = idUserByName.displayResult(); //Возвращает пользователя
 
-                        arrival.setNote(categoryGood.getValue());
+                        arrival.setNote(categoryGood.getValue() + " / " + numberInvoice.getText());
                         arrival.setDate(date);
                         arrival.setSumArrival(new BigDecimal(sumCheckWithAllowance.getText()));
                         arrival.setSumInvoice(new BigDecimal(sumCheck.getText()));
@@ -737,7 +737,7 @@ public class ArrivalController implements Initializable {
                     idUserByName.setLoginUser(login);   //метод для idUser по логину
                     userSwing = idUserByName.displayResult(); //Возвращает пользователя
 
-                    arrival.setNote(categoryGood.getValue());
+                    arrival.setNote(categoryGood.getValue() + " / " + numberInvoice.getText());
                     arrival.setDate(date);
                     arrival.setSumArrival(new BigDecimal(sumCheckWithAllowance.getText()));
                     arrival.setSumInvoice(new BigDecimal(sumCheck.getText()));

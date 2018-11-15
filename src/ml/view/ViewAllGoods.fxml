@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.ViewAllGoodsController">
@@ -25,28 +26,6 @@
          </children>
       </Pane>
    </top>
-   <center>
-      <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-         <children>
-            <TableView fx:id="allGoodTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0">
-              <columns>
-                  <TableColumn fx:id="codeGoodColumn" maxWidth="150.0" onEditCommit="#codeGoodEdit" prefWidth="150.0" text="Код товара" />
-                  <TableColumn fx:id="nameGoodColumn" minWidth="0.0" onEditCommit="#nameGoodEdit" prefWidth="250.0" text="Название товара" />
-                <TableColumn fx:id="purchasePriceColumn" editable="false" minWidth="0.0" prefWidth="150.0" text="Закупочная цена" />
-                <TableColumn fx:id="sellingPriceColumn" editable="false" prefWidth="150.0" text="Продажная цена" />
-                  <TableColumn fx:id="residueColumn" editable="false" prefWidth="150.0" text="Остаток" />
-              </columns>
-               <contextMenu>
-                  <ContextMenu>
-                    <items>
-                      <MenuItem fx:id="deleteGood" mnemonicParsing="false" onAction="#deletePosition" text="Удалить товар" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-            </TableView>
-         </children>
-      </Pane>
-   </center>
    <bottom>
       <Pane BorderPane.alignment="CENTER">
          <children>
@@ -69,4 +48,26 @@
    <right>
       <Pane prefHeight="200.0" prefWidth="10.0" BorderPane.alignment="CENTER" />
    </right>
+   <center>
+      <VBox fillWidth="false" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="allGoodTable" editable="true" VBox.vgrow="ALWAYS">
+              <columns>
+                  <TableColumn fx:id="codeGoodColumn" maxWidth="150.0" onEditCommit="#codeGoodEdit" prefWidth="150.0" text="Код товара" />
+                  <TableColumn fx:id="nameGoodColumn" minWidth="0.0" onEditCommit="#nameGoodEdit" prefWidth="250.0" text="Название товара" />
+                <TableColumn fx:id="purchasePriceColumn" editable="false" minWidth="0.0" prefWidth="150.0" text="Закупочная цена" />
+                <TableColumn fx:id="sellingPriceColumn" editable="false" prefWidth="150.0" text="Продажная цена" />
+                  <TableColumn fx:id="residueColumn" editable="false" prefWidth="150.0" text="Остаток" />
+              </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem fx:id="deleteGood" mnemonicParsing="false" onAction="#deletePosition" text="Удалить товар" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
+         </children>
+      </VBox>
+   </center>
 </BorderPane>
