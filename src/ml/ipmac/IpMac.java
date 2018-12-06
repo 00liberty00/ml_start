@@ -22,7 +22,7 @@ public class IpMac {
     public String getIp() {
         try {
             ip = InetAddress.getLocalHost();
-            System.out.println("Current IP address : " + ip.getHostAddress());
+            //System.out.println("Current IP address : " + ip.getHostAddress());
         } catch (UnknownHostException ex) {
             ex.printStackTrace();
         }

@@ -28,8 +28,8 @@ import ml.model.CaseRecord;
 import ml.model.CheckList;
 import ml.model.Total;
 import ml.query.caserecord.DateCaseRecord;
+import ml.query.check.DateCheck;
 import ml.query.check.Proceeds;
-import ml.query.check.ProfitCheck;
 import ml.query.goods.SumGoods;
 import ml.query.total.DateTotal;
 import ml.table.ReportsDayTable;
@@ -85,8 +85,6 @@ public class ReportsDayController implements Initializable {
     private BigDecimal proceedsCheck = new BigDecimal("0.00");          //Выручка по чекам
     private List<ArrivalList> arrivalViewList;
 
-    
-
     /**
      * Берет дату
      */
@@ -119,28 +117,43 @@ public class ReportsDayController implements Initializable {
         crList = dateCaseRecord.displayResult();
         BigDecimal sumCashIn = new BigDecimal(0.00);
         BigDecimal sumCashOut = new BigDecimal(0.00);
-        ProfitCheck profitCheck = new ProfitCheck();
+        DateCheck dateCheck = new DateCheck();
         SumGoods sumG = new SumGoods();
         BigDecimal profitSum = new BigDecimal(0.00);
 
-        CaseRecord cr = null;
-
-        for (CaseRecord gg1 : crList) {
-            cr = gg1;
-            if (cr != null) {
-                displayResult(cr);
+        //Вывод списка чеков проданного товара по дате
+        for (int i = 0; i < crList.size(); i++) {
+            if (crList != null) {
+                displayResult(crList.get(i));
                 //Сумма ввода денег в кассу
-                if (cr.getCashIn() != null) {
-                    sumCashIn = sumCashIn.add(cr.getCashIn().getSumCash());
+                if (crList.get(i).getCashIn() != null) {
+                    sumCashIn = sumCashIn.add(crList.get(i).getCashIn().getSumCash());
                 }
                 //Сумма вывода денег из кассы
-                if (cr.getCashOut() != null) {
-                    sumCashOut = sumCashOut.add(cr.getCashOut().getSumCash());
+                if (crList.get(i).getCashOut() != null) {
+                    sumCashOut = sumCashOut.add(crList.get(i).getCashOut().getSumCash());
                 }
-
             }
         }
 
+        /*     CaseRecord cr = null;
+        
+        for (CaseRecord gg1 : crList) {
+        System.out.println("QQQQQQQQQQQQQQ");
+        cr = gg1;
+        if (cr != null) {
+        displayResult(cr);
+        //Сумма ввода денег в кассу
+        if (cr.getCashIn() != null) {
+        sumCashIn = sumCashIn.add(cr.getCashIn().getSumCash());
+        }
+        //Сумма вывода денег из кассы
+        if (cr.getCashOut() != null) {
+        sumCashOut = sumCashOut.add(cr.getCashOut().getSumCash());
+        }
+        
+        }
+        }*/
         dateTotal.setDate(date.toString());
         Total total = new Total();
         total = dateTotal.displayResult();
@@ -152,11 +165,15 @@ public class ReportsDayController implements Initializable {
 
                 cash.setVisible(true);
                 pr.setDate(date);
+
                 proceeds.setText(pr.getProceeds().toString());
                 cash.setText(pr.getProceeds().add(sumCashIn).subtract(sumCashOut).toString());
                 //Расчет прибыли
-                checkList = profitCheck.listCheckForProfit(date);
-                CheckList check = null;
+
+                //checkList = profitCheck.listCheckForProfit(date);
+                dateCheck.setDate(date);
+                checkList = dateCheck.displayResultCheckList();
+
                 for (CheckList c1 : checkList) {
                     profitSum = profitSum.add(c1.getProfit());
                 }
@@ -180,7 +197,6 @@ public class ReportsDayController implements Initializable {
                 }
             }
         }
-
     }
 
     /**
