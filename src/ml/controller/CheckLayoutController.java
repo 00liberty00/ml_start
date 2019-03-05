@@ -76,7 +76,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author dave
  */
 public class CheckLayoutController implements Initializable {
-
+    
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -135,7 +135,7 @@ public class CheckLayoutController implements Initializable {
     private Label getConnDB;
     @FXML
     private Label message;
-
+    
     private Stage primaryStage;
     private List<Goods> goodsList;
     private QueryAllGoodsList allGoodsList = new QueryAllGoodsList();
@@ -159,7 +159,7 @@ public class CheckLayoutController implements Initializable {
     private CheckConnection checkConnection = new CheckConnection();
     private Timeline timeline = new Timeline();
     private Timeline timelineForMessage = new Timeline();
-
+    
     boolean firstState = false;
     boolean lastState = false;
     private CompMessage compMessage = new CompMessage();
@@ -180,7 +180,7 @@ public class CheckLayoutController implements Initializable {
         } else {
             getGoodCode(text);
         }
-
+        
     }
 
     /**
@@ -191,7 +191,7 @@ public class CheckLayoutController implements Initializable {
         String g = amountGood.getText();
         //Замена , на .
         String gWithDot = g.replace(',', '.');
-
+        
         int i = tableCheck.getItems().size();   // кол-во строк в таблице
         int row = i - 1;                        // последняя строка
 
@@ -206,7 +206,7 @@ public class CheckLayoutController implements Initializable {
             checkData.get(selectRow).setAmount(decimal("##.###", Double.parseDouble(gWithDot)));
             checkData.get(selectRow).setSum(sum);
             tableCheck.getItems().set(selectRow, checkData.get(selectRow));
-
+            
             tableCheck.getSelectionModel().clearSelection();
             selectRow = -1;
         } else {
@@ -222,7 +222,7 @@ public class CheckLayoutController implements Initializable {
 
         //Вывод на экран суммы скидок
         sumForTextField();
-
+        
         codeGood.requestFocus();
     }
 
@@ -255,7 +255,7 @@ public class CheckLayoutController implements Initializable {
             AnchorPane page = (AnchorPane) loader.load();
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
+            
             FavoriteButtonController controller = loader.getController();
             controller.getButton(cf);
             controller.setDialogStage(dialogStage);
@@ -268,7 +268,7 @@ public class CheckLayoutController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    
     @FXML
     private void category1(ActionEvent event) {
         firstFavorite.setStyle("-fx-base: #b6e7c9;");
@@ -277,14 +277,14 @@ public class CheckLayoutController implements Initializable {
         fourthFavorite.setStyle("");
         fifthFavorite.setStyle("");
         sixthFavorite.setStyle("");
-
+        
         nameCategory = firstFavorite.getText();
         listButtonName(nameCategory);
         getFavButton();
 
 //        listFavCateg(cf);
     }
-
+    
     @FXML
     private void category2(ActionEvent event) {
         firstFavorite.setStyle("");
@@ -297,7 +297,7 @@ public class CheckLayoutController implements Initializable {
         listButtonName(nameCategory);
         getFavButton();
     }
-
+    
     @FXML
     private void category3(ActionEvent event) {
         firstFavorite.setStyle("");
@@ -310,7 +310,7 @@ public class CheckLayoutController implements Initializable {
         listButtonName(nameCategory);
         getFavButton();
     }
-
+    
     @FXML
     private void category4(ActionEvent event) {
         firstFavorite.setStyle("");
@@ -323,7 +323,7 @@ public class CheckLayoutController implements Initializable {
         listButtonName(nameCategory);
         getFavButton();
     }
-
+    
     @FXML
     private void category5(ActionEvent event) {
         firstFavorite.setStyle("");
@@ -336,7 +336,7 @@ public class CheckLayoutController implements Initializable {
         listButtonName(nameCategory);
         getFavButton();
     }
-
+    
     @FXML
     private void category6(ActionEvent event) {
         firstFavorite.setStyle("");
@@ -369,13 +369,13 @@ public class CheckLayoutController implements Initializable {
         }
         sumCheck.setText(totalSum.toString());
     }
-
+    
     @FXML
     private void newCheck() {
         while (tableCheck.getItems().size() > 0) {
             checkData.remove(0);
         }
-
+        
         infoFirstLabel.setText("");
         infoSecondLabel.setText("");
         percent = new BigDecimal(0.00);
@@ -406,9 +406,9 @@ public class CheckLayoutController implements Initializable {
                 checkGood = false;
             }
         }
-
+        
         if (checkGood == false) {
-
+            
             boolean firstLetter = barcodeConv.firstLetters(code);
             if (firstLetter == true) {
                 String codeBarCode = barcodeConv.sixLetter(code);
@@ -422,7 +422,7 @@ public class CheckLayoutController implements Initializable {
                     }
                 }
             }
-
+            
         }
         if (goods != null) {
             displayResult(goods);
@@ -440,7 +440,7 @@ public class CheckLayoutController implements Initializable {
      */
     private void getGoodName(String name) {
         Goods goods = null;
-
+        
         for (Goods gg1 : goodsList) {
             if (gg1.getName().equals(name)) {
                 goods = gg1;
@@ -479,9 +479,9 @@ public class CheckLayoutController implements Initializable {
         checkFreePriceCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, Boolean>("checkFreePrice"));
         if ("ROLE_ADMIN".equals(auth.toString())) {
             residueCheckColumn.setCellValueFactory(new PropertyValueFactory<CheckTable, BigDecimal>("residue"));
-
+            
         }
-
+        
         CheckTable checkTable = new CheckTable();
         for (int i = 0; i < 1; i++) {
             BigDecimal price = goods.getPrice();
@@ -502,7 +502,7 @@ public class CheckLayoutController implements Initializable {
                 checkData.add(checkTable);
             }
         }
-
+        
         tableCheck.setItems(checkData);
 
         //Переход курсора на кол-во товара
@@ -523,14 +523,14 @@ public class CheckLayoutController implements Initializable {
         TextInputDialog dialog = new TextInputDialog("Введите номер карты");
         dialog.setTitle("Дисконтная карта");
         dialog.setHeaderText("Дисконтная карта");
-
+        
         Optional<String> result = dialog.showAndWait();
         // The Java 8 way to get the response value (with lambda expression).
         result.ifPresent(code -> numberDiscount.numberDiscount(code));
         discount = numberDiscount.displayResult();
         if (discount != null) {
             percent = decimal("###.###", Double.parseDouble(discount.getPercent()));
-
+            
             result.ifPresent(numberCard -> infoFirstLabel.setText("Дисконтная карта №" + numberCard));
             infoSecondLabel.setText("Скидка: " + percent + "%");
         } else {
@@ -553,13 +553,13 @@ public class CheckLayoutController implements Initializable {
         TextInputDialog dialog = new TextInputDialog("Введите свободную цену");
         dialog.setTitle("Свободная цена");
         dialog.setHeaderText("Свободная цена");
-
+        
         Optional<String> result = dialog.showAndWait();
         infoFirstLabel.setText("Вы ввели новую цену: " + result.get());
-
+        
         String newPrice = result.get();
         String newPriceWithDot = newPrice.replace(',', '.');
-
+        
         int i = tableCheck.getItems().size();   // кол-во строк в таблице
         int row = i - 1;                        // последняя строка
 
@@ -573,7 +573,7 @@ public class CheckLayoutController implements Initializable {
         checkData.get(row).setSum(sum);
         checkData.get(row).setCheckFreePrice(true);
         tableCheck.getItems().set(row, checkData.get(row));
-
+        
         sumForTextField();
 
         //checkNewPrice = true;
@@ -586,13 +586,13 @@ public class CheckLayoutController implements Initializable {
      */
     //Вызов диалогового окна по нажатию ESC
     private void getDialogEnd() {
-
+        
         Check check = new Check();
         Goods goods = new Goods();
         UserSwing userSwing = new UserSwing();
-
+        
         GoodByCode goodByCode = new GoodByCode();
-
+        
         IdUserByName idUserByName = new IdUserByName();
         Authentication authentication = SecurityContextHolder.getContext().
                 getAuthentication();
@@ -600,10 +600,10 @@ public class CheckLayoutController implements Initializable {
         Date date = new Date();
         List<Check> checkArrayList = new ArrayList<>();
         List<CheckList> checkListArrayList = new ArrayList<>();
-
+        
         BigDecimal sum = new BigDecimal(0.00);
         BigDecimal sumWithDisсount = new BigDecimal(0.00);
-
+        
         idUserByName.setLoginUser(login);   //метод для idUser по логину
         userSwing = idUserByName.displayResult(); //Возвращает пользователя
         //Получаем значение из таблицы
@@ -611,10 +611,10 @@ public class CheckLayoutController implements Initializable {
 
         for (int j = 0; j < i; j++) {
             CheckList checkList = new CheckList();
-
+            
             if (percent.signum() != 0) {
                 System.out.println("Проценты неравны 0!!!");
-
+                
                 BigDecimal price = priceCheckColumn.getCellData(j);
                 BigDecimal priceWithDiscount = priceWithDisount(priceCheckColumn.getCellData(j));
                 BigDecimal amount = amountCheckColumn.getCellData(j);
@@ -632,7 +632,7 @@ public class CheckLayoutController implements Initializable {
             }
             //Товар по коду из таблицы
             goodByCode.setCode(codeCheckColumn.getCellData(j));
-
+            
             Boolean checkFreePrice = checkFreePriceCheckColumn.getCellData(j);
 
             //Прибыль с одной еденицы товара по коду
@@ -646,9 +646,9 @@ public class CheckLayoutController implements Initializable {
             goods.getCheckLists().add(checkList);
             checkList.setAmount(amountCheckColumn.getCellData(j));
             checkList.setProfit(profit);
-
+            checkList.setPrice(priceCheckColumn.getCellData(j));
             checkList.setNewPrice(checkFreePrice);
-
+            
             checkListArrayList.add(checkList);
         }
 
@@ -658,7 +658,7 @@ public class CheckLayoutController implements Initializable {
         userSwing.getChecks().add(check);
         check.setUserSwing(userSwing);
         checkArrayList.add(check);
-
+        
         String convertSum = decimal("###.##", Double.parseDouble(sum.toString())).toString();
         String convertSumWithDiscount = decimal("###.##", Double.parseDouble(sumWithDisсount.toString())).toString();
         boolean okClicked = true;
@@ -675,19 +675,19 @@ public class CheckLayoutController implements Initializable {
             AnchorPane page = (AnchorPane) loader.load();
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
+            
             EndCheckController controller = loader.getController();
-
+            
             controller.setSumText(convertSum, convertSumWithDiscount);
             //controller.setSumText("1000", "10");
             controller.setDialogStage(dialogStage);
-
+            
             controller.setAddCheck(tableCheck, checkArrayList, checkListArrayList, discount, checkNewPrice, newPrice);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
-
+            
             okClicked = controller.displayOkClicked();
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -697,7 +697,7 @@ public class CheckLayoutController implements Initializable {
             while (tableCheck.getItems().size() > 0) {
                 checkData.remove(0);
             }
-
+            
             infoFirstLabel.setText("");
             infoSecondLabel.setText("");
             percent = new BigDecimal(0.00);
@@ -712,7 +712,7 @@ public class CheckLayoutController implements Initializable {
             goodsList = allGoodsList.listGoods();
         }
         allGoodsList.clearList();
-
+        
     }
 
     /**
@@ -722,10 +722,10 @@ public class CheckLayoutController implements Initializable {
      * @return
      */
     private BigDecimal priceWithDisount(BigDecimal price) {
-
+        
         BigDecimal perc = price.multiply(this.percent).divide(new BigDecimal(100));
         price = price.subtract(perc);
-
+        
         return price;
     }
 
@@ -736,7 +736,7 @@ public class CheckLayoutController implements Initializable {
      */
     private void listButtonName(String name) {
         cf = new CategoryFavorite();
-
+        
         categoryByName.setName(name);
         cf = categoryByName.displayResult();
     }
@@ -745,7 +745,7 @@ public class CheckLayoutController implements Initializable {
      * Проверка соединения с БД
      */
     private void getConnection() {
-
+        
         XMLSearchAddress address = new XMLSearchAddress();
         address.findAddress();
         CheckInternetConnection connection = new CheckInternetConnection();
@@ -762,9 +762,9 @@ public class CheckLayoutController implements Initializable {
         };
         
         timer2.schedule(task, 100, 3000);*/
-
+        
         timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
-
+            
             if ("true".equals(connection.call())) {
                 getConnDB.setText("Соединение есть");
                 getConnDB.setStyle("-fx-text-fill: BLUE;");
@@ -775,9 +775,9 @@ public class CheckLayoutController implements Initializable {
                 fourthFavorite.setDisable(false);
                 fifthFavorite.setDisable(false);
                 sixthFavorite.setDisable(false);
-
+                
                 firstState = true;
-
+                
             } else {
                 getConnDB.setText("Соединения нет");
                 getConnDB.setStyle("-fx-text-fill: RED;");
@@ -792,23 +792,23 @@ public class CheckLayoutController implements Initializable {
                 firstState = false;
                 lastState = true;
             }
-
+            
             if ((firstState == true) && (lastState == true)) {
                 firstState = false;
                 lastState = false;
                 checkConnection.restartConnection();
             }
         }));
-
+        
         timeline.setCycleCount(100);
         timeline.play();
-
+        
     }
-
+    
     public void setCompCard(Comp comp) {
         this.comp = comp;
     }
-    
+
     /**
      * Initializes the controller class.
      */
@@ -817,14 +817,14 @@ public class CheckLayoutController implements Initializable {
 
         //Сообщение
         timelineForMessage = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
-
+            
             compMessage.setComp(comp);
             message.setText(compMessage.displayResult().getMessage());
-
+            
         }));
         timelineForMessage.setCycleCount(100);
         timelineForMessage.play();
-
+        
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -854,12 +854,12 @@ public class CheckLayoutController implements Initializable {
                 }
                 String[] both = (String[]) ArrayUtils.addAll(sName, sCode);
                 Arrays.sort(both);
-
+                
                 TextFields.bindAutoCompletion(codeGood, both);
 
                 //Список категорий избранного
                 catFavorList = favoriteList.listFavoriteCategory();
-
+                
                 if (!catFavorList.isEmpty()) {
                     for (int i = 0; i < catFavorList.size(); i++) {
                         if (i == 0) {
@@ -896,7 +896,7 @@ public class CheckLayoutController implements Initializable {
                                         getDialogEnd();
                                     }
                                     break;
-
+                                
                                 case F:
                                     if (event.isControlDown()) {
                                         //getDialogFavofite();

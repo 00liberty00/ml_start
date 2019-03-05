@@ -17,6 +17,9 @@
         <property name="amount" type="big_decimal">
             <column name="amount" precision="7" scale="3" not-null="true" />
         </property>
+        <property name="price" type="big_decimal">
+            <column name="price" precision="7" scale="3" />
+        </property>
         <property name="profit" type="big_decimal">
             <column name="profit" precision="7" scale="3" not-null="true" />
         </property>

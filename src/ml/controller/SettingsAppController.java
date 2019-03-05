@@ -20,6 +20,7 @@ import ml.model.UserSwing;
 import ml.query.user.AdminUser;
 import ml.query.user.PhoneUser;
 import ml.query.user.UpdateAdmin;
+import ml.util.UpdateApp;
 import ml.xml.XMLSettings;
 import ml.xml.model.Settings;
 
@@ -38,6 +39,8 @@ public class SettingsAppController implements Initializable {
     private TextField phoneTextField;
     @FXML
     private CheckBox smsCheck;
+    @FXML
+    private Button updateButton;
 
     private XMLSettings xmls = new XMLSettings();
     private Settings settings = new Settings();
@@ -64,6 +67,12 @@ public class SettingsAppController implements Initializable {
         xmls.newRecord(settings);
 
         alert.alert(null, null, "Настройки сохранены!");
+    }
+
+    @FXML
+    private void update(ActionEvent event) {
+        UpdateApp updateApp = new UpdateApp();
+        updateApp.downloadApp();
     }
 
     //Обработка округления цены товара
@@ -145,4 +154,5 @@ public class SettingsAppController implements Initializable {
             }
         });
     }
+
 }

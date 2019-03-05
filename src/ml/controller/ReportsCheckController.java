@@ -343,7 +343,7 @@ public class ReportsCheckController implements Initializable {
         if (cr.getNewPrice() == true) {
             reportsCheckListTable.setPrice(cr.getCheckListNewPrice().getNewPrice());
         } else {
-            reportsCheckListTable.setPrice(cr.getGoods().getPrice());
+            reportsCheckListTable.setPrice(cr.getPrice());
         }
         // заполняем таблицу данными
         reportsCheckListData.add(reportsCheckListTable);
@@ -382,7 +382,7 @@ public class ReportsCheckController implements Initializable {
                 if (cr.getNewPrice() == true) {
                     reportsCheckListSmallTable.setPrice(cr.getCheckListNewPrice().getNewPrice());
                 } else {
-                    reportsCheckListSmallTable.setPrice(cr.getGoods().getPrice());
+                    reportsCheckListSmallTable.setPrice(cr.getPrice());
                 }
 
             }

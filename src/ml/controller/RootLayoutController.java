@@ -18,6 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -28,10 +29,13 @@ import javafx.util.Duration;
 import ml.authentication.GrantedAuth;
 import ml.exit.ExitApp;
 import ml.modelLicense.Comp;
+import ml.query.accounting.TruncateGoodsAccounting;
+import ml.query.accounting.TruncateBackup;
 import ml.query.compCard.CompMessage;
 import ml.query.goods.QueryAllGoodsList;
 import ml.util.CheckConnection;
 import ml.util.CheckInternetConnection;
+import ml.window.AccountingWindow;
 import ml.window.ArrivalReportsWindow;
 import ml.window.ArrivalWindow;
 import ml.window.CancelReportsWindow;
@@ -153,6 +157,9 @@ public class RootLayoutController implements Initializable {
     private Button viewGoods;
 
     @FXML
+    private Button accounting;
+
+    @FXML
     private Label message;
 
     private ExitApp app = new ExitApp();
@@ -166,6 +173,8 @@ public class RootLayoutController implements Initializable {
     private Comp comp = new Comp();
     boolean firstState = false;
     boolean lastState = false;
+    @FXML
+    private MenuItem deleteAccAndBackUpMenu;
 
     /**
      * Открывает меню движения товара.
@@ -394,6 +403,25 @@ public class RootLayoutController implements Initializable {
     }
 
     /**
+     * Учет товара
+     *
+     * @param event
+     */
+    @FXML
+    private void accountingClicked(ActionEvent event) {
+
+        if ("ROLE_ADMIN".equals(auth.toString())) {
+            new AccountingWindow();
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Сообщение:");
+            alert.setHeaderText("Внимание!");
+            alert.setContentText("Требуются права администратора!");
+            alert.showAndWait();
+        }
+    }
+
+    /**
      * Дневные отчеты.
      *
      * @param event
@@ -488,14 +516,14 @@ public class RootLayoutController implements Initializable {
 
     /**
      * Настройки пользователя
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void settingsUser(ActionEvent event) {
         new SettingsUserWindow();
     }
-    
-    
+
     /**
      * Создание избранного.
      *
@@ -575,6 +603,19 @@ public class RootLayoutController implements Initializable {
 
     }
 
+    /**
+     * Контекстное меню Удаление предыдущего учета и бекапа
+     *
+     * @param event
+     */
+    @FXML
+    private void deleteAccAndBackUp(ActionEvent event) {
+        TruncateGoodsAccounting ta = new TruncateGoodsAccounting();
+        TruncateBackup tb = new TruncateBackup();
+        ta.truncateAccounting();
+        tb.truncateBackup();
+    }
+
     //Подтверждение закрытия окна
     private void closeApp() {
         Alert closeConfirmation = new Alert(
@@ -630,10 +671,9 @@ public class RootLayoutController implements Initializable {
         License license = testTrial.license();*/
         //Сообщение
         timeline = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
-            
+
             //compMessage.setComp(comp);
             //message.setText(compMessage.displayResult().getMessage());
-
             //Проверка связи с бд
             if ("true".equals(connection.call())) {
 
@@ -660,7 +700,5 @@ public class RootLayoutController implements Initializable {
         //executor.shutdownNow();
         //new NewThread("Do it!").start();
     }
-
-    
 
 }

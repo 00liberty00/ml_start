@@ -26,6 +26,7 @@ public class CheckList implements java.io.Serializable {
     private Check check;
     private Goods goods;
     private BigDecimal amount;
+    private BigDecimal price;
     private BigDecimal profit;
     private CheckListNewPrice checkListNewPrice;
     private Boolean checkNewPrice;
@@ -33,10 +34,11 @@ public class CheckList implements java.io.Serializable {
     public CheckList() {
     }
 
-    public CheckList(Check check, Goods goods, BigDecimal amount, BigDecimal profit, CheckListNewPrice checkListNewPrice, Boolean checkNewPrice) {
+    public CheckList(Check check, Goods goods, BigDecimal amount, BigDecimal price, BigDecimal profit, CheckListNewPrice checkListNewPrice, Boolean checkNewPrice) {
         this.check = check;
         this.goods = goods;
         this.amount = amount;
+        this.price = price;
         this.profit = profit;
         this.checkListNewPrice = checkListNewPrice;
         this.checkNewPrice = checkNewPrice;
@@ -82,6 +84,24 @@ public class CheckList implements java.io.Serializable {
         this.amount = amount;
     }
 
+    @Column(name = "price", precision = 7, scale = 3)
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @Column(name = "newPrice")
+    public Boolean getCheckNewPrice() {
+        return checkNewPrice;
+    }
+
+    public void setCheckNewPrice(Boolean checkNewPrice) {
+        this.checkNewPrice = checkNewPrice;
+    }
+
     @Column(name = "profit", nullable = false, precision = 7, scale = 3)
     public BigDecimal getProfit() {
         return this.profit;
@@ -90,7 +110,7 @@ public class CheckList implements java.io.Serializable {
     public void setProfit(BigDecimal profit) {
         this.profit = profit;
     }
-    
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "checkList")
     public CheckListNewPrice getCheckListNewPrice() {
         return this.checkListNewPrice;
@@ -100,7 +120,7 @@ public class CheckList implements java.io.Serializable {
         this.checkListNewPrice = checkListNewPrice;
     }
 
-    @Column(name="new_price")
+    @Column(name = "new_price")
     public Boolean getNewPrice() {
         return checkNewPrice;
     }
@@ -108,5 +128,5 @@ public class CheckList implements java.io.Serializable {
     public void setNewPrice(Boolean checkNewPrice) {
         this.checkNewPrice = checkNewPrice;
     }
-    
+
 }

@@ -111,5 +111,6 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
+      <Button fx:id="updateButton" layoutX="14.0" layoutY="525.0" mnemonicParsing="false" onAction="#update" text="Обновить приложение" />
    </children>
 </AnchorPane>
