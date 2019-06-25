@@ -14,11 +14,11 @@ import org.hibernate.Session;
  *  Список товара из таблицы для учета
  * @author Dave
  */
-public class ListGoodsAccounting {
+public class ListGoodsForAccounting {
 
     private Session sess;
 
-    public List<Goods> listGoodsAccounting() {
+    public List<Goods> listGoodsForAccounting() {
         sess = HibernateUtil.openSession();
         return sess.createQuery("select goods from GoodsAccounting")
                 .list();

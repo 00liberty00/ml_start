@@ -35,6 +35,7 @@ public class AccountingQuery {
     Session session = HibernateUtil.openSession();
     Session sessionFactory;
 
+    //!!!!!
     public void inspectEmptyTable() {
         executeHQLTableIsEmpty(EMPTY);
     }
@@ -66,7 +67,8 @@ public class AccountingQuery {
         }
     }
 
-    //Проверка, естт ли записи в таблице GoodsAccounting
+    //!!!!!
+    //Проверка, есть ли записи в таблице GoodsAccounting
     private void executeHQLTableIsEmpty(String hql) {
         try {
             Session session = HibernateUtil.openSession();

@@ -72,6 +72,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        loginTextField.setText("admin");
+        passwordTextField.setText("qqq");
     }
 
     public void setDialogStage(Stage dialogStage) {

@@ -37,7 +37,7 @@
                </font>
             </Text>
             <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Код товара: " />
-            <TextField fx:id="codeTextField" layoutX="105.0" layoutY="46.0" onKeyTyped="#getCode" />
+            <TextField fx:id="codeTextField" layoutX="105.0" layoutY="46.0" onAction="#codeAction" onKeyTyped="#getCode" />
             <Text layoutX="338.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название или код товара:" />
             <TextField fx:id="nameTextField" layoutX="538.0" layoutY="46.0" onKeyTyped="#getName" />
             <CheckBox fx:id="checkMode" disable="true" layoutX="852.0" layoutY="51.0" mnemonicParsing="false" onAction="#checkMode" text="Включить режим сбора информации" />
