@@ -95,6 +95,7 @@ public class AccountingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
         //проверка, начат учет или нет(проверка записей в таблице GoodsAccounting)
         accountingQuery.inspectEmptyTable();
         if (accountingQuery.displayInspectTable() == true) {
@@ -105,6 +106,7 @@ public class AccountingController implements Initializable {
             accountingTable.setDisable(true);
             codeTextField.setDisable(true);
             nameTextField.setDisable(true);
+            codeTextField.requestFocus();
         } else {
             checkMode.setDisable(false);
             startButton.setDisable(true);
@@ -198,46 +200,34 @@ public class AccountingController implements Initializable {
             BigDecimal residueNewFromTable = accountingGoodsData.get(numberRow).getResidueNew();
             BigDecimal residueOldFromTable = accountingGoodsData.get(numberRow).getResidue();
             BigDecimal residueDiff;
-            
+
             // +1 к числу в колонке ИТОГО
-            accountingGoodsData.get(numberRow).setResidueNew(residueNewFromTable.add(new BigDecimal(1)));
-            
+            BigDecimal residueNew = accountingGoodsData.get(numberRow).getResidueNew().add(new BigDecimal(1));
+
+            accountingGoodsData.get(numberRow).setResidueNew(residueNew);
+
             // расчет разницы между "Остаток" и "Итого" и ввод в "Разница"
             residueDiff = residueOldFromTable.subtract(accountingGoodsData.get(numberRow).getResidueNew());
             accountingGoodsData.get(numberRow).setRedisueDifferent(residueDiff);
             //arrivalData.get(row).setNewPrice(allowance.multiply(invoice));s
-            accountingTable.getItems().set(numberRow, accountingGoodsData.get(numberRow));
+            //accountingTable.getItems().set(numberRow, accountingGoodsData.get(numberRow));
+            accountingTable.refresh();
             //метод +1 к сумме Итого
-            getCodePlusOne(code, residueDiff);
+
+            getCodePlusOne(code, residueNew, residueDiff);
 
             codeTextField.selectAll();
+            codeTextField.setText("");
             codeTextField.requestFocus();
         } else {
             System.out.println("такой позиции нет");
             codeTextField.selectAll();
             codeTextField.requestFocus();
         }
-
-        /*if (countRow == 1) {
-        System.out.println("Кол-во +1");
-        String code = codeTextField.getText();
-        getCodePlusOne(code);
-        codeTextField.selectAll();
-        
-        accountingGoodsData.get(countRow).setResidueNew(new BigDecimal(10));
-        } else if (countRow < 1) {
-        System.out.println("такой позиции нет");
-        codeTextField.selectAll();
-        
-        } else {
-        System.out.println("Больше 1");
-        codeTextField.selectAll();
-        
-        }*/
     }
 
     /**
-     * Поиск по названию товара
+     * Сортировка по коду и по названию товара
      *
      * @param event
      */
@@ -277,6 +267,19 @@ public class AccountingController implements Initializable {
     }
 
     /**
+     * При нажатии ENTER в поле НАЗВАНИЕ ИЛИ КОД ТОВАРА переход в ячейку ПО
+     * ФАКТУ
+     *
+     * @param event
+     */
+    @FXML
+    private void onEnter(ActionEvent ae) {
+        accountingTable.getFocusModel().focus(0, residueFactColumn);
+        accountingTable.requestFocus();
+
+    }
+
+    /**
      * Начало учета
      *
      * @param event
@@ -293,6 +296,8 @@ public class AccountingController implements Initializable {
         startAccounting = true;
         codeTextField.setDisable(false);
         nameTextField.setDisable(false);
+        codeTextField.requestFocus();
+
     }
 
     @FXML
@@ -304,12 +309,16 @@ public class AccountingController implements Initializable {
             exitButton.setDisable(true);
             //Таблица неактивна
             accountingTable.setDisable(true);
+            codeTextField.requestFocus();
+
         } else {
             accountingTable.setDisable(false);
             startButton.setDisable(true);
             endButton.setDisable(false);
             exitButton.setDisable(true);
             codeTextField.requestFocus();
+            codeTextField.requestFocus();
+
         }
     }
 
@@ -321,10 +330,63 @@ public class AccountingController implements Initializable {
     @FXML
     private void getAmountGood(TableColumn.CellEditEvent<AccountingGoodsTable, String> event) {
 
-        String amountString = event.getRowValue().getResidueFact();
+        String amountString = event.getNewValue();
+        
+        
+        
         //Замена , на .
         String inv = amountString.replace(',', '.');
+        BigDecimal residueDiff;
         BigDecimal amount = new BigDecimal(inv);
+
+        String code = event.getRowValue().getCode();
+
+        nameTextField.setText("");
+        nameTextField.requestFocus();
+
+        int countRow = accountingTable.getItems().size();
+        int numberRow = 0;
+
+        for (int i = 0; i < countRow; i++) {
+            if (code.equals(accountingGoodsData.get(i).getCode())) {
+                numberRow = i;
+            }
+        }
+
+        BigDecimal residueOld = accountingGoodsData.get(numberRow).getResidue();
+
+        // + кол-во к числу в колонке ИТОГО
+        BigDecimal residueNew = accountingGoodsData.get(numberRow).getResidueNew().add(amount);
+        accountingGoodsData.get(numberRow).setResidueNew(residueNew);
+
+        // расчет разницы между "Остаток" и "Итого" и ввод в "Разница"
+        residueDiff = residueOld.subtract(residueNew);
+        accountingGoodsData.get(numberRow).setRedisueDifferent(residueDiff);
+
+        //System.out.println("selectRow ^ " + selectRow);
+        System.out.println("numberRow ^ " + numberRow);
+        System.out.println("residueNew ^ " + residueNew);
+        System.out.println("residueOld ^ " + residueOld);
+        System.out.println("amountFact ^ " + amount);
+        System.out.println("residueDiff ^ " + residueDiff);
+        System.out.println("code ^ " + code);
+        accountingTable.refresh();
+        //       accountingTable.getItems().set(numberRow, accountingGoodsData.get(numberRow));
+        //selectRow = -1;
+
+        getCodePlusOne(code, residueNew, residueDiff);
+    }
+
+    /**
+     * Значение номера выбранной строки
+     */
+    @FXML
+    private void getRow() {
+        int i = accountingTable.getItems().size();   // кол-во строк в таблице
+        if (i > 0) {
+            //TablePosition pos = accountingTable.getSelectionModel().getSelectedCells().get(0);
+            //selectRow = pos.getRow();
+        }
     }
 
     @FXML
@@ -353,7 +415,7 @@ public class AccountingController implements Initializable {
             accGoodsTable.setName(ga.getGoods().getName());
             accGoodsTable.setPrice(ga.getGoods().getPrice());
             accGoodsTable.setResidue(ga.getGoods().getResidue());
-            //accGoodsTable.setResidueFact();
+            accGoodsTable.setResidueFact("0.00");
             accGoodsTable.setResidueNew(ga.getResidueNew());
             accGoodsTable.setRedisueDifferent(ga.getResidueDiff());
             accountingGoodsData.add(accGoodsTable);
@@ -365,14 +427,14 @@ public class AccountingController implements Initializable {
     /**
      * +1 к товару по коду и изменение в таблице SQL разницы
      */
-    private void getCodePlusOne(String code, BigDecimal residueDiff) {
+    private void getCodePlusOne(String code, BigDecimal residueNew, BigDecimal residueDiff) {
         GoodByCode goodByCode = new GoodByCode();
         goodByCode.setCode(code);
 
         GoodAccountingByCode gabc = new GoodAccountingByCode();
         gabc.setCode(goodByCode.displayResult());
         UpdateResidueGoodAccounting updateResidueGoodAccounting = new UpdateResidueGoodAccounting();
-        updateResidueGoodAccounting.update(gabc.displayResult(), residueDiff);
+        updateResidueGoodAccounting.update(gabc.displayResult(), residueNew, residueDiff);
     }
 
 }

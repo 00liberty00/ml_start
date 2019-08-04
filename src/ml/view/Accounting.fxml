@@ -13,7 +13,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.controller.AccountingController">
    <center>
-      <TableView fx:id="accountingTable" disable="true" editable="true" BorderPane.alignment="CENTER">
+      <TableView fx:id="accountingTable" disable="true" editable="true" onMouseClicked="#getRow" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="codeColumn" prefWidth="200.0" text="Код товара" />
           <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Название" />
@@ -39,7 +39,7 @@
             <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Код товара: " />
             <TextField fx:id="codeTextField" layoutX="105.0" layoutY="46.0" onAction="#codeAction" onKeyTyped="#getCode" />
             <Text layoutX="338.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название или код товара:" />
-            <TextField fx:id="nameTextField" layoutX="538.0" layoutY="46.0" onKeyTyped="#getName" />
+            <TextField fx:id="nameTextField" layoutX="538.0" layoutY="46.0" onAction="#onEnter" onKeyTyped="#getName" />
             <CheckBox fx:id="checkMode" disable="true" layoutX="852.0" layoutY="51.0" mnemonicParsing="false" onAction="#checkMode" text="Включить режим сбора информации" />
          </children>
          <opaqueInsets>

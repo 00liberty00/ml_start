@@ -22,23 +22,23 @@ public class UpdateResidueGoodAccounting {
     Transaction tx = null;
     Session sessionFactory;
 
-    public void update(GoodsAccounting ga, BigDecimal residueDiff) {
-        executeHQLQuery(ga, residueDiff);
+    public void update(GoodsAccounting ga, BigDecimal residueNew, BigDecimal residueDiff) {
+        executeHQLQuery(ga, residueNew, residueDiff);
     }
 
     //HQL-запрос
-    private void executeHQLQuery(GoodsAccounting ga, BigDecimal residueDiff) {
+    private void executeHQLQuery(GoodsAccounting ga, BigDecimal residueNew, BigDecimal residueDiff) {
         try {
             tx = session.beginTransaction();
             GoodsAccounting goodsAcc = new GoodsAccounting();
             BigDecimal bb = new BigDecimal(0.0);
 
-            //Добавление +1
+            //Добавление кол-ва
 
             goodsAcc = (GoodsAccounting) session.load(GoodsAccounting.class, ga.getGoods().getIdGoods());
-            bb = goodsAcc.getResidueNew().add(new BigDecimal(1.00));
+            //bb = goodsAcc.getResidueNew().add(residueNew);
 
-            goodsAcc.setResidueNew(bb);
+            goodsAcc.setResidueNew(residueNew);
             
             //обновление Разницы остатка в товаре
             goodsAcc.setResidueDiff(residueDiff);
